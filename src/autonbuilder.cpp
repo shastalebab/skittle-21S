@@ -71,11 +71,12 @@ void left_corner() {
 		chassis.pid_wait_quick_chain();
 	}
 	intake.move(127);
-	chassis.pid_odom_set({{16_in, 16_in, 190_deg}, fwd, 127});
+	chassis.pid_odom_set({{18_in, 14_in, 260_deg}, fwd, 127});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set(70_deg, 127, ez::ccw);
+	chassis.pid_turn_set(315_deg, 127, ez::cw);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_odom_set({{{22_in, 12_in, 90_deg}, fwd, 127, ez::cw}, {{30_in, 18_in}, fwd, 127}});
+	chassis.pid_odom_set({{{14_in, 22_in, 0_deg}, fwd, 127, ez::cw}, {{20_in, 28_in}, fwd, 127}});
+	chassis.pid_wait();
 }
 
 void right_corner() {
@@ -84,11 +85,12 @@ void right_corner() {
 		chassis.pid_wait_quick_chain();
 	}
 	intake.move(127);
-	chassis.pid_odom_set({{126_in, 14_in, 100_deg}, fwd, 127});
+	chassis.pid_odom_set({{128_in, 16_in, 170_deg}, fwd, 127});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set(45_deg, 127, ez::ccw);
+	chassis.pid_turn_set(290_deg, 127, ez::cw);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_odom_set({{{130_in, 22_in, 0_deg}, fwd, 127, ez::ccw}, {{124_in, 28_in}, fwd, 127}});
+	chassis.pid_odom_set({{{122_in, 12_in, 270_deg}, fwd, 127, ez::ccw}, {{114_in, 18_in}, fwd, 127}});
+	chassis.pid_wait();
 }
 
 void red_ring_rush() {

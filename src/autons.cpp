@@ -98,6 +98,36 @@ void testcolorsortBlue() {
 	ladybrown.move_relative(-700, -127);
 }
 
+void red_gr_wp() {
+	// pros::Task ringsort(ringsensTask, (void*)"0");
+	chassis.odom_pose_set({132_in, 21_in, 0_deg});
+	doinker.set(true);
+	chassis.pid_odom_set({{{130_in, 42_in}, fwd, 127}, {{128_in, 56_in, 62_deg}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_odom_set({{128_in, 46_in, 0_deg}, rev, 127});
+	ladybrown.move_absolute(1200, 200);
+	chassis.pid_wait_quick_chain();
+	pros::delay(200);
+	doinker.set(false);
+	chassis.pid_turn_set(-90_deg, 127, ez::ccw);
+	chassis.pid_wait_quick_chain();
+	intakefirst.move(127);
+	chassis.pid_odom_set({{{120_in, 40_in}, fwd, 127}, {{96_in, 48_in, -90_deg}, rev, 90}});
+	chassis.pid_wait();
+	mogomech.set(true);
+	intakefirst.move(0);
+	intake.move(127);
+	chassis.pid_odom_set({{126_in, 14_in, 100_deg}, fwd, 127});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(45_deg, 127, ez::ccw);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_odom_set({{{130_in, 22_in, 0_deg}, fwd, 127, ez::ccw}, {{124_in, 28_in}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	doinker.set(false);
+	chassis.pid_odom_set({{72_in, 60_in, -90_deg}, fwd, 127, ez::ccw});
+	chassis.pid_wait();
+}
+
 void red_50WP() {
 	// pros::Task ringsort(ringsensTask, (void*)"0");
 	// Get mogo and score 2 rings
@@ -292,6 +322,36 @@ void red_6ring() {
 
 // BLUE
 
+void blue_gr_wp() {
+	// pros::Task ringsort(ringsensTask, (void*)"1");
+	chassis.odom_pose_set({12_in, 21_in, 0_deg});
+	doinker.set(true);
+	chassis.pid_odom_set({{{14_in, 42_in}, fwd, 127}, {{16_in, 56_in, -62_deg}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_odom_set({{16_in, 46_in, 0_deg}, rev, 127});
+	ladybrown.move_absolute(1200, 200);
+	chassis.pid_wait_quick_chain();
+	pros::delay(200);
+	doinker.set(false);
+	chassis.pid_turn_set(90_deg, 127, ez::cw);
+	chassis.pid_wait_quick_chain();
+	intakefirst.move(127);
+	chassis.pid_odom_set({{{24_in, 40_in}, fwd, 127}, {{48_in, 48_in, 90_deg}, rev, 90}});
+	chassis.pid_wait();
+	mogomech.set(true);
+	intakefirst.move(0);
+	intake.move(127);
+	chassis.pid_odom_set({{16_in, 16_in, 190_deg}, fwd, 127});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(70_deg, 127, ez::ccw);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_odom_set({{{22_in, 12_in, 90_deg}, fwd, 127, ez::cw}, {{30_in, 18_in}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	doinker.set(false);
+	chassis.pid_odom_set({{72_in, 60_in, 90_deg}, fwd, 127, ez::cw});
+	chassis.pid_wait();
+}
+
 void blue_50WP() {
 	// 	pros::Task ringsort(ringsensTask, (void*)"1");
 	// Get mogo and score 2 rings
@@ -341,11 +401,11 @@ void blue_7ring() {
 	doinker.set(true);
 	intakeLevel.set(false);
 	intake.move(127);
-	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{128_in, 16_in, -190_deg}, fwd, 127}});
+	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{126_in, 14_in, 100_deg}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set(-70_deg, 127, ez::cw);
+	chassis.pid_turn_set(45_deg, 127, ez::ccw);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_odom_set({{{122_in, 12_in, -90_deg}, fwd, 127, ez::ccw}, {{114_in, 18_in}, fwd, 127}, {{128_in, 60_in}, fwd, 127}});
+	chassis.pid_odom_set({{{130_in, 22_in, 0_deg}, fwd, 127, ez::ccw}, {{124_in, 28_in}, fwd, 127}, {{128_in, 60_in}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(45_deg, 90, ez::ccw);
 	chassis.pid_wait();

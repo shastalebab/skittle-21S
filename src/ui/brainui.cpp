@@ -40,9 +40,8 @@ void jautontable::jautonpopulate(std::vector<jasauton> JasAutonTable) {
 }
 
 static lv_style_t style;
-static lv_style_t stylebtn;
 static lv_style_t styleind;
-static lv_style_t styleswitch;
+static lv_style_t stylebtn;
 
 lv_obj_t *mainscreen = lv_tileview_create(NULL);
 lv_obj_t *autoselector = lv_tileview_add_tile(mainscreen, 0, 0, LV_DIR_NONE);
@@ -169,26 +168,18 @@ void screeninit() {
 	lv_style_set_text_color(&style, lv_color_hex(0xcfffe9));
 	lv_style_set_bg_color(&style, lv_color_hex(0x071808));
 
-	lv_style_init(&stylebtn);
-	lv_style_set_border_width(&stylebtn, 2);
-	lv_style_set_radius(&stylebtn, 6);
-	lv_style_set_border_color(&stylebtn, lv_color_hex(0x071808));
-	lv_style_set_text_color(&stylebtn, lv_color_hex(0x071808));
-	lv_style_set_bg_color(&stylebtn, lv_color_hex(0xcfffe9));
-	lv_style_set_text_align(&stylebtn, LV_TEXT_ALIGN_CENTER);
-	lv_style_set_bg_opa(&stylebtn, 255);
-
 	lv_style_init(&styleind);
 	lv_style_set_border_width(&styleind, 0);
 	lv_style_set_radius(&styleind, 0);
 	lv_style_set_bg_color(&styleind, lv_color_hex(0x5d5d5d));
 
-	lv_style_init(&styleswitch);
-	lv_style_set_border_width(&styleswitch, 3);
-	lv_style_set_outline_width(&styleswitch, 2);
-	lv_style_set_radius(&styleswitch, 16);
-	lv_style_set_border_color(&styleswitch, lv_color_hex(0x071808));
-	lv_style_set_outline_color(&styleswitch, lv_color_hex(0xcfffe9));
+	lv_style_init(&stylebtn);
+	lv_style_set_border_width(&stylebtn, 3);
+	lv_style_set_outline_width(&stylebtn, 2);
+	lv_style_set_radius(&stylebtn, 16);
+	lv_style_set_bg_color(&stylebtn, lv_color_hex(0xcfffe9));
+	lv_style_set_border_color(&stylebtn, lv_color_hex(0x071808));
+	lv_style_set_outline_color(&stylebtn, lv_color_hex(0xcfffe9));
 
 	lv_img_set_src(overlay, &brainuioverlay);  //"S:brainuioverlay.bin"
 	lv_obj_move_foreground(overlay);
@@ -246,9 +237,9 @@ void screeninit() {
 	lv_obj_set_pos(jauton, 5, 60);
 	lv_obj_move_foreground(autonselectup);
 	lv_obj_move_foreground(autonselectdown);
-	lv_obj_add_style(redblu, &styleswitch, LV_PART_INDICATOR | LV_STATE_DEFAULT); 
-	lv_obj_add_style(redblu, &styleswitch, LV_PART_INDICATOR | LV_STATE_CHECKED);
-	lv_obj_add_style(redblu, &styleswitch, LV_PART_KNOB);
+	lv_obj_add_style(redblu, &stylebtn, LV_PART_INDICATOR | LV_STATE_DEFAULT); 
+	lv_obj_add_style(redblu, &stylebtn, LV_PART_INDICATOR | LV_STATE_CHECKED);
+	lv_obj_add_style(redblu, &stylebtn, LV_PART_KNOB);
 	lv_obj_set_style_pad_all(redblu, 0, LV_PART_KNOB);
 	lv_obj_set_style_pad_hor(redblu, 2, LV_PART_KNOB);
 	lv_obj_set_style_bg_color(redblu, lv_color_hex(0xff2a00), LV_STATE_DEFAULT);
@@ -257,9 +248,9 @@ void screeninit() {
 	lv_obj_set_size(redblu, 42, 20);
 	lv_obj_set_pos(redblu, 62, 10);
 	lv_obj_move_foreground(redblu);
-	lv_obj_add_style(posneg, &styleswitch, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-	lv_obj_add_style(posneg, &styleswitch, LV_PART_INDICATOR |LV_STATE_CHECKED);
-	lv_obj_add_style(posneg, &styleswitch, LV_PART_KNOB);
+	lv_obj_add_style(posneg, &stylebtn, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+	lv_obj_add_style(posneg, &stylebtn, LV_PART_INDICATOR |LV_STATE_CHECKED);
+	lv_obj_add_style(posneg, &stylebtn, LV_PART_KNOB);
 	lv_obj_set_style_pad_all(posneg, 0, LV_PART_KNOB);
 	lv_obj_set_style_pad_hor(posneg, 2, LV_PART_KNOB);
 	lv_obj_set_style_bg_color(posneg, lv_color_hex(0x00b5bc), LV_STATE_DEFAULT);

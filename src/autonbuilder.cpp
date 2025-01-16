@@ -20,7 +20,6 @@ void alliancestake() {
 	chassis.pid_wait();
 }
 
-
 void blue_gr_mogo() {
 	if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 36) {
 		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
@@ -134,7 +133,7 @@ void left_btm_ring() {
 void mid_top_ring() {
 	intakeLevel.set(true);
 	intake.move(127);
-	chassis.pid_odom_set( {{72_in, 24_in}, fwd, 127});
+	chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
 	chassis.pid_wait();
 	intakeLevel.set(false);
 	chassis.pid_wait();

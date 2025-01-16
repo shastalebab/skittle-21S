@@ -303,6 +303,5 @@ void screeninit() {
 		lv_obj_set_style_text_opa(pageswitch, 128, LV_STATE_PRESSED);
 		lv_obj_move_foreground(pageswitch);
 		lv_obj_add_event_cb(pageswitch, pageSwitchBtn, LV_EVENT_CLICKED, &pageside[i < 3 ? 0 : 1]);
-		cout << i << endl;
 	}
 }

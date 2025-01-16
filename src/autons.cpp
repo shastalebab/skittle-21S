@@ -99,7 +99,7 @@ void testcolorsortBlue() {
 }
 
 void red_gr_wp() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	chassis.odom_pose_set({132_in, 21_in, 0_deg});
 	doinker.set(true);
 	chassis.pid_odom_set({{{130_in, 42_in}, fwd, 127}, {{128_in, 56_in, 332_deg}, fwd, 127}});
@@ -129,7 +129,7 @@ void red_gr_wp() {
 }
 
 void red_50WP() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// Get mogo and score 2 rings
 	mogomech.set(false);
 	chassis.pid_drive_set(-34_in, 75, true);
@@ -158,7 +158,7 @@ void red_50WP() {
 }
 
 void red_7ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	chassis.odom_pose_set({54_in, 22_in, 83.6598_deg});
 	ladybrown.move_absolute(800, 200);
 	intakeLevel.set(true);
@@ -189,7 +189,7 @@ void red_7ring() {
 }
 
 void red_4ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// ladybrown.move_relative(-100, -127);
 	// score on allaince stake
 	chassis.pid_drive_set(-15_in, DRIVE_SPEED, false);
@@ -239,7 +239,7 @@ void red_4ring() {
 }
 
 void red_4greed() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");s
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27.5_in);
@@ -272,7 +272,7 @@ void red_4greed() {
 }
 
 void red_6ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27_in);
 	mogomech.set(true);
@@ -323,7 +323,7 @@ void red_6ring() {
 // BLUE
 
 void blue_gr_wp() {
-	// pros::Task ringsort(ringsensTask, (void*)"1");
+	pros::Task ringsort(ringsensTask, (void*)1);
 	chassis.odom_pose_set({12_in, 21_in, 0_deg});
 	doinker.set(true);
 	chassis.pid_odom_set({{{14_in, 42_in}, fwd, 127}, {{16_in, 56_in, -62_deg}, fwd, 127}});
@@ -353,7 +353,7 @@ void blue_gr_wp() {
 }
 
 void blue_50WP() {
-	// 	pros::Task ringsort(ringsensTask, (void*)"1");
+	pros::Task ringsort(ringsensTask, (void*)1);
 	// Get mogo and score 2 rings
 	mogomech.set(false);
 	chassis.pid_drive_set(-35_in, 60, true);
@@ -383,7 +383,7 @@ void blue_50WP() {
 }
 
 void blue_7ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"1");
+	pros::Task ringsort(ringsensTask, (void*)1);
 	chassis.odom_pose_set({90_in, 22_in, -83.6598_deg});
 	ladybrown.move_absolute(800, 200);
 	intakeLevel.set(true);
@@ -414,7 +414,7 @@ void blue_7ring() {
 }
 
 void blue_4ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// ladybrown.move_relative(-100, -127);
 	// score on allaince stake
 	chassis.pid_drive_set(-16_in, DRIVE_SPEED, false);
@@ -464,7 +464,7 @@ void blue_4ring() {
 }
 
 void blue_4greed() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27.5_in);
@@ -497,7 +497,7 @@ void blue_4greed() {
 }
 
 void blue_6ring() {
-	// pros::Task ringsort(ringsensTask, (void*)"0");
+	pros::Task ringsort(ringsensTask, (void*)0);
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 75, true);
 	chassis.pid_wait_until(-28_in);

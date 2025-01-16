@@ -94,7 +94,6 @@ void tableupdate(lv_obj_t *targettable) {
 		k + 4 < manmodules.size() ? lv_table_set_cell_value(manbuilderpath, 4, 0, manmodules[k + 4].Name.c_str()) :
 									lv_table_set_cell_value(manbuilderpath, 4, 0, "");
 	}
-	cout << lv_obj_get_x(targettable) << endl;
 }
 
 static void allianceselect(lv_event_t *e) {

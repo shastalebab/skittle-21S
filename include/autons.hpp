@@ -25,6 +25,7 @@ void blue_4ring();
 void blue_4greed();
 void blue_6ring();
 
+void skittleskills();
 void skills();
 void skills50();
 

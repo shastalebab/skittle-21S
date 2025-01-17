@@ -23,17 +23,17 @@ ez::Drive chassis(
 ez::tracking_wheel vertical_tracker(1, 2.75, 0.7);	// Rotation sensors
 ez::tracking_wheel horiz_tracker(2, 2.75, -0.5);
 // list of motors to get temperature
-pros::Motor intake1(4);
-pros::Motor intake2(6);
-pros::Motor driveleft1(-13);
-pros::Motor driveleft2(-14);
-pros::Motor driveleft3(-15);
-pros::Motor driveright1(17);
-pros::Motor driveright2(18);
-pros::Motor driveright3(20);
+pros::Motor intake1(-16);
+pros::Motor intake2(-17);
+pros::Motor driveleft1(-18);
+pros::Motor driveleft2(-19);
+pros::Motor driveleft3(-20);
+pros::Motor driveright1(11);
+pros::Motor driveright2(12);
+pros::Motor driveright3(13);
 
 vector<jas::motors::motordata> motorbar{{intake1, "intake 1"}, {driveleft1, "drive l1"},  {driveleft2, "drive l2"},	 {driveleft3, "drive l3"},
-										{intake2, "intake 2"}, {driveright1, "drive r1"}, {driveright2, "drive r2"}, {driveright3, "drive r3"}};
+										{intake2, "intake 2"}, {driveright1, "drive r1"}, {driveright2, "drive r2"}, {driveright3, "drive r3"}, {ladybrown, "ladybrown"}};
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -90,6 +90,7 @@ void initialize() {
 		jas::jasauton(red_4greed, 0, 0, "Red 4 ring no WP", "Red 4 ring in negative corner", 4, 0, false),
 		jas::jasauton(red_4ring, 0, 0, "Red 4 ring WP", "Red 3 ring in negative corner + 1 ring on alliance", 3, 0, true),
 		jas::jasauton(red_6ring, 0, 0, "Red 6 ring no WP", "Red 6 ring in negative corner", 6, 0, false),
+		jas::jasauton(skittleskills, 0, 2, "New potential 53-59 pt skills auton", "Loosely tested", 6, 5, true),
 		jas::jasauton(skills, 0, 2, "Old skills auton", "Unfinished, inconsistent skills auton", 6, 6, true),
 		// jas::jasauton(skills50, 0, 2, "New skills auton", "Potential 50 pt skills auton- does not work yet, takes too long", 5, 6, true),
 
@@ -183,6 +184,7 @@ void autonomous() {
 	*/
 
 	// autonomous consistency
+	intakeLevel.set(false);
 	if(lv_tileview_get_tile_act(mainscreen) == autobuilder)
 		autocallback();
 	else if(lv_tileview_get_tile_act(mainscreen) == manbuilder)
@@ -284,6 +286,7 @@ void opcontrol() {
 	chassis.drive_brake_set(MOTOR_BRAKE_BRAKE);
 	scrpage = 2;
 	lv_event_send(pageswitch, LV_EVENT_CLICKED, NULL);
+	intakeLevel.set(true);
 
 	while(true) {
 		// Gives you some extras to make EZ-Template easier

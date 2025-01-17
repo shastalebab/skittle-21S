@@ -1,8 +1,10 @@
 #include "subsystems.hpp"
+
 #include "main.h"  // IWYU pragma: keep
 #include "pros/misc.h"
 
-bool setLB = false;
+
+bool setLB = true;
 
 void setIntake() {
 	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -25,32 +27,21 @@ void setLadyBrown() {
 		if(setLB) {
 			ladybrown.move_absolute(10, 200);
 		} else {
-			ladybrown.move_absolute(180, 200);
+			ladybrown.move_absolute(200, 200);
 		}
 	} else {
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 			ladybrown.move(127);
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+			target = ladybrown.get_position();
+			was_preset_pressed = false;
+		} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			ladybrown.move(-127);
-		else
-			ladybrown.move(0);
-	}
-	/*
-	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-		ladybrown.move(127);
-		target = ladybrown.get_position();
-		was_preset_pressed = false;
-	}
-
-	else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-		ladybrown.move(-127);
-		target = ladybrown.get_position();
-		was_preset_pressed = false;
-	}
-	else {
-		if (!was_preset_pressed) {
-			// ladybrown.move(0);
-			ladybrown.move_absolute(target, 20);// this isn't going full power because it was yucky going full power
+			target = ladybrown.get_position();
+			was_preset_pressed = false;
+		} else {
+			if(!was_preset_pressed) {
+				ladybrown.move_absolute(target, 20);  // this isn't going full power because it was yucky going full power
+			}
 		}
 	}
 }

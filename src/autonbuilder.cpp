@@ -6,6 +6,7 @@ void goal_rush() {
 	chassis.pid_wait();
 	chassis.pid_odom_set(-24_in, 127, false);
 	chassis.pid_wait_quick_chain();
+	doinker.set(false);
 	chassis.pid_turn_set(180_deg, 127);
 	chassis.pid_wait();
 }

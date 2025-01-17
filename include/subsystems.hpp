@@ -6,7 +6,7 @@
 // Motors, sensors, etc
 inline pros::Optical ringsens(9);
 inline pros::MotorGroup intake({-16, -17});
-inline pros::Motor intakefirst(-16);
+inline pros::Motor intakefirst(-17);
 inline pros::Motor ladybrown(10);
 inline ez::Piston mogomech('H');
 inline ez::Piston intakeLevel('G');

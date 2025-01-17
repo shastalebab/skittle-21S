@@ -5,13 +5,12 @@
 bool setLB = false;
 
 void setIntake() {
-	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		intake.move(-127);
-	} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+	else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		intake.move(127);
-	} else {
+	else
 		intake.move(0);
-	}
 }
 
 bool was_preset_pressed = false;
@@ -28,8 +27,15 @@ void setLadyBrown() {
 		} else {
 			ladybrown.move_absolute(180, 200);
 		}
+	} else {
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+			ladybrown.move(127);
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+			ladybrown.move(-127);
+		else
+			ladybrown.move(0);
 	}
-
+	/*
 	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 		ladybrown.move(127);
 		target = ladybrown.get_position();

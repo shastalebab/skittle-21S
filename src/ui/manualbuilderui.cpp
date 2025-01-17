@@ -196,7 +196,7 @@ static void positionupdate(lv_event_t *e) {
 	} else if(lv_event_get_target(e) == positiontoggle)
 		positionorient = !positionorient;
 	startposition = lv_slider_get_value(positionslider);
-	lv_obj_set_pos(positionind, 304 + (startposition * 0.84722222222), 8);
+	lv_obj_set_pos(positionind, 303 + (startposition * 0.84722222222), 8);
 	lv_label_set_text_fmt(positionind, "%d", lv_slider_get_value(positionslider));
 	lv_label_set_text(positiontoggle, positionorient ? "f" : "r");
 }

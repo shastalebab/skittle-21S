@@ -47,9 +47,9 @@ void initialize() {
 	pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
 	// Are you using tracking wheels?  Comment out which ones you're using here!
-	chassis.odom_tracker_right_set(&vertical_tracker);
+	//chassis.odom_tracker_right_set(&vertical_tracker);
 	// chassis.odom_tracker_left_set(&left_tracker);
-	chassis.odom_tracker_back_set(&horiz_tracker);	// Replace `back` to `front` if your tracker is in the front!
+	//chassis.odom_tracker_back_set(&horiz_tracker);	// Replace `back` to `front` if your tracker is in the front!
 
 	// Configure your chassis controls
 	chassis.opcontrol_curve_buttons_toggle(false);	// Enables modifying the controller curve with buttons on the
@@ -184,7 +184,7 @@ void autonomous() {
 	*/
 
 	// autonomous consistency
-	intakeLevel.set(false);
+	intakeLevel.set(true);
 	if(lv_tileview_get_tile_act(mainscreen) == autobuilder)
 		autocallback();
 	else if(lv_tileview_get_tile_act(mainscreen) == manbuilder)

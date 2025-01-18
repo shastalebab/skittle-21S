@@ -24,7 +24,7 @@ static void gettemp(lv_event_t *e) {
 static void tempmore(lv_event_t *e) {
 	const char *getinfo = (char *)lv_event_get_user_data(e);
 	motorinfo = lv_msgbox_create(NULL, (motorbar[*getinfo].name + " temperature:").c_str(),
-								 (std::to_string(motorbar[*getinfo].motor.get_temperature()) + "°C").c_str(), NULL, true);
+								 (std::to_string(motorbar[*getinfo].motor.get_temperature(1)) + "°C").c_str(), NULL, true);
 	lv_obj_add_style(lv_msgbox_get_close_btn(motorinfo), &stylemotor, LV_PART_MAIN);
 	lv_obj_add_style(motorinfo, &stylemotor, LV_PART_MAIN);
 	lv_obj_set_style_text_font(motorinfo, &lv_font_montserrat_48, LV_PART_MAIN);

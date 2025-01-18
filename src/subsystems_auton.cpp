@@ -34,15 +34,24 @@ void colorDetect() {
 	}
 }
 
-void discard() {}
+bool discarding = false;
+
+void discard() {
+	discarding = true;
+	pros::delay(75);
+	intake.move(0);
+	pros::delay(300);
+	intake.move(127);
+	discarding = false;
+}
 
 // this function is wrong, fix it
 void ringsensTask(void* assign) {
 	while(true) {
 		alliancecolor allianceColor;
 		allianceColor.alliance = int((int*)assign);
-		cout << allianceColor.alliance << endl;
-		if(allianceColor.alliance == intakeColor) discard();
+		cout << allianceColor.alliance << intakeColor << endl;
+		if(allianceColor.alliance == intakeColor && discarding == false) discard();
 		pros::delay(10);
 	}
 }

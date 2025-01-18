@@ -320,10 +320,10 @@ void autonbuilderinit() {
 }
 
 void autocallback() {
-	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 24_in : 120_in) : (useredblu == useposneg ? 48_in : 96_in), 21_in,
+	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 24_in : 120_in) : (useredblu == useposneg ? 48_in : 96_in), 18_in,
 						   usegoalrush == true ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
-	ringsorting = pros::c::task_create(ringsensTask, useredblu ? (void *)"0" : (void *)"1", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	ringsorting = pros::c::task_create(ringsensTask, useredblu ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	for(int module_it = 0; module_it < modules.size(); module_it++) {
 		if(modules[module_it] == "goal rush")
 			// cout << "goal_rush" << endl;

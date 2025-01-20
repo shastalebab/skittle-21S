@@ -8,7 +8,7 @@ typedef struct alliancecolor {
 
 void colorDetect() {
 	while(true) {
-		ringsens.set_led_pwm(50);
+		ringsens.set_led_pwm(100);
 		if((ringsens.get_hue() < 10) && (ringsens.get_hue() > 0)) {
 			intakeColor = 1;  // red
 			lv_obj_set_style_bg_color(ringind, lv_color_hex(0xff2a00), LV_PART_MAIN);
@@ -38,11 +38,11 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(75);
+	pros::delay(50);
 	intake.move(0);
 	pros::delay(300);
-	intake.move(127);
 	discarding = false;
+	intake.move(127);
 }
 
 // this function is wrong, fix it

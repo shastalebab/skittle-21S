@@ -59,7 +59,7 @@ void move_forward() { chassis.pid_drive_set(5_in, DRIVE_SPEED, true); }
 void testautonRed() {
 	pros::Task ringsort(ringsensTask, (void *)0);
 	mogomech.set(true);
-	intake.move(127);
+	intake.move(119);
 	chassis.pid_wait();
 }
 
@@ -162,7 +162,7 @@ void red_50WP() {
 
 void red_7ring() {
 	pros::Task ringsort(ringsensTask, (void *)0);
-	chassis.odom_xyt_set(48_in, 18_in, 0_deg);
+	chassis.odom_xyt_set(48_in, 21_in, 0_deg);
 	ladybrown.move_absolute(600, 200);
 	intakeLevel.set(false);
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
@@ -391,7 +391,7 @@ void blue_50WP() {
 
 void blue_7ring() {
 	pros::Task ringsort(ringsensTask, (void *)1);
-	chassis.odom_xyt_set(96_in, 18_in, 0_deg);
+	chassis.odom_xyt_set(96_in, 21_in, 0_deg);
 	ladybrown.move_absolute(600, 200);
 	intakeLevel.set(false);
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
@@ -557,7 +557,10 @@ void blue_6ring() {
 // SKILLS
 
 void skittleskills() {
-	chassis.odom_xyt_set(96_in, 13_in, 130_deg);
+	chassis.odom_xyt_set(94_in, 4_in, 180_deg);
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{96_in, 36_in, 180_deg}, rev, 127});
+	chassis.pid_wait();
 	mogomech.set(true);
 	intake.move(127);
 	chassis.pid_odom_set({{{96_in, 48_in, 0_deg}, fwd, 127}, {{130_in, 24_in}, fwd, 90}, {{120_in, 14_in}, fwd, 60}, {{120_in, 24_in, 315_deg}, fwd, 60}, {{128_in, 16_in, 315_deg}, rev, 90}});
@@ -566,6 +569,7 @@ void skittleskills() {
 	ladybrown.move_absolute(180, 200);
 	chassis.pid_odom_set({{132_in, 72_in, 90_deg}, fwd, 127});
 	chassis.pid_wait_quick_chain();
+	intake.move(0);
 	ladybrown.move_absolute(1200, 200);
 	pros::delay(2000);
 	ladybrown.move_absolute(10, 20);
@@ -573,6 +577,7 @@ void skittleskills() {
 	chassis.pid_odom_set({{{120_in, 96_in}, fwd, 127}, {{98_in, 128_in, 135_deg}, rev, 127}});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
+	intake.move(127);
 	ladybrown.move_absolute(1200, 200);
 	pros::delay(1000);
 	ladybrown.move_absolute(10, 20);
@@ -597,10 +602,10 @@ void skittleskills() {
 	ladybrown.move_absolute(180, 200);
 	chassis.pid_odom_set({{12_in, 72_in, 270_deg}, fwd, 127});
 	chassis.pid_wait();
+	intake.move(0);
 	ladybrown.move_absolute(1200, 200);
 	pros::delay(2000);
 	ladybrown.move_absolute(10, 20);
-	intake.move(0);
 	intakefirst.move(127);
 	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{48_in, 24_in, 300_deg}, rev, 90}});
 	chassis.pid_wait_quick_chain();

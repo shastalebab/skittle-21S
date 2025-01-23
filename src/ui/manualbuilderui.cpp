@@ -421,7 +421,7 @@ void mancallback() {
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	if(color != 1)
 		ringsorting =
-			pros::c::task_create(ringsensTask, color == 0 ? (void *)"0" : (void *)"1", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+			pros::c::task_create(ringsensTask, color == 0 ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
 		if(manmodules[module_it].Name == "goal rush")
 			// cout << "goal_rush" << endl;

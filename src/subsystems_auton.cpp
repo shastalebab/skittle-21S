@@ -8,7 +8,7 @@ typedef struct alliancecolor {
 
 void colorDetect() {
 	while(true) {
-		ringsens.set_led_pwm(50);
+		ringsens.set_led_pwm(100);
 		if((ringsens.get_hue() < 10) && (ringsens.get_hue() > 0)) {
 			intakeColor = 1;  // red
 			lv_obj_set_style_bg_color(ringind, lv_color_hex(0xff2a00), LV_PART_MAIN);
@@ -34,15 +34,24 @@ void colorDetect() {
 	}
 }
 
-void discard() {}
+bool discarding = false;
+
+void discard() {
+	discarding = true;
+	pros::delay(50);
+	intake.move(0);
+	pros::delay(300);
+	discarding = false;
+	intake.move(127);
+}
 
 // this function is wrong, fix it
 void ringsensTask(void* assign) {
 	while(true) {
 		alliancecolor allianceColor;
 		allianceColor.alliance = int((int*)assign);
-		cout << allianceColor.alliance << endl;
-		if(allianceColor.alliance == intakeColor) discard();
+		cout << allianceColor.alliance << intakeColor << endl;
+		if(allianceColor.alliance == intakeColor && discarding == false) discard();
 		pros::delay(10);
 	}
 }

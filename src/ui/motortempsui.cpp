@@ -18,16 +18,19 @@ LV_IMG_DECLARE(brainbg);
 static void gettemp(lv_event_t *e) {
 	const char *getmotor = (char *)lv_event_get_user_data(e);
 	temp = (motorbar[*getmotor].motor.get_temperature() - 30) * 5;
+	lv_obj_set_style_bg_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0xcfffe9 : 0xff2a00), LV_PART_MAIN);
+	lv_obj_set_style_text_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0x071808 : 0xcfffe9), LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(lv_event_get_target(e), temp, LV_PART_MAIN);
 }
 
 static void tempmore(lv_event_t *e) {
 	const char *getinfo = (char *)lv_event_get_user_data(e);
-	motorinfo = lv_msgbox_create(NULL, (motorbar[*getinfo].name + " temperature:").c_str(),
-								 (std::to_string((int)motorbar[*getinfo].motor.get_temperature()) + "°C").c_str(), NULL, true);
+	motorinfo = lv_msgbox_create(
+		NULL, (motorbar[*getinfo].name + " temperature:").c_str(),
+		motorbar[*getinfo].motor.is_installed() ? (std::to_string((int)motorbar[*getinfo].motor.get_temperature()) + "°C").c_str() : "Unplugged", NULL, true);
 	lv_obj_add_style(lv_msgbox_get_close_btn(motorinfo), &stylemotor, LV_PART_MAIN);
 	lv_obj_add_style(motorinfo, &stylemotor, LV_PART_MAIN);
-	lv_obj_set_style_text_font(motorinfo, &lv_font_montserrat_48, LV_PART_MAIN);
+	lv_obj_set_style_text_font(motorinfo, motorbar[*getinfo].motor.is_installed() ? &lv_font_montserrat_48 : &lv_font_montserrat_36, LV_PART_MAIN);
 	lv_obj_set_style_text_font(lv_msgbox_get_title(motorinfo), &lv_font_montserrat_14, LV_PART_MAIN);
 	lv_obj_set_style_text_color(motorinfo, lv_color_hex(0xcfffe9), LV_PART_MAIN);
 	lv_obj_set_style_text_font(lv_msgbox_get_close_btn(motorinfo), &lv_font_montserrat_24, LV_PART_MAIN);
@@ -35,7 +38,7 @@ static void tempmore(lv_event_t *e) {
 	lv_obj_set_style_border_opa(lv_msgbox_get_close_btn(motorinfo), 0, LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(motorinfo, 255, LV_PART_MAIN);
 	lv_obj_align(motorinfo, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_set_style_bg_color(motorinfo, lv_color_hsv_to_rgb(124, 71, temp), LV_PART_MAIN);
+	lv_obj_set_style_bg_color(motorinfo, lv_color_hsv_to_rgb(motorbar[*getinfo].motor.is_installed() ? 124 : 0, 71, temp), LV_PART_MAIN);
 }
 
 lv_event_cb_t getTemp = gettemp;

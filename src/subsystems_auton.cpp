@@ -38,11 +38,16 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(50);
+	intake.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE);
+	double voltage = intake.get_voltage();
 	intake.move(0);
-	pros::delay(300);
+	pros::delay(50);
+	int target = (int)intake.get_position()%1000;
+	intake.move_relative(1000-target, 200);
+	pros::delay(500);
+	intake.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
+	intake.move(abs(voltage));
 	discarding = false;
-	intake.move(127);
 }
 
 // this function is wrong, fix it

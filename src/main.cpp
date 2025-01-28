@@ -9,8 +9,8 @@
 // Chassis constructor
 ez::Drive chassis(
 	// These are your drive motors, the first motor is used for sensing!
-	{20, 19, 18},  // Left Chassis Ports (negative port will reverse it!)
-	{-11, -12, -13},	  // Right Chassis Ports (negative port will reverse it!)
+	{20, 19, -18},  // Left Chassis Ports (negative port will reverse it!)
+	{11, -12, -13},	  // Right Chassis Ports (negative port will reverse it!)
 
 	1,	   // IMU Port
 	3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -23,11 +23,11 @@ ez::Drive chassis(
 ez::tracking_wheel vertical_tracker(1, 2.75, 0.7);	// Rotation sensors
 ez::tracking_wheel horiz_tracker(2, 2.75, -0.5);
 // list of motors to get temperature
-pros::Motor intake1(-16);
-pros::Motor intake2(-17);
-pros::Motor driveleft1(-18);
-pros::Motor driveleft2(-19);
-pros::Motor driveleft3(-20);
+pros::Motor intake1(16);
+pros::Motor intake2(17);
+pros::Motor driveleft1(18);
+pros::Motor driveleft2(19);
+pros::Motor driveleft3(20);
 pros::Motor driveright1(11);
 pros::Motor driveright2(12);
 pros::Motor driveright3(13);

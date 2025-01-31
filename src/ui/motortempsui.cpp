@@ -59,6 +59,8 @@ void tempcheck() {
 	char vectorprobe = 0;
 	for(int j = 0; j < motorbar.size(); j++) motorindex.push_back(j);
 	for(int b = 0; b < motorbar.size(); b++) {
+		if(b != 0 && b % 4 == 0) motorrow++;
+		if(motorbar[b].name == "gap") return;
 		motorview = lv_label_create(motortemps);
 		lv_obj_add_style(motorview, &stylemotor, LV_PART_MAIN);
 		lv_obj_add_flag(motorview, LV_OBJ_FLAG_CLICKABLE);
@@ -69,7 +71,6 @@ void tempcheck() {
 		lv_obj_set_style_transform_height(motorview, 2, LV_STATE_PRESSED);
 		lv_obj_add_event_cb(motorview, getTemp, LV_EVENT_REFRESH, &motorindex[b]);
 		lv_obj_add_event_cb(motorview, tempMore, LV_EVENT_CLICKED, &motorindex[b]);
-		if(b != 0 && b % 4 == 0) motorrow++;
 		lv_obj_set_pos(motorview, (17 + b % 4 * 116), (68 + motorrow * 58));
 		motorboxes.push_back(motorview);
 	}

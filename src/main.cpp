@@ -21,7 +21,7 @@ ez::Drive chassis(
 //  `4.0` is the distance from the center of the wheel to the center of the robot
 // ez::tracking_wheel right_tracker({-'A', -'B'}, 2.75, 4.0);  // ADI Encoders
 ez::tracking_wheel vertical_tracker(1, 2.75, 0.7);	// Rotation sensors
-ez::tracking_wheel horiz_tracker(2, 2.75, -0.5);
+ez::tracking_wheel horiz_tracker(14, 2, -0.5);
 // list of motors to get temperature
 pros::Motor intake1(16);
 pros::Motor intake2(17);
@@ -49,13 +49,13 @@ void initialize() {
 	// Are you using tracking wheels?  Comment out which ones you're using here!
 	//chassis.odom_tracker_right_set(&vertical_tracker);
 	// chassis.odom_tracker_left_set(&left_tracker);
-	//chassis.odom_tracker_back_set(&horiz_tracker);	// Replace `back` to `front` if your tracker is in the front!
+	chassis.odom_tracker_back_set(&horiz_tracker);	// Replace `back` to `front` if your tracker is in the front!
 
 	// Configure your chassis controls
 	chassis.opcontrol_curve_buttons_toggle(false);	// Enables modifying the controller curve with buttons on the
 													// joysticks
 	chassis.opcontrol_drive_activebrake_set(4);		// Sets the active brake kP. We recommend ~2.  0 will disable.
-	chassis.opcontrol_curve_default_set(0, 0);		// Defaults for curve. If using tank, only the first parameter is
+	chassis.opcontrol_curve_default_set(5, 0);		// Defaults for curve. If using tank, only the first parameter is
 													// used. (Comment this line out if you have an SD card!)
 
 	// Set the drive to your own constants from autons.cpp!

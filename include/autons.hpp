@@ -6,29 +6,17 @@ extern Drive chassis;
 
 
 void testautonRed();
-void testcolorsortRed();
 void testautonBlue();
-void testcolorsortBlue();
-void move_forward();
 
 void red_gr_wp();
-void red_50WP();
 void red_7ring();
-void red_4ring();
-void red_4greed();
-void red_6ring();
 
 void blue_gr_wp();
-void blue_50WP();
 void blue_7ring();
-void blue_4ring();
-void blue_4greed();
-void blue_6ring();
 
-void skittleskills();
 void skills();
-void skills50();
 
+void move_forward();
 void drive_example();
 void turn_example();
 void drive_and_turn();

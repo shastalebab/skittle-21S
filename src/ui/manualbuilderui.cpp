@@ -225,7 +225,7 @@ static void tableinfo(lv_event_t *e) {
 	lv_obj_set_style_text_font(lv_msgbox_get_close_btn(manpathinfo), &lv_font_montserrat_20, LV_PART_MAIN);
 	lv_obj_set_style_text_font(lv_msgbox_get_title(manpathinfo), &lv_font_montserrat_20, LV_PART_MAIN);
 	lv_obj_del(buf);
-	//autonomous(); //comment this out
+	// autonomous(); //comment this out
 }
 
 static void screenchange(lv_event_t *e) {
@@ -417,11 +417,10 @@ void manualbuilderinit() {
 }
 
 void mancallback() {
-	chassis.odom_pose_set({startposition * okapi::inch, 10.5_in, positionorient ? 0_deg : 180_deg});
+	chassis.odom_pose_set({startposition * okapi::inch, 20_in, positionorient ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	if(color != 1)
-		ringsorting =
-			pros::c::task_create(ringsensTask, color == 0 ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+		ringsorting = pros::c::task_create(ringsensTask, color == 0 ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
 		if(manmodules[module_it].Name == "goal rush")
 			// cout << "goal_rush" << endl;

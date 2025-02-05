@@ -3,7 +3,6 @@
 #include "main.h"  // IWYU pragma: keep
 #include "pros/misc.h"
 
-
 bool setLB = true;
 
 void setIntake() {

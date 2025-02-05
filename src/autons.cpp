@@ -53,6 +53,7 @@ void default_constants() {
 }
 
 void move_forward() { chassis.pid_drive_set(5_in, DRIVE_SPEED, true); }
+
 // RED
 
 void testautonRed() {
@@ -201,7 +202,7 @@ void blue_7ring() {
 	intakefirst.move_relative(600, 200);
 	chassis.pid_odom_set({72_in, 12_in, 0_deg, rev, 127});
 	chassis.pid_wait_quick();
-	intake.move_relative(600, 400); 
+	intake.move_relative(600, 400);
 	pros::delay(500);
 	chassis.pid_odom_set({{96_in, 48_in}, rev, 127});
 	chassis.pid_wait_quick_chain();
@@ -234,7 +235,11 @@ void skills() {
 	chassis.pid_wait();
 	mogomech.set(true);
 	intake.move(127);
-	chassis.pid_odom_set({{{96_in, 48_in, 0_deg}, fwd, 127}, {{130_in, 24_in}, fwd, 90}, {{120_in, 14_in}, fwd, 60}, {{120_in, 24_in, 315_deg}, fwd, 60}, {{128_in, 16_in, 315_deg}, rev, 90}});
+	chassis.pid_odom_set({{{96_in, 48_in, 0_deg}, fwd, 127},
+						  {{130_in, 24_in}, fwd, 90},
+						  {{120_in, 14_in}, fwd, 60},
+						  {{120_in, 24_in, 315_deg}, fwd, 60},
+						  {{128_in, 16_in, 315_deg}, rev, 90}});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(false);
 	ladybrown.move_absolute(180, 200);
@@ -255,19 +260,25 @@ void skills() {
 	pros::delay(1000);
 	intakefirst.move(0);
 	intake.move(127);
-	chassis.pid_odom_set({{{116_in, 128_in}, fwd, 90}, {{128_in, 120_in, 135_deg}, fwd, 60}, {{120_in, 120_in, 225_deg}, fwd, 60}, {{128_in, 128_in, 225_deg}, rev, 90}});
+	chassis.pid_odom_set(
+		{{{116_in, 128_in}, fwd, 90}, {{128_in, 120_in, 135_deg}, fwd, 60}, {{120_in, 120_in, 225_deg}, fwd, 60}, {{128_in, 128_in, 225_deg}, rev, 90}});
 	mogomech.set(false);
 	intake.move(0);
 	chassis.pid_wait();
 	intakefirst.move(127);
-	chassis.pid_odom_set({{{96_in, 96_in}, fwd, 127}, {{72_in, 120_in, 135_deg}, rev,127}});
+	chassis.pid_odom_set({{{96_in, 96_in}, fwd, 127}, {{72_in, 120_in, 135_deg}, rev, 127}});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
 	intakefirst.move(0);
 	intake.move(127);
 	chassis.pid_turn_set(225_deg, 90);
 	chassis.pid_wait();
-	chassis.pid_odom_set({{{48_in, 96_in}, fwd, 127}, {{24_in, 96_in, 340_deg}, fwd, 127}, {{26_in, 116_in}, fwd, 60}, {{24_in, 124_in, 225_deg}, fwd, 60}, {{16_in, 116_in, 135_deg}, fwd, 60}, {{16_in, 128_in, 135_deg}, rev, 60}});
+	chassis.pid_odom_set({{{48_in, 96_in}, fwd, 127},
+						  {{24_in, 96_in, 340_deg}, fwd, 127},
+						  {{26_in, 116_in}, fwd, 60},
+						  {{24_in, 124_in, 225_deg}, fwd, 60},
+						  {{16_in, 116_in, 135_deg}, fwd, 60},
+						  {{16_in, 128_in, 135_deg}, rev, 60}});
 	chassis.pid_wait();
 	mogomech.set(false);
 	ladybrown.move_absolute(180, 200);
@@ -283,7 +294,8 @@ void skills() {
 	mogomech.set(true);
 	intakefirst.move(0);
 	intake.move(127);
-	chassis.pid_odom_set({{{48_in, 48_in, 240_deg}, fwd, 90}, {{24_in, 24_in, 180_deg}, fwd, 60, ez::ccw}, {{24_in, 16_in}, fwd, 60}, {{12_in, 24_in}, fwd, 60}});
+	chassis.pid_odom_set(
+		{{{48_in, 48_in, 240_deg}, fwd, 90}, {{24_in, 24_in, 180_deg}, fwd, 60, ez::ccw}, {{24_in, 16_in}, fwd, 60}, {{12_in, 24_in}, fwd, 60}});
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(45_deg, 90);
 	chassis.pid_wait();

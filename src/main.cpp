@@ -9,12 +9,12 @@
 // Chassis constructor
 ez::Drive chassis(
 	// These are your drive motors, the first motor is used for sensing!
-	{20, 19, -18},  // Left Chassis Ports (negative port will reverse it!)
-	{11, -12, -13},	  // Right Chassis Ports (negative port will reverse it!)
+	{20, 19, -18},	 // Left Chassis Ports (negative port will reverse it!)
+	{11, -12, -13},	 // Right Chassis Ports (negative port will reverse it!)
 
-	1,	   // IMU Port
+	1,			   // IMU Port
 	3.7454365097,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-	450);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+	450);		   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Are you using tracking wheels?  Comment out which ones you're using here!
 //  `2.75` is the wheel diameter
@@ -32,8 +32,9 @@ pros::Motor driveright1(11);
 pros::Motor driveright2(12);
 pros::Motor driveright3(13);
 
-vector<jas::motors::motordata> motorbar{{intake1, "intake 1"}, {driveleft1, "drive l1"},  {driveleft2, "drive l2"},	 {driveleft3, "drive l3"},
-										{intake2, "intake 2"}, {driveright1, "drive r1"}, {driveright2, "drive r2"}, {driveright3, "drive r3"}, {ladybrown, "ladybrown"}};
+vector<jas::motors::motordata> motorbar{{intake1, "intake 1"},	   {driveleft1, "drive l1"},  {driveleft2, "drive l2"},
+										{driveleft3, "drive l3"},  {intake2, "intake 2"},	  {driveright1, "drive r1"},
+										{driveright2, "drive r2"}, {driveright3, "drive r3"}, {ladybrown, "ladybrown"}};
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -47,7 +48,7 @@ void initialize() {
 	pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
 	// Are you using tracking wheels?  Comment out which ones you're using here!
-	//chassis.odom_tracker_right_set(&vertical_tracker);
+	// chassis.odom_tracker_right_set(&vertical_tracker);
 	// chassis.odom_tracker_left_set(&left_tracker);
 	chassis.odom_tracker_back_set(&horiz_tracker);	// Replace `back` to `front` if your tracker is in the front!
 

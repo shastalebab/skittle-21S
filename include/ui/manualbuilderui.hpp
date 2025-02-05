@@ -11,7 +11,6 @@ extern int startposition;
 extern bool positionorient;
 extern bool activescreen;
 extern lv_obj_t *allianceslider;
-extern pros::task_t ringsorting;
 
 namespace jas {
     class autobuildermodules {

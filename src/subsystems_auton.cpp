@@ -5,6 +5,7 @@ int spurfly;
 typedef struct alliancecolor {
 	int alliance;
 } alliancecolor;
+bool lineTracking = false;
 
 void colorDetect() {
 	while(true) {
@@ -56,5 +57,12 @@ void ringsensTask(void* assign) {
 		allianceColor.alliance = int((int*)assign);
 		if(allianceColor.alliance == intakeColor && discarding == false) discard();
 		pros::delay(10);
+	}
+}
+
+void lineDetect(void* test) {
+	while(lineTracking) {
+		bool linedetect = linesafety.get_value() < 2000 ? true : false;
+		if(linedetect) chassis.odom_xyt_set(chassis.odom_x_get() * okapi::inch, 72_in, chassis.odom_theta_get() * okapi::degree);
 	}
 }

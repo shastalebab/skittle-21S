@@ -11,6 +11,7 @@ inline pros::Motor ladybrown(10);
 inline ez::Piston mogomech('H');
 inline ez::Piston intakeLevel('G');
 inline ez::Piston doinker('F');
+inline pros::adi::AnalogIn linesafety('E');
 // inline pros::adi::DigitalIn limit_switch('A');
 
 // Functions

@@ -1,5 +1,4 @@
 #include "main.h"  // IWYU pragma: keep
-#include "subsystems.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our
@@ -57,7 +56,7 @@ void move_forward() { chassis.pid_drive_set(5_in, DRIVE_SPEED, true); }
 // RED
 
 void testautonRed() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	mogomech.set(true);
 	intake.move(119);
 	chassis.pid_wait();
@@ -77,7 +76,7 @@ void testcolorsortRed() {
 }
 
 void testautonBlue() {
-	pros::Task ringsort(ringsensTask, (void *)1);
+	pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	mogomech.set(true);
 	intake.move(127);
 	chassis.pid_wait();
@@ -97,8 +96,10 @@ void testcolorsortBlue() {
 }
 
 void red_gr_wp() {
-	pros::Task ringsort(ringsensTask, (void *)0);
-	chassis.odom_xyt_set(132_in, 21_in, 0_deg);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	linedetection = pros::c::task_create(lineDetect, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "line sensing");
+	chassis.odom_xyt_set(132_in, 20_in, 0_deg);
+	lineTracking = true;
 	doinker.set(true);
 	chassis.pid_odom_set({{{130_in, 42_in}, fwd, 127}, {{128_in, 56_in, 332_deg}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
@@ -120,6 +121,7 @@ void red_gr_wp() {
 	mogomech.set(true);
 	intakefirst.move(0);
 	intake.move(127);
+	lineTracking = false;
 	chassis.pid_odom_set({{128_in, 16_in, 170_deg}, fwd, 127});
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(290_deg, 127, ez::cw);
@@ -129,10 +131,12 @@ void red_gr_wp() {
 	doinker.set(false);
 	chassis.pid_odom_set({{72_in, 60_in, -90_deg}, fwd, 127, ez::ccw});
 	chassis.pid_wait();
+	pros::c::task_delete(ringsorting);
+	pros::c::task_delete(linedetection);
 }
 
 void red_50WP() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// Get mogo and score 2 rings
 	mogomech.set(false);
 	chassis.pid_drive_set(-34_in, 75, true);
@@ -161,8 +165,10 @@ void red_50WP() {
 }
 
 void red_7ring() {
-	pros::Task ringsort(ringsensTask, (void *)0);
-	chassis.odom_xyt_set(48_in, 21_in, 0_deg);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	linedetection = pros::c::task_create(lineDetect, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "line sensing");
+	chassis.odom_xyt_set(48_in, 20_in, 0_deg);
+	lineTracking = false;
 	ladybrown.move_absolute(600, 200);
 	intakeLevel.set(false);
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
@@ -188,12 +194,16 @@ void red_7ring() {
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(45_deg, 90, ez::cw);
 	chassis.pid_wait();
+	lineTracking = true;
 	chassis.pid_odom_set({{{24_in, 65_in}, fwd, 60}, {{36_in, 63_in}, fwd, 90}, {{72_in, 60_in, 90_deg}, fwd, 127}});
 	chassis.pid_wait();
+	lineTracking = false;
+	pros::c::task_delete(ringsorting);
+	pros::c::task_delete(linedetection);
 }
 
 void red_4ring() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// ladybrown.move_relative(-100, -127);
 	// score on allaince stake
 	chassis.pid_drive_set(-15_in, DRIVE_SPEED, false);
@@ -243,7 +253,7 @@ void red_4ring() {
 }
 
 void red_4greed() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27.5_in);
@@ -276,7 +286,7 @@ void red_4greed() {
 }
 
 void red_6ring() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27_in);
 	mogomech.set(true);
@@ -327,8 +337,10 @@ void red_6ring() {
 // BLUE
 
 void blue_gr_wp() {
-	pros::Task ringsort(ringsensTask, (void *)1);
-	chassis.odom_xyt_set(12_in, 21_in, 0_deg);
+	pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	linedetection = pros::c::task_create(lineDetect, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "line sensing");
+	chassis.odom_xyt_set(12_in, 20_in, 0_deg);
+	lineTracking = true;
 	doinker.set(true);
 	chassis.pid_odom_set({{{14_in, 42_in}, fwd, 127}, {{16_in, 56_in, -62_deg}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
@@ -348,6 +360,7 @@ void blue_gr_wp() {
 	chassis.pid_odom_set({{48_in, 48_in, -90_deg}, rev, 90});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
+	lineTracking = false;
 	chassis.pid_odom_set({{18_in, 14_in, 260_deg}, fwd, 127});
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(315_deg, 127, ez::cw);
@@ -357,10 +370,12 @@ void blue_gr_wp() {
 	doinker.set(false);
 	chassis.pid_odom_set({{72_in, 60_in, 90_deg}, fwd, 127, ez::cw});
 	chassis.pid_wait();
+	pros::c::task_delete(ringsorting);
+	pros::c::task_delete(linedetection);
 }
 
 void blue_50WP() {
-	pros::Task ringsort(ringsensTask, (void *)1);
+	pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// Get mogo and score 2 rings
 	mogomech.set(false);
 	chassis.pid_drive_set(-35_in, 60, true);
@@ -390,8 +405,10 @@ void blue_50WP() {
 }
 
 void blue_7ring() {
-	pros::Task ringsort(ringsensTask, (void *)1);
-	chassis.odom_xyt_set(96_in, 21_in, 0_deg);
+	pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	linedetection = pros::c::task_create(lineDetect, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "line sensing");
+	chassis.odom_xyt_set(96_in, 20_in, 0_deg);
+	lineTracking = false;
 	ladybrown.move_absolute(600, 200);
 	intakeLevel.set(false);
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
@@ -417,12 +434,16 @@ void blue_7ring() {
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(45_deg, 90, ez::ccw);
 	chassis.pid_wait();
+	lineTracking = true;
 	chassis.pid_odom_set({{{120_in, 65_in}, fwd, 60}, {{108_in, 63_in}, fwd, 90}, {{72_in, 60_in, -90_deg}, fwd, 127}});
 	chassis.pid_wait();
+	lineTracking = false;
+	pros::c::task_delete(ringsorting);
+	pros::c::task_delete(linedetection);
 }
 
 void blue_4ring() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// ladybrown.move_relative(-100, -127);
 	// score on allaince stake
 	chassis.pid_drive_set(-16_in, DRIVE_SPEED, false);
@@ -472,7 +493,7 @@ void blue_4ring() {
 }
 
 void blue_4greed() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 60, true);
 	chassis.pid_wait_until(-27.5_in);
@@ -505,7 +526,7 @@ void blue_4greed() {
 }
 
 void blue_6ring() {
-	pros::Task ringsort(ringsensTask, (void *)0);
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	// ladybrown.move_relative(-100, -127);
 	chassis.pid_drive_set(-30_in, 75, true);
 	chassis.pid_wait_until(-28_in);

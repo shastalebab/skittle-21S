@@ -417,7 +417,7 @@ void manualbuilderinit() {
 }
 
 void mancallback() {
-	chassis.odom_pose_set({startposition * okapi::inch, 21_in, positionorient ? 0_deg : 180_deg});
+	chassis.odom_pose_set({startposition * okapi::inch, 10.5_in, positionorient ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	if(color != 1)
 		ringsorting =

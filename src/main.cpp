@@ -13,15 +13,15 @@ ez::Drive chassis(
 	{11, -12, -13},	  // Right Chassis Ports (negative port will reverse it!)
 
 	1,	   // IMU Port
-	3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+	3.7454365097,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
 	450);  // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 // Are you using tracking wheels?  Comment out which ones you're using here!
 //  `2.75` is the wheel diameter
 //  `4.0` is the distance from the center of the wheel to the center of the robot
 // ez::tracking_wheel right_tracker({-'A', -'B'}, 2.75, 4.0);  // ADI Encoders
-ez::tracking_wheel vertical_tracker(1, 2.75, 0.7);	// Rotation sensors
-ez::tracking_wheel horiz_tracker(14, 2, -0.5);
+//=ez::tracking_wheel vertical_tracker(1, 2.75, 0.7);	// Rotation sensors
+ez::tracking_wheel horiz_tracker(14, 2.0279680025, -0.91);
 // list of motors to get temperature
 pros::Motor intake1(16);
 pros::Motor intake2(17);

@@ -47,6 +47,7 @@ void setLadyBrown() {
 
 void setMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)); }
 
-void setDoinker() { doinker.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)); }
+void setDoinkerR() { doinkerR.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)); }
+void setDoinkerL() { doinkerL.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)); }
 
 bool shift() { return master.get_digital(pros::E_CONTROLLER_DIGITAL_R1); }

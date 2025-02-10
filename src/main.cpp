@@ -289,7 +289,8 @@ void opcontrol() {
 		setIntake();
 		setMogo();
 		setLadyBrown();
-		setDoinker();
+		setDoinkerR();
+		setDoinkerL();
 
 		if(lv_tileview_get_tile_act(mainscreen) == motortemps) {
 			for(int m = 0; m < motorbar.size(); m++) {

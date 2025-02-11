@@ -57,7 +57,7 @@ void updatepath() {
 	lv_label_set_text_fmt(AutonBaseInfoTxt, "Team: %s\nCorner: %s\nMogo 1: %d\nMogo 2: %d\nG.Rush: %s\nA.Stke: %s\nStart pos: %d inches",
 						  (useredblu == true ? "Red" : "Blue"), (useposneg == true ? "Neg" : "Pos"), finmogo1, finmogo2, (usegoalrush == true ? "On" : "Off"),
 						  (allianceringbuilder == true ? "On" : "Off"),
-						  usegoalrush == true ? (useredblu == useposneg ? 120 : 24) : (useredblu == useposneg ? 96 : 48));
+						  usegoalrush == true ? (useredblu == useposneg ? 132 : 12) : (useredblu == useposneg ? 96 : 48));
 
 	if(usegoalrush == true) modules.push_back(useredblu == useposneg ? "blue goal rush" : "red goal rush");
 	if(allianceringbuilder == true) modules.push_back("alliance stake");

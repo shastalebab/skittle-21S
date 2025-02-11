@@ -2,20 +2,20 @@
 #include "main.h"  // IWYU pragma: keep
 
 void blue_goal_rush() {
-	doinkerL.set(true);
+	doinkerR.set(true);
 	chassis.pid_odom_set({{{16_in, 56_in}, fwd, 127}, {{16_in, 27_in}, rev, 100}});
 	chassis.pid_wait_until_index_started(1);
-	doinkerL.set(false);
+	doinkerR.set(false);
 	chassis.pid_wait();
 	chassis.pid_turn_set(180_deg, 127);
 	chassis.pid_wait();
 }
 
 void red_goal_rush() {
-	doinkerR.set(true);
+	doinkerL.set(true);
 	chassis.pid_odom_set({{{128_in, 56_in}, fwd, 127}, {{128_in, 27_in}, rev, 100}});
 	chassis.pid_wait_until_index_started(1);
-	doinkerR.set(false);
+	doinkerL.set(false);
 	chassis.pid_wait();
 	chassis.pid_turn_set(180_deg, 127);
 	chassis.pid_wait();

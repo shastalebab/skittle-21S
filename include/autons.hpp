@@ -8,10 +8,12 @@ extern Drive chassis;
 void testautonRed();
 void testautonBlue();
 
+void red_gr_corner();
 void red_gr_wp();
 void red_6ring();
 void red_7ring();
 
+void blue_gr_corner();
 void blue_gr_wp();
 void blue_6ring();
 void blue_7ring();

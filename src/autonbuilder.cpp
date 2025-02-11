@@ -1,12 +1,12 @@
 #include "main.h"  // IWYU pragma: keep
 
 void goal_rush() {
-	doinker.set(true);
+	doinkerR.set(true);
 	chassis.pid_odom_set(62_in, 127, false);
 	chassis.pid_wait();
 	chassis.pid_odom_set(-24_in, 127, false);
 	chassis.pid_wait_quick_chain();
-	doinker.set(false);
+	doinkerR.set(false);
 	chassis.pid_turn_set(180_deg, 127);
 	chassis.pid_wait();
 }

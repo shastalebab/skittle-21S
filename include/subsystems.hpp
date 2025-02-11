@@ -12,12 +12,13 @@ inline ez::Piston mogomech('H');
 inline ez::Piston intakeLevel('G');
 inline ez::Piston doinkerR('F');
 inline ez::Piston doinkerL('E');
-inline pros::adi::AnalogIn linesafety('E');
+//inline pros::adi::AnalogIn linesafety('E');
 // inline pros::adi::DigitalIn limit_switch('A');
 
 // Functions
 void setIntake();
 void setLadyBrown();
 void setMogo();
-void setDoinker();
+void setDoinkerR();
+void setDoinkerL();
 bool shift();

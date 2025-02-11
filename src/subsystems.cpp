@@ -7,9 +7,9 @@ bool setLB = true;
 
 void setIntake() {
 	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-		intake.move(-127);
+		intake.move(-119);
 	else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-		intake.move(127);
+		intake.move(119);
 	else
 		intake.move(0);
 }
@@ -47,7 +47,7 @@ void setLadyBrown() {
 
 void setMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)); }
 
-void setDoinkerR() { doinkerR.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)); }
+void setDoinkerR() { doinkerR.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)); }
 void setDoinkerL() { doinkerL.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)); }
 
 bool shift() { return master.get_digital(pros::E_CONTROLLER_DIGITAL_R1); }

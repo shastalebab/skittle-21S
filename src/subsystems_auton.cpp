@@ -60,9 +60,9 @@ void ringsensTask(void* assign) {
 	}
 }
 
-void lineDetect(void* test) {
+/*void lineDetect(void* test) {
 	while(lineTracking) {
 		bool linedetect = linesafety.get_value() < 2000 ? true : false;
 		if(linedetect) chassis.odom_xyt_set(chassis.odom_x_get() * okapi::inch, 72_in, chassis.odom_theta_get() * okapi::degree);
 	}
-}
+}*/

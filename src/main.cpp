@@ -134,7 +134,7 @@ void disabled() {
  */
 void competition_initialize() {
 	// . . .
-	lv_obj_set_tile(mainscreen, autobuilder, LV_ANIM_ON);
+	lv_obj_set_tile(mainscreen, autoselector, LV_ANIM_ON);
 }
 
 /**
@@ -175,10 +175,7 @@ void autonomous() {
 	else if(lv_tileview_get_tile_act(mainscreen) == manbuilder)
 		mancallback();
 	else {
-		if(noselection == false) {
-			printf("Running auton");
-			jautonrun();
-		}
+		if(noselection == false) jautonrun();
 	}
 	// ez::as::auton_selector.selected_auton_call();  // Calls selected auton from
 	// autonomous selector

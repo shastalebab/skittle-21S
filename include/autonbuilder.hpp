@@ -4,9 +4,10 @@
 
 extern Drive chassis;
 
-void goal_rush();
 void alliancestake();
 
+void blue_goal_rush();
+void red_goal_rush();
 void blue_gr_mogo();
 void red_gr_mogo();
 void left_mogo();

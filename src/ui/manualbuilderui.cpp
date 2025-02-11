@@ -31,7 +31,8 @@ bool noselection2 = true;
 pros::task_t ringsorting;
 
 vector<jas::autobuildermodules> getmodules{
-	jas::autobuildermodules("goal rush", "Use doinker to grab mogo at the intersection between alliances"),
+	jas::autobuildermodules("blue goal rush", "Use doinker to grab mogo at the intersection between alliances"),
+	jas::autobuildermodules("red goal rush", "Use doinker to grab mogo at the intersection between alliances"),
 	jas::autobuildermodules("alliance stake", "Score on the alliance stake"),
 	jas::autobuildermodules("blue regrab goal rush", "Grab the goal rush mogo from where it was first dropped off"),
 	jas::autobuildermodules("red regrab goal rush", "Grab the goal rush mogo from where it was first dropped off"),
@@ -422,9 +423,12 @@ void mancallback() {
 	if(color != 1)
 		ringsorting = pros::c::task_create(ringsensTask, color == 0 ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
-		if(manmodules[module_it].Name == "goal rush")
-			// cout << "goal_rush" << endl;
-			goal_rush();
+		if(manmodules[module_it].Name == "blue goal rush")
+			// cout << "blue_goal_rush" << endl;
+			blue_goal_rush();
+		else if(manmodules[module_it].Name == "red goal rush")
+			// cout << "red_goal_rush" << endl;
+			red_goal_rush();
 		else if(manmodules[module_it].Name == "alliance stake")
 			// cout << "alliancestake" << endl;
 			alliancestake();

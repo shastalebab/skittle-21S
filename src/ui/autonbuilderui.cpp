@@ -59,7 +59,7 @@ void updatepath() {
 						  (allianceringbuilder == true ? "On" : "Off"),
 						  usegoalrush == true ? (useredblu == useposneg ? 120 : 24) : (useredblu == useposneg ? 96 : 48));
 
-	if(usegoalrush == true) modules.push_back("goal rush");
+	if(usegoalrush == true) modules.push_back(useredblu == useposneg ? "blue goal rush" : "red goal rush");
 	if(allianceringbuilder == true) modules.push_back("alliance stake");
 
 	if(usefinmogo1 > 0) {
@@ -320,14 +320,17 @@ void autonbuilderinit() {
 }
 
 void autocallback() {
-	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 24_in : 120_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
+	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 12_in : 132_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
 						   usegoalrush == true ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	ringsorting = pros::c::task_create(ringsensTask, useredblu ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	for(int module_it = 0; module_it < modules.size(); module_it++) {
-		if(modules[module_it] == "goal rush")
-			// cout << "goal_rush" << endl;
-			goal_rush();
+		if(modules[module_it] == "blue goal rush")
+			// cout << "blue_goal_rush" << endl;
+			blue_goal_rush();
+		else if(modules[module_it] == "red goal rush")
+			// cout << "red_goal_rush" << endl;
+			red_goal_rush();
 		else if(modules[module_it] == "alliance stake")
 			// cout << "alliancestake" << endl;
 			alliancestake();

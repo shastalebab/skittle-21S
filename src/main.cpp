@@ -72,13 +72,17 @@ void initialize() {
 
 	// Autonomous Selector using lvgl
 	j_auton_selector.jautonpopulate({
-		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 1 ring on goal rush + 3 ring in positive corner", 1, 3, false),
-		jas::jasauton(testautonBlue, 1, 2, "Blue test auton", "Testing for blue autons", 0, 0, false),
-		jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 1 ring on goal rush + 3 ring in positive corner", 1, 3, false),
-		jas::jasauton(testautonRed, 0, 2, "Red test auton", "Testing for red autons", 0, 0, false),
-		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring WP", "Blue 6 ring in negative corner + 1 ring on alliance", 6, 0, true),
-		jas::jasauton(red_7ring, 0, 0, "Red 7 ring WP", "Red 6 ring in negative corner + 1 ring on alliance", 6, 0, true),
-		jas::jasauton(skills, 0, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 5, true),
+		//jas::jasauton(testautonRed, 0, 2, "Red test auton", "Testing for red autons", 0, 0, false),
+		//jas::jasauton(testautonBlue, 1, 2, "Blue test auton", "Testing for blue autons", 0, 0, false),
+		jas::jasauton(red_gr_corner, 0, 1, "Red goal rush, no WP", "Red 3 + 2 ring goal rush auton", 2, 3, false),
+		jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 3 + 1 + 1 goal rush auton", 1, 3, true),
+		jas::jasauton(red_6ring, 0, 0, "Red 6 ring, no WP", "Red 5 + 1 ring side auton", 5, 1, false),
+		jas::jasauton(red_7ring, 0, 0, "Red 7 ring WP", "Red 6 + 1 ring side auton", 6, 1, true),
+		jas::jasauton(blue_gr_corner, 1, 1, "Blue goal rush, no WP", "Blue 3 + 2 goal rush auton", 2, 3, false),
+		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 3 + 1 + 1 goal rush auton", 1, 3, true),
+		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring, no WP", "Blue 5 + 1 ring side auton", 5, 1, false),
+		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring WP", "Blue 6 + 1 ring side auton", 6, 1, true),
+		jas::jasauton(skills, 2, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 5, true),
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward", 0, 0, false),
 	});
 

@@ -88,7 +88,7 @@ void red_gr_wp() {
 
 void red_6ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
-	chassis.odom_xyt_set(96_in, 20_in, 180_deg);
+	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
 	intake.move(119);
 	ladybrown.move_relative(600, 200);
 	chassis.pid_odom_set( {{48_in, 48_in}, rev, 100});
@@ -111,12 +111,12 @@ void red_6ring() {
 
 void red_7ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
-	chassis.odom_xyt_set(88_in, 12_in, 270_deg);
+	chassis.odom_xyt_set(56_in, 12_in, 90_deg);
 	chassis.pid_wait_quick();
 	intakeLevel.set(false);
 	intake.move(119);
 	ladybrown.move_relative(600, 200);
-	chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, 100, 25);
+	chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, 100, 25);
 	chassis.pid_wait();
 	intakeLevel.set(true);
 	pros::delay(500);

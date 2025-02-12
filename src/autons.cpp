@@ -73,25 +73,76 @@ void testautonRed() {
 	chassis.pid_wait();
 }
 
-void red_gr_corner() {
+void red_5greed() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
-	chassis.odom_xyt_set(132_in, 20_in, 0_deg);
-	doinkerR.set(true);
-	chassis.pid_odom_set({{{128_in, 56_in}, fwd, 127}, {{128_in, 27_in}, rev, 100}});
-	chassis.pid_wait_until_index_started(1);
-	doinkerR.set(false);
+	chassis.odom_xyt_set(96_in, 20_in, 180_deg);
 	chassis.pid_wait();
 	chassis.pid_odom_set({{{96_in, 48_in}, rev, 90}, {{120_in, 48_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	mogomech.set(true);
 	intake.move(119);
 	chassis.pid_wait();
+	pros::delay(500);
+	chassis.pid_odom_set({{130_in, 18_in}, fwd, 90});
+	doinkerR.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::cw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
+void red_5ring() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(88_in, 12_in, 90_deg);
+	intakeLevel.set(false);
+	chassis.pid_odom_set({{78_in, 11_in}, rev, 60});
+	chassis.pid_wait();
+	ladybrown.move_relative(400, 200);
+	pros::delay(500);
+	chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, 100);
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{96_in, 48_in}, rev, 100});
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 100}, {{130_in, 18_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	doinkerR.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::cw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
+void red_gr_corner() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(132_in, 20_in, 0_deg);
+	doinkerL.set(true);
+	chassis.pid_odom_set({{{128_in, 56_in}, fwd, 127}, {{128_in, 27_in}, rev, 100}});
+	chassis.pid_wait_until_index_started(1);
+	doinkerL.set(false);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{96_in, 48_in}, rev, 90}, {{120_in, 48_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	pros::delay(500);
 	mogomech.set(false);
 	chassis.pid_odom_set({{{128_in, 48_in}, rev, 60}, {{130_in, 18_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	mogomech.set(true);
-	doinkerR.set(true);
-	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
+	doinkerL.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::cw}, {{72_in, 24_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	intakeLevel.set(false);
 	chassis.pid_wait();
@@ -117,11 +168,13 @@ void red_gr_wp() {
 	mogomech.set(true);
 	intake.move(119);
 	chassis.pid_wait();
+	pros::delay(500);
 	mogomech.set(false);
 	chassis.pid_odom_set({{{128_in, 48_in}, rev, 60}, {{130_in, 18_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	mogomech.set(true);
 	doinkerL.set(true);
+	chassis.pid_wait();
 	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::cw}, {{72_in, 24_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	intakeLevel.set(false);
@@ -154,10 +207,36 @@ void red_6ring() {
 	pros::c::task_delete(ringsorting);
 }
 
+void red_7greed() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(56_in, 12_in, 270_deg);
+	chassis.pid_odom_set({{66_in, 11_in}, rev, 60});
+	chassis.pid_wait();
+	ladybrown.move_relative(400, 200);
+	pros::delay(500);
+	chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, 100);
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{48_in, 48_in}, rev, 100});
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{44_in, 50_in}, fwd, 100}, {{37_in, 61_in}, fwd, 80}, {{16_in, 63_in}, fwd, 80}, {{24_in, 48_in}, fwd, 100}, {{14_in, 18_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(4);
+	doinkerR.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{54_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
 void red_7ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(56_in, 12_in, 90_deg);
-	chassis.pid_wait_quick();
 	intakeLevel.set(false);
 	intake.move(119);
 	ladybrown.move_relative(600, 200);
@@ -196,6 +275,56 @@ void testautonBlue() {
 	chassis.pid_wait();
 }
 
+void blue_5greed() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{48_in, 48_in}, rev, 90}, {{24_in, 48_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	pros::delay(500);
+	chassis.pid_odom_set({{14_in, 18_in}, fwd, 90});
+	doinkerL.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{54_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
+void blue_5ring() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(56_in, 12_in, 90_deg);
+	intakeLevel.set(false);
+	chassis.pid_odom_set({{66_in, 11_in}, rev, 60});
+	chassis.pid_wait();
+	ladybrown.move_relative(400, 200);
+	pros::delay(500);
+	chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, 100);	
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{48_in, 48_in}, rev, 100});
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 100}, {{14_in, 18_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	doinkerR.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{54_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
+
 void blue_gr_corner() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(12_in, 20_in, 0_deg);
@@ -209,11 +338,13 @@ void blue_gr_corner() {
 	mogomech.set(true);
 	intake.move(119);
 	chassis.pid_wait();
+	pros::delay(500);
 	mogomech.set(false);
 	chassis.pid_odom_set({{{16_in, 48_in}, rev, 60}, {{14_in, 18_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	mogomech.set(true);
 	doinkerR.set(true);
+	chassis.pid_wait();
 	chassis.pid_odom_set({{{54_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	intakeLevel.set(false);
@@ -240,11 +371,13 @@ void blue_gr_wp() {
 	mogomech.set(true);
 	intake.move(119);
 	chassis.pid_wait();
+	pros::delay(500);
 	mogomech.set(false);
 	chassis.pid_odom_set({{{16_in, 48_in}, rev, 60}, {{14_in, 18_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	mogomech.set(true);
 	doinkerR.set(true);
+	chassis.pid_wait();
 	chassis.pid_odom_set({{{54_in, 22_in}, fwd, 60, ez::ccw}, {{72_in, 24_in}, fwd, 90}});
 	chassis.pid_wait_until_index_started(1);
 	intakeLevel.set(false);
@@ -277,10 +410,36 @@ void blue_6ring() {
 	pros::c::task_delete(ringsorting);
 }
 
+void blue_7greed() {
+	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	chassis.odom_xyt_set(88_in, 12_in, 90_deg);
+	chassis.pid_odom_set({{78_in, 11_in}, rev, 60});
+	chassis.pid_wait();
+	ladybrown.move_relative(400, 200);
+	pros::delay(500);
+	chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, 100);
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{96_in, 48_in}, rev, 100});
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	intake.move(119);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{100_in, 50_in}, fwd, 100}, {{107_in, 61_in}, fwd, 80}, {{128_in, 63_in}, fwd, 80}, {{120_in, 48_in}, fwd, 100}, {{130_in, 18_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(4);
+	doinkerL.set(true);
+	chassis.pid_wait();
+	chassis.pid_odom_set({{{90_in, 22_in}, fwd, 60, ez::cw}, {{72_in, 24_in}, fwd, 90}});
+	chassis.pid_wait_until_index_started(1);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	intakeLevel.set(true);
+	chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	pros::c::task_delete(ringsorting);
+}
+
 void blue_7ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(88_in, 12_in, 270_deg);
-	chassis.pid_wait_quick();
 	intakeLevel.set(false);
 	intake.move(119);
 	ladybrown.move_relative(600, 200);

@@ -1,4 +1,5 @@
 #include "main.h"
+#include "EZ-Template/sdcard.hpp"
 
 // big money $_$
 /////

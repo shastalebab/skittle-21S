@@ -19,7 +19,7 @@ double lbtarget = 0.0;
 void setLadyBrown() {
 	// ladybrown code
 
-	if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+	if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 		was_preset_pressed = true;
 		setLB = !setLB;
 		if(ladybrown.get_position() > 280) setLB = false;
@@ -45,7 +45,7 @@ void setLadyBrown() {
 	}
 }
 
-void setMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_B)); }
+void setMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)); }
 
 void setDoinkerR() { doinkerR.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)); }
 void setDoinkerL() { doinkerL.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)); }

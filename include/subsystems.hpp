@@ -7,6 +7,7 @@
 inline pros::Optical ringsens(2);
 inline pros::MotorGroup intake({-16, -17});
 inline pros::Motor intakefirst(-16);
+inline pros::Motor intakesecond(-17);
 inline pros::Motor ladybrown(10);
 inline ez::Piston mogomech('H');
 inline ez::Piston intakeLevel('G');

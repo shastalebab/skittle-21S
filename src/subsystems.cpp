@@ -15,7 +15,7 @@ void setIntake() {
 }
 
 bool was_preset_pressed = false;
-double target = 0.0;
+double lbtarget = 0.0;
 void setLadyBrown() {
 	// ladybrown code
 
@@ -31,15 +31,15 @@ void setLadyBrown() {
 	} else {
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 			ladybrown.move(127);
-			target = ladybrown.get_position();
+			lbtarget = ladybrown.get_position();
 			was_preset_pressed = false;
 		} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			ladybrown.move(-127);
-			target = ladybrown.get_position();
+			lbtarget = ladybrown.get_position();
 			was_preset_pressed = false;
 		} else {
 			if(!was_preset_pressed) {
-				ladybrown.move_absolute(target, 20);  // this isn't going full power because it was yucky going full power
+				ladybrown.move_absolute(lbtarget, 20);  // this isn't going full power because it was yucky going full power
 			}
 		}
 	}

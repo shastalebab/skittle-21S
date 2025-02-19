@@ -122,6 +122,7 @@ void initialize() {
 	master.rumble(".");
 	pros::Task tempcheckcontroller(tempcheckctrl);
 	pros::Task colordetection(colorDetect);
+	pros::Task unjam(unjamTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
 }
 

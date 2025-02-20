@@ -6,19 +6,20 @@
 bool setLB = true;
 
 void setIntake() {
-	if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-		intake.move(-119);
-	else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-		intake.move(119);
-	else
-		intake.move(0);
+	if(!jammed) {
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+			intakeMove(-127);
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+			intakeMove(127);
+		else
+			intakeMove(0);
+	}
 }
 
 bool was_preset_pressed = false;
 double lbtarget = 0.0;
 void setLadyBrown() {
 	// ladybrown code
-
 	if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 		was_preset_pressed = true;
 		setLB = !setLB;
@@ -39,7 +40,7 @@ void setLadyBrown() {
 			was_preset_pressed = false;
 		} else {
 			if(!was_preset_pressed) {
-				ladybrown.move_absolute(lbtarget, 20);  // this isn't going full power because it was yucky going full power
+				ladybrown.move_absolute(lbtarget, 20);	// this isn't going full power because it was yucky going full power
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 #include "main.h"
 #include "EZ-Template/sdcard.hpp"
+#include "autons.hpp"
 
 // big money $_$
 /////
@@ -91,6 +92,7 @@ void initialize() {
 		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring", "Blue 5 + 1 + 1 ring side auton", 5, 1, true),
 		jas::jasauton(skills, 2, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 5, true),
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward", 0, 0, false),
+		jas::jasauton(testautonRed, 2, 2, "red test", "intake", 0, 0, false),
 	});
 
 	// auton builder modules, for testing

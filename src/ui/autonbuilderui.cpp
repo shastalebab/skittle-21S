@@ -372,7 +372,7 @@ void autocallback() {
 			ladder();
 		else if(modules[module_it] == "drop mogo") {
 			// cout << "drop mogo" << endl;
-			intake.move(0);
+			intakeMove(0);
 			mogomech.set(false);
 		}
 	}

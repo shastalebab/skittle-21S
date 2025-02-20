@@ -1,5 +1,4 @@
 #include "main.h"  // IWYU pragma: keep
-#include "pros/misc.hpp"
 
 int intakeColor = 2;
 int spurfly;
@@ -8,6 +7,7 @@ typedef struct alliancecolor {
 } alliancecolor;
 int target = 0;
 bool lineTracking = false;
+bool jammed = false;
 
 void intakeMove(int Target) {
 	intake.move(Target);
@@ -68,16 +68,15 @@ void ringsensTask(void* assign) {
 
 void unjamTask() {
 	int jamtime = 0;
-	bool jammed = false;
-	while(pros::competition::is_autonomous()) {
-		if(target != 0 && intake.get_actual_velocity(0) <= 20) {
+	while(setLB) {
+		if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
 			jamtime++;
 			if(jamtime > 25) {
 				jamtime = 0;
 				jammed = true;
 			}
-		} else
-			jamtime = 0;
+		} 
+
 		if(jammed) {
 			intakesecond.move(-target);
 			jamtime++;

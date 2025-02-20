@@ -470,7 +470,7 @@ void mancallback() {
 			ladder();
 		else if(manmodules[module_it].Name == "drop mogo") {
 			// cout << "drop mogo" << endl;
-			intake.move(0);
+			intakeMove(0);
 			mogomech.set(false);
 		}
 	}

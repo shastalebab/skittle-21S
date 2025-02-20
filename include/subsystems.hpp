@@ -23,3 +23,5 @@ void setMogo();
 void setDoinkerR();
 void setDoinkerL();
 bool shift();
+
+extern bool setLB;

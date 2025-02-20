@@ -69,7 +69,7 @@ void move_forward() {
 void testautonRed() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	mogomech.set(true);
-	intakeMove(119);
+	intakeMove(127);
 	chassis.pid_wait();
 }
 
@@ -99,7 +99,7 @@ void red_gr_wp() {
 	chassis.odom_xyt_set(132_in, 20_in, 0_deg);
 	// rush mogo
 	doinkerL.set(true);
-	chassis.pid_odom_set({{{129_in, 50_in}, fwd, 127}, {{128_in, 60_in}, fwd, 127}});
+	chassis.pid_odom_set({{{129_in, 44_in}, fwd, 127}, {{128_in, 58_in}, fwd, 127}});
 	chassis.pid_wait_quick();
 	doinkerL.set(false);
 	chassis.pid_odom_set({{128_in, 27_in}, rev, 90});
@@ -114,7 +114,7 @@ void red_gr_wp() {
 	chassis.pid_odom_set({{126_in, 44_in}, rev, 60});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
-	intakeMove(119);
+	intakeMove(127);
 	pros::delay(200);
 	// grab bottom ring of ring stack
 	chassis.pid_odom_set({{114_in, 52_in}, fwd, 127});
@@ -122,7 +122,7 @@ void red_gr_wp() {
 	pros::delay(1000);
 	// drop mogo and grab other mogo
 	mogomech.set(false);
-	chassis.pid_odom_set({{92_in, 40_in}, rev, 90});
+	chassis.pid_odom_set({{96_in, 48_in}, rev, 90});
 	chassis.pid_wait_quick();
 	mogomech.set(true);
 	// sweep and score corner
@@ -165,7 +165,7 @@ void red_7ring() {
 	chassis.odom_xyt_set(56_in, 12_in, 90_deg);
 	// prime actuated intake and grab top ring
 	intakeLevel.set(false);
-	intakeMove(119);
+	intakeMove(127);
 	ladybrown.move_relative(600, 200);
 	chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, 100, 25);
 	chassis.pid_wait();
@@ -202,7 +202,7 @@ void red_7ring() {
 void testautonBlue() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	mogomech.set(true);
-	intakeMove(119);
+	intakeMove(127);
 	chassis.pid_wait();
 }
 
@@ -232,7 +232,7 @@ void blue_gr_wp() {
 	chassis.odom_xyt_set(12_in, 20_in, 0_deg);
 	// rush mogo
 	doinkerR.set(true);
-	chassis.pid_odom_set({{{15_in, 50_in}, fwd, 127}, {{16_in, 60_in}, fwd, 127}});
+	chassis.pid_odom_set({{{15_in, 44_in}, fwd, 127}, {{16_in, 58_in}, fwd, 127}});
 	chassis.pid_wait_quick();
 	doinkerR.set(false);
 	chassis.pid_odom_set({{16_in, 27_in}, rev, 90});
@@ -244,10 +244,10 @@ void blue_gr_wp() {
 	pros::delay(300);
 	doinkerR.set(false);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_odom_set({{18_in, 44_in}, rev, 60});
+	chassis.pid_odom_set({{24_in, 48_in}, rev, 60});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
-	intakeMove(119);
+	intakeMove(127);
 	pros::delay(200);
 	// grab bottom ring of ring stack
 	chassis.pid_odom_set({{30_in, 52_in}, fwd, 127});
@@ -298,7 +298,7 @@ void blue_7ring() {
 	chassis.odom_xyt_set(88_in, 12_in, 270_deg);
 	// prime actuated intake and grab top ring
 	intakeLevel.set(false);
-	intakeMove(119);
+	intakeMove(127);
 	ladybrown.move_relative(600, 200);
 	chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, 100, 25);
 	chassis.pid_wait();

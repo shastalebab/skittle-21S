@@ -5,6 +5,7 @@
 
 extern int target;
 extern bool lineTracking;
+extern bool jammed;
 extern pros::task_t ringsorting;
 extern pros::task_t linedetection;
 

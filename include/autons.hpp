@@ -15,6 +15,7 @@ void red_gr_wp();
 void red_6ring();
 void red_7greed();
 void red_7ring();
+void red_solowp();
 
 void blue_5greed();
 void blue_5ring();
@@ -23,6 +24,7 @@ void blue_gr_wp();
 void blue_6ring();
 void blue_7greed();
 void blue_7ring();
+void blue_solowp();
 
 void skills();
 

@@ -1,4 +1,5 @@
 #include "main.h"  // IWYU pragma: keep
+#include "subsystems.hpp"
 
 int intakeColor = 2;
 int spurfly;
@@ -10,8 +11,8 @@ bool lineTracking = false;
 bool jammed = false;
 
 void intakeMove(int Target) {
-	intake.move(Target);
 	target = Target;
+	intake.move(Target);
 }
 
 void colorDetect() {
@@ -46,13 +47,9 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	intake.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE);
-	intake.move(0);
-	pros::delay(50);
-	int discTarget = (int)intake.get_position() % 1000;
-	intake.move_relative(1000 - discTarget, 200);
-	pros::delay(500);
-	intake.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
+	pros::delay(160);
+	intakesecond.move(-target);
+	pros::delay(100);
 	intakeMove(target);
 	discarding = false;
 }
@@ -68,19 +65,19 @@ void ringsensTask(void* assign) {
 
 void unjamTask() {
 	int jamtime = 0;
-	while(setLB) {
+	while(setLB == true && discarding == false && intakesecond.get_temperature() < 50) {
 		if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
 			jamtime++;
-			if(jamtime > 25) {
+			if(jamtime > 20) {
 				jamtime = 0;
 				jammed = true;
 			}
-		} 
+		}
 
 		if(jammed) {
 			intakesecond.move(-target);
 			jamtime++;
-			if(jamtime > 25) {
+			if(jamtime > 20) {
 				jamtime = 0;
 				jammed = false;
 				intakeMove(target);

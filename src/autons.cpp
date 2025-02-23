@@ -99,7 +99,7 @@ void red_5greed() {
 	intakeLevel.set(true);
 	pros::delay(500);
 	// drop goal in corner
-	chassis.pid_odom_set({{138_in, 138_in}, rev, 90});
+	chassis.pid_odom_set({{138_in, 6_in}, rev, 90});
 	chassis.pid_wait();
 	mogomech.set(false);
 	// touch ladder
@@ -137,7 +137,7 @@ void red_5ring() {
 	intakeLevel.set(true);
 	pros::delay(500);
 	// drop goal in corner
-	chassis.pid_odom_set({{138_in, 138_in}, rev, 90});
+	chassis.pid_odom_set({{138_in, 6_in}, rev, 90});
 	chassis.pid_wait();
 	mogomech.set(false);
 	// touch ladder
@@ -730,4 +730,107 @@ void blue_solowp() {
 
 // SKILLS
 
-void skills() {}
+void skills() {
+	chassis.odom_xyt_set(72_in, 12_in, 180_deg);
+	// score preload on alliance stake
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(250);
+	ladybrown.move_absolute(10, 200);
+	// grab mogo
+	chassis.pid_odom_set({{96_in, 24_in}, rev, 80});
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	intakeMove(127);
+	// score 2 rings on mogo and 1 on wallstake
+	chassis.pid_odom_set({{{96_in, 47_in}, fwd, 90}, {{120_in, 48_in}, fwd, 90}, {{130_in, 72_in}, fwd, 90}});
+	chassis.pid_wait_until_index(1);
+	pros::delay(750);
+	ladybrown.move_absolute(200, 200);
+	chassis.pid_wait();
+	chassis.pid_turn_set(90_deg, 90);
+	chassis.pid_wait();
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(500);
+	ladybrown.move_absolute(10, 200);
+	// score 3 more rings on mogo and drop off in corner
+	chassis.pid_odom_set({{{120_in, 96_in}, fwd, 90}, {{120_in, 128_in}, fwd, 90}, {{127_in, 131_in}, rev, 60}});
+	chassis.pid_wait();
+	pros::delay(500);
+	mogomech.set(false);
+	// score ring on wallstake
+	ladybrown.move_absolute(200, 200);
+	chassis.pid_odom_set({{{130_in, 118_in}, fwd, 90}, {{130_in, 72_in}, fwd, 90}});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(90_deg, 90);
+	chassis.pid_wait();
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(500);
+	ladybrown.move_absolute(10, 200);
+	// grab ring then grab mogo
+	chassis.pid_odom_set({{{96_in, 96_in}, fwd, 90}, {{72_in, 120_in}, rev, 80}});
+	chassis.pid_wait_until_index(0);
+	pros::delay(200);
+	intakeMove(0);
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	// score grabbed ring and 5 more on mogo, then drop off
+	intakeMove(127);
+	chassis.pid_odom_set({{{48_in, 96_in}, fwd, 90}, {{24_in, 96_in}, fwd, 90}, {{24_in, 128_in}, fwd, 90}, {{15_in, 118_in}, fwd, 90}, {{14_in, 126_in}, rev, 90}});
+	chassis.pid_wait();
+	mogomech.set(false);
+	// grab blue ring mogo
+	ladybrown.move_absolute(200, 200);
+	chassis.pid_odom_set({{44_in, 131_in}, rev, 80});
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	// score ring on wallstake, prime another ring for wallstake, then drop off mogo
+	chassis.pid_odom_set({{15_in, 72_in}, fwd, 90});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(270_deg, 90);
+	chassis.pid_wait();
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(500);
+	ladybrown.move_absolute(200, 200);
+	chassis.pid_odom_set({{{15_in, 25_in}, fwd, 90}, {{13_in, 16_in}, rev, 90}});
+	chassis.pid_wait();
+	mogomech.set(false);
+	// score primed ring on wallstake
+	chassis.pid_odom_set({{15_in, 72_in}, fwd, 90});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(270_deg, 90);
+	chassis.pid_wait();
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(500);
+	ladybrown.move_absolute(10, 200);
+	// grab ring then grab mogo
+	chassis.pid_odom_set({{{48_in, 48_in}, fwd, 90}, {{48_in, 24_in}, rev, 80}});
+	chassis.pid_wait_until_index(0);
+	pros::delay(200);
+	intakeMove(0);
+	chassis.pid_wait_quick_chain();
+	mogomech.set(true);
+	// score grabbed ring and 5 more on mogo, prime ring for ladybrown, then drop off
+	intakeMove(127);
+	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 90}, {{24_in, 16_in}, fwd, 90}, {{130_in, 24_in}, fwd, 90}, {{122_in, 15_in}, fwd, 90}, {{130_in, 13_in}, rev, 90}});
+	chassis.pid_wait_until_index_started(3);
+	ladybrown.move_absolute(200, 200);
+	chassis.pid_wait();
+	mogomech.set(false);
+	// score primed ring on wallstake
+	chassis.pid_odom_set({{130_in, 72_in}, fwd, 90});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(90_deg, 90);
+	chassis.pid_wait();
+	ladybrown.move_absolute(1000, 200);
+	pros::delay(500);
+	ladybrown.move_absolute(10, 200);
+	// grab mid ring and score on alliance stake
+	chassis.pid_odom_set({{{96_in, 48_in}, fwd, 90}, {{48_in, 96_in}, fwd, 90}, {{72_in, 132_in}, rev, 90}});
+	chassis.pid_wait_until_index_started(1);
+	pros::delay(250);
+	intakeMove(0);
+	chassis.pid_wait();
+	chassis.pid_turn_set(180_deg, 90);
+	chassis.pid_wait();
+	intakeMove(127);
+}

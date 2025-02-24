@@ -317,8 +317,8 @@ void red_6ring() {
 	ram();
 	ram();
 	ram();
-	// touch ladder
-	chassis.pid_odom_set({{72_in, 44_in}, fwd, 90});
+	// ram corner
+	chassis.pid_odom_set({{138_in, 10_in}, rev, 90});
 	chassis.pid_wait();
 	pros::c::task_delete(ringsorting);
 }
@@ -700,8 +700,8 @@ void blue_6ring() {
 	ram();
 	ram();
 	ram();
-	// touch ladder
-	chassis.pid_odom_set({{72_in, 44_in}, fwd, 90});
+	// ram corner
+	chassis.pid_odom_set({{6_in, 10_in}, rev, 90});
 	chassis.pid_wait();
 	pros::c::task_delete(ringsorting);
 }

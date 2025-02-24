@@ -80,7 +80,7 @@ void unjamTask() {
 		}
 
 		if(jammed) {
-			(jamfirst ? intakefirst : intakesecond).move(-target);
+			intakesecond.move(-target);
 			jamtime++;
 			if(jamtime > 20) {
 				jamtime = 0;

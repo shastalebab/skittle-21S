@@ -112,7 +112,7 @@ void red_5greed() {
 void red_5ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(84_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({80_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{80_in, 12_in}, fwd, 60});
@@ -254,7 +254,7 @@ void red_gr_wp() {
 void red_possolowp() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(84_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({79_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{79_in, 9_in}, fwd, 60});
@@ -306,11 +306,9 @@ void red_6ring() {
 	mogomech.set(true);
 	intakeMove(127);
 	chassis.pid_wait();
-	// sweep ring rush rings and score preload on wallstake
+	// sweep ring rush rings
 	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{10_in, 63_in}, fwd, 60}});
 	chassis.pid_wait();
-	ladybrown.move_relative(400, 200);
-	pros::delay(750);
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{10_in, 10_in}, fwd, 90}});
 	chassis.pid_wait();
@@ -319,13 +317,6 @@ void red_6ring() {
 	ram();
 	ram();
 	ram();
-	// grab mid top ring
-	chassis.pid_odom_set({{70_in, 22_in}, fwd, 70});
-	pros::delay(500);
-	intakeLevel.set(false);
-	chassis.pid_wait();
-	intakeLevel.set(true);
-	pros::delay(500);
 	// touch ladder
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 90});
 	chassis.pid_wait();
@@ -335,7 +326,7 @@ void red_6ring() {
 void red_7greed() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)0, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({65_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{65_in, 9_in}, fwd, 80});
@@ -413,7 +404,7 @@ void red_7ring() {
 void red_negsolowp() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({65_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{65_in, 9_in}, fwd, 60});
@@ -504,7 +495,7 @@ void blue_5greed() {
 void blue_5ring() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({64_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{64_in, 12_in}, fwd, 60});
@@ -646,7 +637,7 @@ void blue_gr_wp() {
 void blue_possolowp() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({65_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{65_in, 9_in}, fwd, 60});
@@ -701,8 +692,6 @@ void blue_6ring() {
 	// sweep ring rush rings and score preload on wallstake
 	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{134_in, 63_in}, fwd, 60}});
 	chassis.pid_wait();
-	ladybrown.move_relative(400, 200);
-	pros::delay(750);
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{134_in, 10_in}, fwd, 90}});
 	chassis.pid_wait();
@@ -711,13 +700,6 @@ void blue_6ring() {
 	ram();
 	ram();
 	ram();
-	// grab mid top ring
-	chassis.pid_odom_set({{74_in, 22_in}, fwd, 70});
-	pros::delay(500);
-	intakeLevel.set(false);
-	chassis.pid_wait();
-	intakeLevel.set(true);
-	pros::delay(500);
 	// touch ladder
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 90});
 	chassis.pid_wait();
@@ -727,7 +709,7 @@ void blue_6ring() {
 void blue_7greed() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(84_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({79_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{79_in, 9_in}, fwd, 80});
@@ -805,7 +787,7 @@ void blue_7ring() {
 void blue_negsolowp() {
 	ringsorting = pros::c::task_create(ringsensTask, (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
 	chassis.odom_xyt_set(84_in, 20_in, 180_deg);
-	//score preload
+	// score preload
 	chassis.pid_turn_set({79_in, 12_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_odom_set({{79_in, 9_in}, fwd, 60});
@@ -895,7 +877,8 @@ void skills() {
 	mogomech.set(true);
 	// score grabbed ring and 5 more on mogo, then drop off
 	intakeMove(127);
-	chassis.pid_odom_set({{{48_in, 96_in}, fwd, 90}, {{24_in, 96_in}, fwd, 90}, {{24_in, 128_in}, fwd, 90}, {{15_in, 118_in}, fwd, 90}, {{14_in, 126_in}, rev, 90}});
+	chassis.pid_odom_set(
+		{{{48_in, 96_in}, fwd, 90}, {{24_in, 96_in}, fwd, 90}, {{24_in, 128_in}, fwd, 90}, {{15_in, 118_in}, fwd, 90}, {{14_in, 126_in}, rev, 90}});
 	chassis.pid_wait();
 	mogomech.set(false);
 	// grab blue ring mogo
@@ -931,7 +914,8 @@ void skills() {
 	mogomech.set(true);
 	// score grabbed ring and 5 more on mogo, prime ring for ladybrown, then drop off
 	intakeMove(127);
-	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 90}, {{24_in, 16_in}, fwd, 90}, {{130_in, 24_in}, fwd, 90}, {{122_in, 15_in}, fwd, 90}, {{130_in, 13_in}, rev, 90}});
+	chassis.pid_odom_set(
+		{{{24_in, 48_in}, fwd, 90}, {{24_in, 16_in}, fwd, 90}, {{130_in, 24_in}, fwd, 90}, {{122_in, 15_in}, fwd, 90}, {{130_in, 13_in}, rev, 90}});
 	chassis.pid_wait_until_index_started(3);
 	ladybrown.move_absolute(200, 200);
 	chassis.pid_wait();

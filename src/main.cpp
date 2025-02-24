@@ -1,6 +1,4 @@
 #include "main.h"
-#include "EZ-Template/sdcard.hpp"
-#include "autons.hpp"
 
 // big money $_$
 /////
@@ -289,7 +287,7 @@ void opcontrol() {
 
 	while(true) {
 		// Gives you some extras to make EZ-Template easier
-		ez_template_etxras();
+		// ez_template_etxras();
 
 		chassis.opcontrol_tank();  // Tank control
 								   // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade

@@ -65,14 +65,9 @@ void ringsensTask(void* assign) {
 
 void unjamTask() {
 	int jamtime = 0;
-	bool jamfirst = false;
 	while(setLB == true && discarding == false && intakesecond.get_temperature() < 50) {
 		if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
 			jamtime++;
-			if(abs(intakefirst.get_actual_velocity()) <= 20)
-				jamfirst = true;
-			else
-				jamfirst = false;
 			if(jamtime > 20) {
 				jamtime = 0;
 				jammed = true;
@@ -85,7 +80,6 @@ void unjamTask() {
 			if(jamtime > 20) {
 				jamtime = 0;
 				jammed = false;
-				jamfirst = false;
 				intakeMove(target);
 			}
 		}

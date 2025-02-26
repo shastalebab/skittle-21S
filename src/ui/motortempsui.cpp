@@ -17,7 +17,8 @@ LV_IMG_DECLARE(brainbg);
 
 static void gettemp(lv_event_t *e) {
 	const char *getmotor = (char *)lv_event_get_user_data(e);
-	temp = (motorbar[*getmotor].motor.get_temperature() - 30) * 5;
+	temp = motorbar[*getmotor].motor.get_temperature() * 5;
+	if(temp > 255) temp = 255;
 	lv_obj_set_style_bg_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0xcfffe9 : 0xff2a00), LV_PART_MAIN);
 	lv_obj_set_style_text_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0x071808 : 0xcfffe9), LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(lv_event_get_target(e), temp, LV_PART_MAIN);
@@ -87,12 +88,18 @@ void tempcheck() {
 	lv_label_set_text(mainlabel, "Motor Temperatures");
 }
 
-void tempcheckctrl() {
+void tempchecktask() {
 	while(true) {
 		driveTemp = (motorbar[1].motor.get_temperature() + motorbar[2].motor.get_temperature() + motorbar[3].motor.get_temperature() +
 					 motorbar[5].motor.get_temperature() + motorbar[6].motor.get_temperature() + motorbar[7].motor.get_temperature()) /
 					6;
 		intakeTemp = (motorbar[0].motor.get_temperature() + motorbar[4].motor.get_temperature()) / 2;
+
+		if(lv_tileview_get_tile_act(mainscreen) == motortemps) {
+			for(int m = 0; m < motorbar.size(); m++) {
+				lv_event_send(motorboxes[m], LV_EVENT_REFRESH, NULL);
+			}
+		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y) == true) {
 			if(intakeTemp <= 30)

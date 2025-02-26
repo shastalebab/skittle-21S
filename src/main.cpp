@@ -123,7 +123,7 @@ void initialize() {
 	_init_fs();
 	screeninit();
 	master.rumble(".");
-	pros::Task tempcheckcontroller(tempcheckctrl);
+	pros::Task tempCheck(tempchecktask);
 	pros::Task colordetection(colorDetect);
 	pros::Task unjam(unjamTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -303,12 +303,6 @@ void opcontrol() {
 		setLadyBrown();
 		setDoinkerR();
 		setDoinkerL();
-
-		if(lv_tileview_get_tile_act(mainscreen) == motortemps) {
-			for(int m = 0; m < motorbar.size(); m++) {
-				lv_event_send(motorboxes[m], LV_EVENT_REFRESH, NULL);
-			}
-		}
 
 		pros::delay(ez::util::DELAY_TIME);	// This is used for timer calculations! Keep this ez::util::DELAY_TIME
 	}

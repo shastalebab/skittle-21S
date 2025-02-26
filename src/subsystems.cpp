@@ -16,32 +16,37 @@ void setIntake() {
 	}
 }
 
-bool was_preset_pressed = false;
-double lbtarget = 0.0;
+bool pressing = false;
 void setLadyBrown() {
 	// ladybrown code
 	if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-		was_preset_pressed = true;
 		setLB = !setLB;
+		pressing = false;
 		if(ladybrown.get_position() > 280) setLB = false;
 		if(setLB) {
-			ladybrown.move_absolute(10, 200);
+			lbPID.target_set(10);
 		} else {
-			ladybrown.move_absolute(200, 200);
+			lbPID.target_set(200);
 		}
 	} else {
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+			pressing = true;
 			ladybrown.move(127);
-			lbtarget = ladybrown.get_position();
-			was_preset_pressed = false;
+			lbPID.target_set(ladybrown.get_position());
 		} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+			pressing = true;
 			ladybrown.move(-127);
-			lbtarget = ladybrown.get_position();
-			was_preset_pressed = false;
-		} else {
-			if(!was_preset_pressed) {
-				ladybrown.move_absolute(lbtarget, 20);	// this isn't going full power because it was yucky going full power
-			}
+			lbPID.target_set(ladybrown.get_position());
+		} else
+			pressing = false;
+	}
+}
+
+void ladybrownTask() {
+	while(true) {
+		if(pressing == false) {
+			ladybrown.move(lbPID.compute(ladybrown.get_position()));
+			pros::delay(10);
 		}
 	}
 }

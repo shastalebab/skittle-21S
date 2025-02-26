@@ -126,6 +126,7 @@ void initialize() {
 	pros::Task tempCheck(tempchecktask);
 	pros::Task colordetection(colorDetect);
 	pros::Task unjam(unjamTask);
+	pros::Task ladybrownpid(ladybrownTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
 }
 

@@ -13,7 +13,7 @@ inline ez::Piston mogomech('H');
 inline ez::Piston intakeLevel('G');
 inline ez::Piston doinkerR('F');
 inline ez::Piston doinkerL('E');
-inline ez::PID lbPID{0.45, 0, 0, 0, "ladybrown"};
+inline ez::PID lbPID{1.35, .04, .75, 0, "ladybrown"};
 //inline pros::adi::AnalogIn linesafety('E');
 // inline pros::adi::DigitalIn limit_switch('A');
 

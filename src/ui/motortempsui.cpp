@@ -18,7 +18,6 @@ LV_IMG_DECLARE(brainbg);
 static void gettemp(lv_event_t *e) {
 	const char *getmotor = (char *)lv_event_get_user_data(e);
 	temp = motorbar[*getmotor].motor.get_temperature() * 5;
-	if(temp > 255) temp = 255;
 	lv_obj_set_style_bg_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0xcfffe9 : 0xff2a00), LV_PART_MAIN);
 	lv_obj_set_style_text_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0x071808 : 0xcfffe9), LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(lv_event_get_target(e), temp, LV_PART_MAIN);
@@ -39,6 +38,7 @@ static void tempmore(lv_event_t *e) {
 	lv_obj_set_style_border_opa(lv_msgbox_get_close_btn(motorinfo), 0, LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(motorinfo, 255, LV_PART_MAIN);
 	lv_obj_align(motorinfo, LV_ALIGN_CENTER, 0, 0);
+	temp = motorbar[*getinfo].motor.get_temperature() * 5;
 	lv_obj_set_style_bg_color(motorinfo, lv_color_hsv_to_rgb(motorbar[*getinfo].motor.is_installed() ? 124 : 0, 71, temp), LV_PART_MAIN);
 }
 

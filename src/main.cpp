@@ -74,20 +74,20 @@ void initialize() {
 	j_auton_selector.jautonpopulate({
 		jas::jasauton(red_5greed, 0, 1, "Red 5 ring greed", "Red 5 ring auton", 5, 0, false),
 		jas::jasauton(red_5ring, 0, 1, "Red 5 ring", "Red 4 + 1 ring auton", 4, 0, true),
-		jas::jasauton(red_gr_corner, 0, 1, "Red goal rush, no WP", "Red 3 + 2 ring goal rush auton", 2, 3, false),
-		jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 3 + 1 + 1 goal rush auton", 1, 3, true),
+		//jas::jasauton(red_gr_corner, 0, 1, "Red goal rush, no WP", "Red 3 + 2 ring goal rush auton", 2, 3, false),
+		//jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 3 + 1 + 1 goal rush auton", 1, 3, true),
 		jas::jasauton(red_possolowp, 0, 0, "Red positive solo WP", "Red 4 + 1 + 1 goal side auton", 5, 1, true),
 		jas::jasauton(red_6ring, 0, 0, "Red 6 ring", "Red 5 + 1 ring side auton", 5, 1, false),
-		jas::jasauton(red_7greed, 0, 0, "Red 7 ring greed", "Red 6 + 1 ring side auton", 6, 1, false),
+		//jas::jasauton(red_7greed, 0, 0, "Red 7 ring greed", "Red 6 + 1 ring side auton", 6, 1, false),
 		jas::jasauton(red_7ring, 0, 0, "Red 7 ring", "Red 5 + 1 + 1 ring side auton", 5, 1, true),
 		jas::jasauton(red_negsolowp, 0, 0, "Red negative solo WP", "Red 4 + 1 + 1 ring side auton", 5, 1, true),
 		jas::jasauton(blue_5greed, 1, 1, "Blue 5 ring greed", "Blue 5 ring auton", 5, 0, false),
 		jas::jasauton(blue_5ring, 1, 1, "Blue 5 ring", "Blue 4 + 1 ring auton", 4, 0, true),
-		jas::jasauton(blue_gr_corner, 1, 1, "Blue goal rush, no WP", "Blue 3 + 2 goal rush auton", 2, 3, false),
-		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 3 + 1 + 1 goal rush auton", 1, 3, true),
+		//jas::jasauton(blue_gr_corner, 1, 1, "Blue goal rush, no WP", "Blue 3 + 2 goal rush auton", 2, 3, false),
+		//jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 3 + 1 + 1 goal rush auton", 1, 3, true),
 		jas::jasauton(blue_possolowp, 1, 0, "Blue positive solo WP", "Blue 4 + 1 + 1 goal side auton", 5, 1, true),
 		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring", "Blue 5 + 1 ring side auton", 5, 1, false),
-		jas::jasauton(blue_7greed, 1, 0, "Blue 7 ring greed", "Blue 6 + 1 ring side auton", 6, 1, false),
+		//jas::jasauton(blue_7greed, 1, 0, "Blue 7 ring greed", "Blue 6 + 1 ring side auton", 6, 1, false),
 		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring", "Blue 5 + 1 + 1 ring side auton", 5, 1, true),
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 4 + 1 + 1 ring side auton", 5, 1, true),
 		jas::jasauton(skills, 2, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 5, true),
@@ -96,28 +96,6 @@ void initialize() {
 		jas::jasauton(testautonBlue, 1, 2, "blue test", "intake + clamp", 0, 0, false),
 	});
 
-	// auton builder modules, for testing
-	/*j_auton_selector.jautonpopulate(
-		{jas::jasauton(testautonbuilder, 2, 2, "Test auton modules", "Test auton builder modules manually", 4, 0, true),
-		 jas::jasauton(goal_rush, 2, 2, "Goal rush module", "Positive corner POI, goal rush mogo", 0, 0, false),
-		 jas::jasauton(alliancestake, 2, 2, "Alliance stake module", "Mutual POI, alliance stake score", 0, 0, true),
-
-		 jas::jasauton(left_mogo, 2, 2, "Left mogo module", "Left side POI, closest mogo", 0, 0, false),
-		 jas::jasauton(gr_mogo, 2, 2, "Left mogo module", "Left side POI, closest mogo", 0, 0, false),
-		 jas::jasauton(right_mogo, 2, 2, "Right mogo module", "Right side POI, closest mogo", 0, 0, false),
-
-		 jas::jasauton(left_corner, 2, 2, "Left corner module", "Left side POI, 2 ring corner rush", 2, 0, false),
-		 jas::jasauton(right_corner, 2, 2, "Right corner module", "Right side POI, 2 ring corner rush", 2, 0, false),
-
-		 jas::jasauton(red_ring_rush, 0, 2, "Red ring rush module", "Red alliance POI, cluster of 2 rings near mid", 2, 0, false),
-		 jas::jasauton(blue_ring_rush, 1, 2, "Blue ring rush module", "Blue alliance POI, cluster of 2 rings near mid", 2, 0, false),
-
-		 jas::jasauton(left_btm_ring, 2, 2, "Left bottom ring module", "Left side POI, bottom ring of ring stack", 1, 0, false),
-		 jas::jasauton(mid_top_ring, 2, 2, "Mid top ring module", "Mutual POI, top ring of ring stack", 1, 0, false),
-		 jas::jasauton(right_btm_ring, 2, 2, "Right bottom ring module", "Right side POI, bottom ring of ring stack", 1, 0, false),
-
-		 jas::jasauton(ladder, 2, 2, "Ladder module", "POI for the central ladder, always goes to mid", 6, 6, true)});
-*/
 	// Initialize chassis and auton selector
 	chassis.initialize();
 	_init_fs();

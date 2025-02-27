@@ -799,7 +799,7 @@ void blue_negsolowp() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{100_in, 49_in}, fwd, 90}, {{107_in, 61_in}, fwd, 70}, {{134_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	pros::delay(500);
 	// grab bottom ring of ring stack
@@ -811,11 +811,14 @@ void blue_negsolowp() {
 	intakeLevel.set(false);
 	chassis.pid_wait();
 	intakeLevel.set(true);
-	pros::delay(650);
+	chassis.pid_wait();
+	pros::delay(750);
+	chassis.pid_drive_set(-6_in,90);
+	chassis.pid_wait();
 	mogomech.set(false);
 	pros::delay(100);
 	// grab other mogo & grab other bottom ring
-	chassis.pid_odom_set({{46_in, 48_in}, rev, 80});
+	chassis.pid_odom_set({{48_in, 49_in}, rev, 80});
 	chassis.pid_wait_quick();
 	mogomech.set(true);
 	chassis.pid_odom_set({{24_in, 48_in}, fwd, 127});

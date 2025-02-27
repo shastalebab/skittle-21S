@@ -262,7 +262,7 @@ void red_possolowp() {
 	lbPID.target_set(1000);
 	pros::delay(250);
 	// grab mogo & bottom ring
-	chassis.pid_odom_set({{98_in, 48_in}, rev, 80});
+	chassis.pid_odom_set({{96_in, 49_in}, rev, 80});
 	chassis.pid_wait_quick();
 	mogomech.set(true);
 	chassis.pid_odom_set({{120_in, 48_in}, fwd, 127});
@@ -273,7 +273,9 @@ void red_possolowp() {
 	intakeLevel.set(false);
 	chassis.pid_wait();
 	intakeLevel.set(true);
-	pros::delay(650);
+	pros::delay(750);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait();
 	mogomech.set(false);
 	pros::delay(100);
 	// grab mogo
@@ -283,7 +285,7 @@ void red_possolowp() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{44_in, 49_in}, fwd, 90}, {{37_in, 61_in}, fwd, 70}, {{10_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{9_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	pros::delay(500);
 	// grab bottom ring of ring stack
@@ -307,7 +309,7 @@ void red_6ring() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{10_in, 63_in}, fwd, 60}});
+	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{9_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{10_in, 10_in}, fwd, 90}});
@@ -341,7 +343,7 @@ void red_7greed() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{43_in, 49_in}, fwd, 90}, {{37_in, 61_in}, fwd, 70}, {{10_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{9_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{8_in, 12_in}, fwd, 127}});
@@ -381,7 +383,7 @@ void red_7ring() {
 	chassis.pid_odom_set({{{72_in, 30_in}, fwd, 90}, {{48_in, 50_in}, rev, 127}});
 	chassis.pid_wait_quick_chain();
 	mogomech.set(true);
-	chassis.pid_wait();	
+	chassis.pid_wait();
 	// sweep ring rush rings and score preload on wallstake
 	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 67_in}, fwd, 70}, {{10_in, 68_in}, fwd, 60}});
 	chassis.pid_wait();
@@ -418,7 +420,7 @@ void red_negsolowp() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{44_in, 49_in}, fwd, 90}, {{37_in, 61_in}, fwd, 70}, {{10_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{44_in, 51_in}, fwd, 90}, {{37_in, 62_in}, fwd, 70}, {{9_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	pros::delay(500);
 	// grab bottom ring of ring stack
@@ -430,11 +432,13 @@ void red_negsolowp() {
 	intakeLevel.set(false);
 	chassis.pid_wait();
 	intakeLevel.set(true);
-	pros::delay(650);
+	pros::delay(750);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait();
 	mogomech.set(false);
 	pros::delay(100);
 	// grab other mogo & grab other bottom ring
-	chassis.pid_odom_set({{98_in, 48_in}, rev, 80});
+	chassis.pid_odom_set({{96_in, 49_in}, rev, 80});
 	chassis.pid_wait_quick();
 	mogomech.set(true);
 	chassis.pid_odom_set({{120_in, 48_in}, fwd, 127});
@@ -645,7 +649,7 @@ void blue_possolowp() {
 	lbPID.target_set(1000);
 	pros::delay(250);
 	// grab mogo & bottom ring
-	chassis.pid_odom_set({{46_in, 48_in}, rev, 80});
+	chassis.pid_odom_set({{48_in, 49_in}, rev, 80});
 	chassis.pid_wait_quick();
 	mogomech.set(true);
 	chassis.pid_odom_set({{24_in, 48_in}, fwd, 127});
@@ -656,7 +660,9 @@ void blue_possolowp() {
 	intakeLevel.set(false);
 	chassis.pid_wait();
 	intakeLevel.set(true);
-	pros::delay(650);
+	pros::delay(750);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait();
 	mogomech.set(false);
 	pros::delay(100);
 	// grab other mogo
@@ -666,7 +672,7 @@ void blue_possolowp() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{100_in, 49_in}, fwd, 90}, {{107_in, 61_in}, fwd, 70}, {{134_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	pros::delay(500);
 	// grab bottom ring of ring stack
@@ -690,7 +696,7 @@ void blue_6ring() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings and score preload on wallstake
-	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{134_in, 63_in}, fwd, 60}});
+	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{134_in, 13_in}, fwd, 90}, {{120_in, 12_in}, fwd, 60}, {{99_in, 9_in}, fwd, 90}});
@@ -722,7 +728,7 @@ void blue_7greed() {
 	intakeMove(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{101_in, 49_in}, fwd, 90}, {{107_in, 61_in}, fwd, 70}, {{134_in, 61_in}, fwd, 60}});
+	chassis.pid_odom_set({{{100_in, 51_in}, fwd, 90}, {{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
 	// grab bottom ring of ring stack, then sweep corner
 	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{136_in, 12_in}, fwd, 127}});
@@ -811,9 +817,8 @@ void blue_negsolowp() {
 	intakeLevel.set(false);
 	chassis.pid_wait();
 	intakeLevel.set(true);
-	chassis.pid_wait();
 	pros::delay(750);
-	chassis.pid_drive_set(-6_in,90);
+	chassis.pid_drive_set(-6_in, 90);
 	chassis.pid_wait();
 	mogomech.set(false);
 	pros::delay(100);

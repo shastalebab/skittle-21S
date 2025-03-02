@@ -57,7 +57,7 @@ void updatepath() {
 	lv_label_set_text_fmt(AutonBaseInfoTxt, "Team: %s\nCorner: %s\nMogo 1: %d\nMogo 2: %d\nG.Rush: %s\nA.Stke: %s\nStart pos: %d inches",
 						  (useredblu == true ? "Red" : "Blue"), (useposneg == true ? "Neg" : "Pos"), finmogo1, finmogo2, (usegoalrush == true ? "On" : "Off"),
 						  (allianceringbuilder == true ? "On" : "Off"),
-						  usegoalrush == true ? (useredblu == useposneg ? 132 : 12) : (useredblu == useposneg ? 96 : 48));
+						  usegoalrush == true ? (useredblu == useposneg ? 107 : 37) : (useredblu == useposneg ? 96 : 48));
 
 	if(usegoalrush == true) modules.push_back(useredblu == useposneg ? "blue goal rush" : "red goal rush");
 	if(allianceringbuilder == true) modules.push_back("alliance stake");
@@ -320,7 +320,7 @@ void autonbuilderinit() {
 }
 
 void autocallback() {
-	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 12_in : 132_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
+	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 37_in : 107_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
 						   usegoalrush == true ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	ringsorting = pros::c::task_create(ringsensTask, useredblu ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");

@@ -28,7 +28,6 @@ bool activescreen = false;
 bool positionorient = true;
 bool noselection1 = true;
 bool noselection2 = true;
-pros::task_t ringsorting;
 
 vector<jas::autobuildermodules> getmodules{
 	jas::autobuildermodules("blue goal rush", "Use doinker to grab mogo at the intersection between alliances"),
@@ -421,7 +420,7 @@ void mancallback() {
 	chassis.odom_pose_set({startposition * okapi::inch, 20_in, positionorient ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
 	if(color != 1)
-		ringsorting = pros::c::task_create(ringsensTask, color == 0 ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+		allianceColor = color == 0 ? Colors::RED : Colors::BLUE;
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
 		if(manmodules[module_it].Name == "blue goal rush")
 			// cout << "blue_goal_rush" << endl;
@@ -470,9 +469,8 @@ void mancallback() {
 			ladder();
 		else if(manmodules[module_it].Name == "drop mogo") {
 			// cout << "drop mogo" << endl;
-			intakeMove(0);
-			mogomech.set(false);
+			setIntake(0);
+			setMogo(false);
 		}
 	}
-	if(color != 1) pros::c::task_delete(ringsorting);
 }

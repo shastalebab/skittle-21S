@@ -4,7 +4,7 @@
 #include "api.h"  // IWYU pragma: keep
 
 void tempcheck();
-void tempchecktask();
+void tempcheckTask();
 
 namespace jas {
 class motors {

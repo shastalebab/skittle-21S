@@ -323,7 +323,7 @@ void autocallback() {
 	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 37_in : 107_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
 						   usegoalrush == true ? 0_deg : 180_deg});
 	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
-	ringsorting = pros::c::task_create(ringsensTask, useredblu ? (void *)0 : (void *)1, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ring sorting");
+	allianceColor = useredblu ? Colors::RED : Colors::BLUE;
 	for(int module_it = 0; module_it < modules.size(); module_it++) {
 		if(modules[module_it] == "blue goal rush")
 			// cout << "blue_goal_rush" << endl;
@@ -372,9 +372,8 @@ void autocallback() {
 			ladder();
 		else if(modules[module_it] == "drop mogo") {
 			// cout << "drop mogo" << endl;
-			intakeMove(0);
-			mogomech.set(false);
+			setIntake(0);
+			setMogo(false);
 		}
 	}
-	pros::c::task_delete(ringsorting);
 }

@@ -95,10 +95,11 @@ void initialize() {
 	_init_fs();
 	screeninit();
 	master.rumble(".");
-	pros::Task tempCheck(tempchecktask);
-	pros::Task colordetection(colorDetect);
-	pros::Task unjam(unjamTask);
-	pros::Task ladybrownpid(ladybrownTask);
+	pros::Task tempchecktask(tempcheckTask);
+	pros::Task colortask(colorTask);
+	pros::Task unjamtask(unjamTask);
+	pros::Task ladybrowntask(ladybrownTask);
+	pros::Task distancetask(distanceTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
 }
 
@@ -271,11 +272,11 @@ void opcontrol() {
 		// . . .
 		// Put more user control code here!
 		// . . .
-		setIntake();
-		setMogo();
-		setLadyBrown();
-		setDoinkerR();
-		setDoinkerL();
+		opcontrolIntake();
+		opcontrolMogo();
+		opcontrolLadyBrown();
+		opcontrolDoinkerR();
+		opcontrolDoinkerL();
 
 		pros::delay(ez::util::DELAY_TIME);	// This is used for timer calculations! Keep this ez::util::DELAY_TIME
 	}

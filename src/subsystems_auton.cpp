@@ -1,47 +1,34 @@
+#include "subsystems_auton.hpp"
+
 #include "main.h"  // IWYU pragma: keep
 #include "subsystems.hpp"
 
-int intakeColor = 2;
-int spurfly;
-typedef struct alliancecolor {
-	int alliance;
-} alliancecolor;
 int target = 0;
-bool lineTracking = false;
 bool jammed = false;
+Colors allianceColor = Colors::NEUTRAL;
+AutoMogo mogoState = AutoMogo::OFF;
 
-void intakeMove(int Target) {
+// Wrappers
+
+void setIntake(int Target) {
 	target = Target;
 	intake.move(Target);
 }
 
-void colorDetect() {
-	while(true) {
-		ringsens.set_led_pwm(100);
-		if((ringsens.get_hue() < 10) && (ringsens.get_hue() > 0)) {
-			intakeColor = 1;  // red
-			lv_obj_set_style_bg_color(ringind, lv_color_hex(0xff2a00), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(mainlabel, lv_color_hex(0xff2a00), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(builderringind, lv_color_hex(0xff2a00), LV_PART_MAIN);
-		} else if((ringsens.get_hue() < 225) && (ringsens.get_hue() > 210)) {
-			intakeColor = 0;  // blue
-			lv_obj_set_style_bg_color(ringind, lv_color_hex(0x0066cc), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(mainlabel, lv_color_hex(0x0066cc), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(builderringind, lv_color_hex(0x0066cc), LV_PART_MAIN);
-		} else if((ringsens.get_hue() < 90) && (ringsens.get_hue() > 70)) {
-			spurfly = (spurfly + 1) % 360;	// easter egg
-			lv_obj_set_style_bg_color(ringind, lv_color_hsv_to_rgb(spurfly, 100, 100), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(mainlabel, lv_color_hsv_to_rgb(spurfly, 100, 100), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(builderringind, lv_color_hsv_to_rgb(spurfly, 100, 100), LV_PART_MAIN);
-		} else {
-			intakeColor = 2;  // neutral
-			lv_obj_set_style_bg_color(ringind, lv_color_hex(0x5d5d5d), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(mainlabel, lv_color_hex(0x5d5d5d), LV_PART_MAIN);
-			lv_obj_set_style_bg_color(builderringind, lv_color_hex(0x5d5d5d), LV_PART_MAIN);
-		}
-		pros::delay(10);
-	}
+void setLadyBrown(int Target) {
+	lbPID.target_set(Target);
 }
+
+void setMogo(bool state) {
+	mogomech.set(state);
+}
+
+void setDoinker(Doinker doinker, bool state) {
+	if(doinker == Doinker::LEFT || doinker == Doinker::BOTH) doinkerL.set(state);
+	if(doinker == Doinker::RIGHT || doinker == Doinker::BOTH) doinkerR.set(state);
+}
+
+// Color sorting
 
 bool discarding = false;
 
@@ -50,15 +37,56 @@ void discard() {
 	pros::delay(160);
 	intakesecond.move(-target);
 	pros::delay(100);
-	intakeMove(target);
+	setIntake(target);
 	discarding = false;
 }
 
-void ringsensTask(void* assign) {
+int intakeColor = 2;
+int spurfly = 0;
+lv_color_t colorList[4] = {lv_color_hex(0xff2a00), lv_color_hex(0x0066cc), lv_color_hex(0x5d5d5d), lv_color_hsv_to_rgb(spurfly, 100, 100)};
+
+void colorSet(Colors color) {
+	if(color == Colors::SPUR) {
+		spurfly = (spurfly + 1) % 360;	// easter egg
+		colorList[3] = lv_color_hsv_to_rgb(spurfly, 100, 100);
+	}
+	lv_obj_set_style_bg_color(ringind, colorList[(int)color], LV_PART_MAIN);
+	lv_obj_set_style_bg_color(mainlabel, colorList[(int)color], LV_PART_MAIN);
+	lv_obj_set_style_bg_color(builderringind, colorList[(int)color], LV_PART_MAIN);
+}
+
+Colors colorGet() {
+	auto hue = ringsens.get_hue();
+	if(hue > 0 && hue < 10)
+		return Colors::RED;
+	else if(hue > 210 && hue < 225)
+		return Colors::BLUE;
+	else if(hue < 90 && hue > 70)
+		return Colors::SPUR;
+	else
+		return Colors::NEUTRAL;
+}
+
+void colorTask() {
+	Colors color;
 	while(true) {
-		alliancecolor allianceColor;
-		allianceColor.alliance = int((int*)assign);
-		if(allianceColor.alliance == intakeColor && discarding == false) discard();
+		color = colorGet();
+		ringsens.set_led_pwm(100);
+		colorSet(color);
+		if(pros::competition::is_autonomous() && discarding == false) {
+			if(allianceColor != color && (int)color < 2) {
+				discard();
+			}
+		}
+		pros::delay(10);
+	}
+}
+
+// Other tasks
+
+void ladybrownTask() {
+	while(true) {
+		ladybrown.move(lbPID.compute(ladybrown.get_position()));
 		pros::delay(10);
 	}
 }
@@ -81,7 +109,7 @@ void unjamTask() {
 				if(jamtime > 20) {
 					jamtime = 0;
 					jammed = false;
-					intakeMove(target);
+					setIntake(target);
 				}
 			}
 		}
@@ -89,9 +117,12 @@ void unjamTask() {
 	}
 }
 
-/*void lineDetect(void* test) {
-	while(lineTracking) {
-		bool linedetect = linesafety.get_value() < 2000 ? true : false;
-		if(linedetect) chassis.odom_xyt_set(chassis.odom_x_get() * okapi::inch, 72_in, chassis.odom_theta_get() * okapi::degree);
+void distanceTask() {
+	while(true) {
+		if(mogoState == AutoMogo::PRIMED) {
+			if(distsens.get() < 300) mogomech.set(true);
+			mogoState = AutoMogo::OFF;
+		}
+		pros::delay(10);
 	}
-}*/
+}

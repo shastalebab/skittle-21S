@@ -88,7 +88,7 @@ void tempcheck() {
 	lv_label_set_text(mainlabel, "Motor Temperatures");
 }
 
-void tempchecktask() {
+void tempcheckTask() {
 	while(true) {
 		driveTemp = (motorbar[1].motor.get_temperature() + motorbar[2].motor.get_temperature() + motorbar[3].motor.get_temperature() +
 					 motorbar[5].motor.get_temperature() + motorbar[6].motor.get_temperature() + motorbar[7].motor.get_temperature()) /

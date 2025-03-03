@@ -4,14 +4,35 @@
 #include "api.h"  // IWYU pragma: keep
 
 extern int target;
-extern bool lineTracking;
 extern bool jammed;
-extern pros::task_t ringsorting;
-extern pros::task_t linedetection;
 
-void colorDetect();
-void lineDetect(void* test);
-void ringsensTask(void* assign);
+enum class AutoMogo {
+    OFF = 0,
+    PRIMED = 1
+};
+
+enum class Colors {
+    RED = 0,
+    BLUE = 1,
+    NEUTRAL = 2,
+    SPUR = 3
+};
+
+enum class Doinker {
+    LEFT = 0,
+    RIGHT = 1,
+    BOTH = 2
+};
+
+void setIntake(int Target);
+void setLadyBrown(int Target);
+void setMogo(bool state);
+void setDoinker(Doinker doinker, bool state);
+
+void ladybrownTask();
+void colorTask();
 void unjamTask();
-void intakeMove(int target);
-void discard();
+void distanceTask();
+
+extern AutoMogo mogoState;
+extern Colors allianceColor;

@@ -1,4 +1,3 @@
-#include "EZ-Template/util.hpp"
 #include "main.h"  // IWYU pragma: keep
 
 bool red_goal_rush_used = false;
@@ -90,7 +89,9 @@ void left_corner() {
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
-	ram(3);
+	ram();
+	ram();
+	ram();
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
 	chassis.pid_wait();
 }
@@ -105,7 +106,9 @@ void right_corner() {
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
-	ram(3);
+	ram();
+	ram();
+	ram();
 	chassis.pid_turn_set({72_in, 24_in}, fwd, 90);
 	chassis.pid_wait();
 }
@@ -118,6 +121,8 @@ void red_ring_rush() {
 	setIntake(127);
 	chassis.pid_odom_set({{{37_in, 62_in}, fwd, 70}, {{9_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
+	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 90, 50, ez::cw);
+	chassis.pid_wait_quick_chain();
 }
 
 void blue_ring_rush() {
@@ -128,6 +133,8 @@ void blue_ring_rush() {
 	setIntake(127);
 	chassis.pid_odom_set({{{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
 	chassis.pid_wait();
+	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 90, 50, ez::ccw);
+	chassis.pid_wait_quick_chain();
 }
 
 void left_btm_ring() {

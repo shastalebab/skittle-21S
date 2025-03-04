@@ -1,7 +1,4 @@
-#include "subsystems_auton.hpp"
-
 #include "main.h"  // IWYU pragma: keep
-#include "subsystems.hpp"
 
 int target = 0;
 bool jammed = false;
@@ -15,13 +12,9 @@ void setIntake(int Target) {
 	intake.move(Target);
 }
 
-void setLadyBrown(int Target) {
-	lbPID.target_set(Target);
-}
+void setLadyBrown(int Target) { lbPID.target_set(Target); }
 
-void setMogo(bool state) {
-	mogomech.set(state);
-}
+void setMogo(bool state) { mogomech.set(state); }
 
 void setDoinker(Doinker doinker, bool state) {
 	if(doinker == Doinker::LEFT || doinker == Doinker::BOTH) doinkerL.set(state);
@@ -73,7 +66,7 @@ void colorTask() {
 		color = colorGet();
 		ringsens.set_led_pwm(100);
 		colorSet(color);
-		if(pros::competition::is_autonomous() && discarding == false) {
+		if(pros::competition::is_autonomous() && !discarding && !jammed) {
 			if(allianceColor != color && (int)color < 2) {
 				discard();
 			}
@@ -93,23 +86,25 @@ void ladybrownTask() {
 
 void unjamTask() {
 	int jamtime = 0;
-	while(intakesecond.get_temperature() < 50) {
-		if(setLB == true && discarding == false) {
-			if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
-				jamtime++;
-				if(jamtime > 20) {
-					jamtime = 0;
-					jammed = true;
+	while(true) {
+		if(intakesecond.get_temperature() < 50) {
+			if(setLB == true && discarding == false) {
+				if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
+					jamtime++;
+					if(jamtime > 20) {
+						jamtime = 0;
+						jammed = true;
+					}
 				}
-			}
 
-			if(jammed) {
-				intakesecond.move(-target);
-				jamtime++;
-				if(jamtime > 20) {
-					jamtime = 0;
-					jammed = false;
-					setIntake(target);
+				if(jammed) {
+					intakesecond.move(-target);
+					jamtime++;
+					if(jamtime > 20) {
+						jamtime = 0;
+						jammed = false;
+						setIntake(target);
+					}
 				}
 			}
 		}
@@ -119,9 +114,11 @@ void unjamTask() {
 
 void distanceTask() {
 	while(true) {
-		if(mogoState == AutoMogo::PRIMED) {
-			if(distsens.get() < 300) mogomech.set(true);
-			mogoState = AutoMogo::OFF;
+		if(pros::competition::is_autonomous() && mogoState == AutoMogo::PRIMED) {
+			if(distsens.get() < 40) {
+				mogomech.set(true);
+				mogoState = AutoMogo::OFF;
+			}
 		}
 		pros::delay(10);
 	}

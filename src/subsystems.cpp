@@ -1,7 +1,4 @@
-#include "subsystems.hpp"
-
 #include "main.h"  // IWYU pragma: keep
-#include "pros/misc.h"
 
 bool setLB = true;
 
@@ -17,7 +14,6 @@ void opcontrolIntake() {
 }
 
 void opcontrolLadyBrown() {
-	// ladybrown code
 	if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
 		setLB = !setLB;
 		if(ladybrown.get_position() > 280) setLB = false;
@@ -29,6 +25,10 @@ void opcontrolLadyBrown() {
 			setLadyBrown(ladybrown.get_position() - 100);
 		}
 	}
+	if(lbPID.target_get() > 1200)
+		setLadyBrown(1200);
+	else if(lbPID.target_get() < 10)
+		setLadyBrown(10);
 }
 
 void opcontrolMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)); }

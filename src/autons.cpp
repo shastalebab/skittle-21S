@@ -12,6 +12,7 @@ const int TURN_SPEED = 90;
 const int SWING_SPEED = 90;
 const int GRAB_MOGO = 80;
 
+bool cornerState = false;
 ///
 // Constants
 ///
@@ -104,9 +105,11 @@ void red_5greed() {
 	chassis.pid_drive_set(-6_in, 90);
 	chassis.pid_wait();
 	// drop goal in corner
-	chassis.pid_odom_set({{138_in, 6_in}, rev, 90});
-	chassis.pid_wait();
-	setMogo(false);
+	if(cornerState) {
+		chassis.pid_odom_set({{138_in, 6_in}, rev, 90});
+		chassis.pid_wait();
+		setMogo(false);
+	}
 	// touch ladder
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
 }
@@ -158,7 +161,7 @@ void red_gr_wp() {
 	chassis.pid_drive_set(-6_in, 90);
 	chassis.pid_wait();
 	setMogo(false);
-	// score on alliance stake 
+	// score on alliance stake
 	chassis.pid_odom_set({{{72_in, 22_in}, fwd, 90}, {{72_in, 10_in}, rev, 90}});
 	chassis.pid_wait();
 	setIntake(127);
@@ -248,14 +251,65 @@ void red_6ring() {
 	ram();
 	ram();
 	// ram corner
-	chassis.pid_odom_set({{138_in, 10_in}, rev, 90});
-	chassis.pid_wait();
-	setMogo(false);
+	if(cornerState) {
+		chassis.pid_odom_set({{138_in, 10_in}, rev, 90});
+		chassis.pid_wait();
+		setMogo(false);
+	}
 	// touch ladder
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
 }
 
 void red_7ring() {
+	allianceColor = Colors::RED;
+	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
+	// score preload
+	chassis.pid_odom_set({{64.5_in, 9_in}, fwd, 90});
+	chassis.pid_wait();
+	setLadyBrown(1000);
+	pros::delay(500);
+	setLadyBrown(10);
+	// grab mogo
+	chassis.pid_odom_set({{43_in, 50_in}, rev, GRAB_MOGO});
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait();
+	// sweep ring rush rings
+	chassis.pid_odom_set({{{37_in, 62.5_in}, fwd, 70}, {{9_in, 62.5_in}, fwd, 60}});
+	chassis.pid_wait();
+	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 90, 50, ez::cw);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack, then score corner
+	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{10_in, 10_in}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
+	chassis.pid_wait_quick_chain();
+	ram();
+	ram();
+	ram();
+	// grab mid top ring
+	chassis.pid_odom_set({{66_in, 22_in}, fwd, 90});
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	// ram corner
+	if(cornerState) {
+		chassis.pid_odom_set({{138_in, 10_in}, rev, 90});
+		chassis.pid_wait();
+		setMogo(false);
+	}
+	// touch ladder
+	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
+}
+
+void red_7greed() {
 	allianceColor = Colors::RED;
 	chassis.odom_xyt_set(56_in, 12_in, 90_deg);
 	// prime actuated intake & grab top ring
@@ -297,7 +351,7 @@ void red_7ring() {
 }
 
 void red_negsolowp() {
-	allianceColor = Colors::BLUE;
+	allianceColor = Colors::RED;
 	chassis.odom_xyt_set(60_in, 20_in, 180_deg);
 	// score preload
 	chassis.pid_odom_set({{64.5_in, 9_in}, fwd, 90});
@@ -394,10 +448,12 @@ void blue_5greed() {
 	chassis.pid_drive_set(-6_in, 90);
 	chassis.pid_wait();
 	// drop goal in corner
-	chassis.pid_odom_set({{6_in, 6_in}, rev, 127});
-	chassis.pid_wait();
+	if(cornerState) {
+		chassis.pid_odom_set({{6_in, 6_in}, rev, 127});
+		chassis.pid_wait();
+		setMogo(false);
+	}
 	// touch ladder
-	setMogo(false);
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
 }
 
@@ -446,7 +502,7 @@ void blue_gr_wp() {
 	chassis.pid_drive_set(-6_in, 90);
 	chassis.pid_wait();
 	setMogo(false);
-	// score on alliance stake 
+	// score on alliance stake
 	chassis.pid_odom_set({{{72_in, 22_in}, fwd, 90}, {{72_in, 10_in}, rev, 90}});
 	chassis.pid_wait();
 	setIntake(127);
@@ -523,7 +579,7 @@ void blue_6ring() {
 	setIntake(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{107_in, 62_in}, fwd, 70}, {{135_in, 62_in}, fwd, 60}});
+	chassis.pid_odom_set({{{107_in, 62.5_in}, fwd, 70}, {{135_in, 62.5_in}, fwd, 60}});
 	chassis.pid_wait();
 	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 90, 50, ez::ccw);
 	chassis.pid_wait_quick_chain();
@@ -536,14 +592,65 @@ void blue_6ring() {
 	ram();
 	ram();
 	// ram corner
-	chassis.pid_odom_set({{6_in, 10_in}, rev, 90});
-	chassis.pid_wait();
-	setMogo(false);
+	if(cornerState) {
+		chassis.pid_odom_set({{6_in, 10_in}, rev, 90});
+		chassis.pid_wait();
+		setMogo(false);
+	}
 	// touch ladder
 	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
 }
 
 void blue_7ring() {
+	allianceColor = Colors::BLUE;
+	chassis.odom_xyt_set(84_in, 20_in, 180_deg);
+	// score preload
+	chassis.pid_odom_set({{79.5_in, 9_in}, fwd, 90});
+	chassis.pid_wait();
+	setLadyBrown(1000);
+	pros::delay(500);
+	setLadyBrown(10);
+	// grab mogo
+	chassis.pid_odom_set({{101_in, 50_in}, rev, GRAB_MOGO});
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait();
+	// sweep ring rush rings
+	chassis.pid_odom_set({{{109_in, 62.5_in}, fwd, 70}, {{135_in, 62.5_in}, fwd, 60}});
+	chassis.pid_wait();
+	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 90, 50, ez::ccw);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack, then score corner
+	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{134_in, 10_in}, fwd, 127}});
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
+	chassis.pid_wait_quick_chain();
+	ram();
+	ram();
+	ram();
+	// grab mid top ring
+	chassis.pid_odom_set({{78_in, 22_in}, fwd, 90});
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	// ram corner
+	if(cornerState) {
+		chassis.pid_odom_set({{6_in, 10_in}, rev, 90});
+		chassis.pid_wait();
+		setMogo(false);
+	}
+	// touch ladder
+	chassis.pid_odom_set({{72_in, 44_in}, fwd, 127});
+}
+
+void blue_7greed() {
 	allianceColor = Colors::BLUE;
 	chassis.odom_xyt_set(88_in, 12_in, 270_deg);
 	// prime actuated intake & grab top ring
@@ -606,7 +713,7 @@ void blue_negsolowp() {
 	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 90, 50, ez::ccw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack
-	chassis.pid_odom_set({{{124_in, 48_in}, fwd, 127}, {{66_in, 22_in}, fwd, 90}});
+	chassis.pid_odom_set({{{124_in, 48_in}, fwd, 127}, {{78_in, 22_in}, fwd, 90}});
 	pros::delay(2000);
 	intakeLevel.set(false);
 	chassis.pid_wait();
@@ -790,8 +897,8 @@ void skills() {
 }
 
 void ram() {
-		chassis.pid_drive_set(8_in, 127, false);
-		chassis.pid_wait_quick();
-		chassis.pid_drive_set(-8_in, 127, false);
-		chassis.pid_wait_quick();
+	chassis.pid_drive_set(8_in, 127, false);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-8_in, 127, false);
+	chassis.pid_wait_quick();
 }

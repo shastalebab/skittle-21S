@@ -124,6 +124,15 @@ void updatepath() {
 
 	modules.push_back("ladder");
 
+	for(int i = 0; i < modules.size()-1; i++) {
+		if((modules[i] == "left bottom ring" || modules[i] == "right bottom ring") && (modules[i+1] == "red mid two" || modules[i+1] == "blue mid two")) {
+			auto two = modules[i];
+			auto one = modules[i+1];
+			modules[i] = one;
+			modules[i+1] = two;
+		}
+	}
+
 	for(int strings = 0; strings < modules.size(); strings++) {
 		path = path.append(strings == modules.size() - 1 ? modules[strings] : modules[strings] + "\n");
 	}

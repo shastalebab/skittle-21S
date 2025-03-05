@@ -1,3 +1,5 @@
+#include "autons.hpp"
+#include "liblvgl/core/lv_obj.h"
 #include "main.h"  // IWYU pragma: keep
 
 using namespace jas;
@@ -75,6 +77,12 @@ vector<lv_color32_t> colortable = {lv_color_hex(0xff2a00), lv_color_hex(0x0066cc
 
 void jautonrun() { jautoncurated[selected].AutonCall(); }
 
+void setPosInd() {
+	bool corner = lv_obj_has_state(posneg, LV_STATE_CHECKED);
+	if(cornerState) lv_obj_set_style_bg_color(posind, corner ? lv_color_hex(0xb12e1c) : lv_color_hex(0x5d2e1c), LV_PART_MAIN);
+	else lv_obj_set_style_bg_color(posind, corner ? lv_color_hex(0xdb8826) : lv_color_hex(0x5d5d5d), LV_PART_MAIN);
+}
+
 static void clear() {
 	noselection = true;
 	lv_obj_set_style_bg_color(redbluind, lv_color_hex(0x5d5d5d), LV_PART_MAIN);
@@ -121,6 +129,7 @@ static void selectauton(lv_event_t *e) {
 															 lv_obj_set_style_bg_color(redbluind, lv_color_hex(0xff2a00), LV_PART_MAIN);
 		lv_obj_has_state(posneg, LV_STATE_CHECKED) == true ? lv_obj_set_style_bg_color(posind, lv_color_hex(0xdb8826), LV_PART_MAIN) :
 															 lv_obj_set_style_bg_color(negind, lv_color_hex(0x00b5bc), LV_PART_MAIN);
+		setPosInd();
 		colortable[2] = lv_obj_get_style_bg_color(redbluind, LV_PART_MAIN);
 		lv_label_set_text(selectedAuton, ((jautoncurated[selected].Desc).c_str()));
 		lv_obj_set_style_bg_color(mogoring1, colortable[jautoncurated[selected].RedBluFilt], LV_PART_MAIN);
@@ -147,6 +156,11 @@ static void updownbtn(lv_event_t *e) {
 	listupdate();
 }
 
+static void cornertoggle(lv_event_t *e) {
+	cornerState = !cornerState;
+	setPosInd();
+}
+
 lv_obj_t *screens[3]{autoselector, motortemps, autobuilder};
 
 static void pageswitchbtn(lv_event_t *e) {
@@ -160,6 +174,7 @@ lv_event_cb_t jautonCurate = jautoncurate;
 lv_event_cb_t selectAuton = selectauton;
 lv_event_cb_t upDownBtn = updownbtn;
 lv_event_cb_t pageSwitchBtn = pageswitchbtn;
+lv_event_cb_t cornerToggle = cornertoggle;
 
 void screeninit() {
 	lv_style_init(&style);
@@ -265,6 +280,7 @@ void screeninit() {
 	lv_obj_add_style(negind, &styleind, LV_PART_MAIN);
 	lv_obj_set_size(posind, 66, 66);
 	lv_obj_set_pos(posind, 412, 126);
+	lv_obj_add_flag(posind, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_add_style(posind, &styleind, LV_PART_MAIN);
 	lv_obj_set_size(redbluind, 62, 79);
 	lv_obj_set_pos(redbluind, 266, 22);
@@ -275,6 +291,7 @@ void screeninit() {
 
 	lv_obj_add_event_cb(redblu, jautonCurate, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(posneg, jautonCurate, LV_EVENT_CLICKED, NULL);
+	lv_obj_add_event_cb(posind, cornerToggle, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(autonselectup, upDownBtn, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(autonselectdown, upDownBtn, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(jauton, selectAuton, LV_EVENT_VALUE_CHANGED, NULL);

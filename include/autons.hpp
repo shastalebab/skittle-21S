@@ -4,6 +4,7 @@
 
 extern Drive chassis;
 
+extern bool cornerState;
 
 void testautonRed();
 void testautonBlue();

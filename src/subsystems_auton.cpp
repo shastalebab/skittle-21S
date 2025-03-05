@@ -27,7 +27,7 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(160);
+	pros::delay(120);
 	intakesecond.move(-target);
 	pros::delay(100);
 	setIntake(target);
@@ -65,6 +65,7 @@ void colorTask() {
 	while(true) {
 		color = colorGet();
 		ringsens.set_led_pwm(100);
+		ringsens.set_integration_time(10);
 		colorSet(color);
 		if(pros::competition::is_autonomous() && !discarding && !jammed) {
 			if(allianceColor != color && (int)color < 2) {

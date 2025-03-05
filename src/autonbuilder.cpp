@@ -41,8 +41,9 @@ void blue_gr_mogo() {
 		chassis.pid_wait_quick_chain();
 	}
 	chassis.pid_odom_set({{24_in, 48_in}, rev, 80});
-	chassis.pid_wait_quick_chain();
 	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
 	chassis.pid_wait();
 }
 
@@ -52,8 +53,9 @@ void red_gr_mogo() {
 		chassis.pid_wait_quick_chain();
 	}
 	chassis.pid_odom_set({{120_in, 48_in}, rev, 80});
-	chassis.pid_wait_quick_chain();
 	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
 	chassis.pid_wait();
 }
 
@@ -63,8 +65,9 @@ void left_mogo() {
 		chassis.pid_wait_quick_chain();
 	}
 	chassis.pid_odom_set({{48_in, 48_in}, rev, 80});
-	chassis.pid_wait_quick_chain();
 	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
 	chassis.pid_wait();
 }
 
@@ -74,8 +77,9 @@ void right_mogo() {
 		chassis.pid_wait_quick_chain();
 	}
 	chassis.pid_odom_set({{96_in, 48_in}, rev, 80});
-	chassis.pid_wait_quick_chain();
 	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
 	chassis.pid_wait();
 }
 
@@ -86,8 +90,6 @@ void left_corner() {
 	}
 	setIntake(127);
 	chassis.pid_odom_set({{10_in, 10_in}, fwd, 127});
-	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	ram();
 	ram();
@@ -103,8 +105,6 @@ void right_corner() {
 	}
 	setIntake(127);
 	chassis.pid_odom_set({{134_in, 10_in}, fwd, 127});
-	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
 	ram();
 	ram();

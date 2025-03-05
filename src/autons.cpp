@@ -644,16 +644,53 @@ void blue_negsolowp() {
 // SKILLS
 
 void skills() {
-	allianceColor = Colors::NEUTRAL;
-	chassis.odom_xyt_set(72_in, 12_in, 180_deg);
+	allianceColor = Colors::RED;
+	chassis.odom_xyt_set(70_in, 0_in, 90_deg);
 	// score preload on alliance stake
-	setLadyBrown(1000);
-	pros::delay(1000);
-	setLadyBrown(10);
+	//turn off anti jam here
+	setIntake(127);
+	pros::delay(750);
+	//anti jam back on
 	// grab mogo
-	chassis.pid_odom_set({{96_in, 24_in}, rev, GRAB_MOGO});
-	chassis.pid_wait_quick_chain();
+	chassis.pid_drive_set(15, 127);
+	chassis.pid_wait();
+	chassis.pid_turn_set(180_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-18, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-4, 70);
+	chassis.pid_wait_quick();
 	setMogo(true);
+	chassis.pid_turn_set(90_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(25, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(0_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(24, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(90_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(60, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(6, 90);
+	chassis.pid_wait();
+	pros::delay(250);
+	chassis.pid_drive_set(-72, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(270_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(36, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(180_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-6, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(135_deg, 127);
+	chassis.pid_wait_quick();
+	setMogo(false);
+
+	/*
 	setIntake(127);
 	// score 2 rings on mogo & 1 on wallstake
 	chassis.pid_odom_set({{{96_in, 47_in}, fwd, 90}, {{120_in, 48_in}, fwd, 90}, {{130_in, 72_in}, fwd, 90}});
@@ -749,6 +786,7 @@ void skills() {
 	chassis.pid_turn_set(180_deg, 90);
 	chassis.pid_wait();
 	setIntake(127);
+	*/
 }
 
 void ram() {

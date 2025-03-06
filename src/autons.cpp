@@ -54,8 +54,6 @@ void default_constants() {
 	chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
-pros::task_t linedetection;
-
 void move_forward() {
 	chassis.pid_drive_set(10_in, 127);
 	chassis.pid_wait();

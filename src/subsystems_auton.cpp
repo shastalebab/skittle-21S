@@ -3,7 +3,7 @@
 int target = 0;
 bool unjam = true;
 bool jammed = false;
-Colors allianceColor = Colors::NEUTRAL;
+Colors allianceColor = Colors::RED;
 AutoMogo mogoState = AutoMogo::OFF;
 
 // Wrappers
@@ -70,7 +70,7 @@ void colorTask() {
 	while(true) {
 		color = colorGet();
 		colorSet(color);
-		if(pros::competition::is_autonomous() && (int)allianceColor < 2 && !discarding && !jammed) {
+		if((int)allianceColor < 2 && !discarding && !jammed) {
 			if(allianceColor != color && (int)color < 2) {
 				discard();
 			}

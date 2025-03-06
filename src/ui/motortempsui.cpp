@@ -18,6 +18,7 @@ LV_IMG_DECLARE(brainbg);
 static void gettemp(lv_event_t *e) {
 	const char *getmotor = (char *)lv_event_get_user_data(e);
 	temp = motorbar[*getmotor].motor.get_temperature() * 5;
+	if(temp > 255) temp = 255;
 	lv_obj_set_style_bg_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0xcfffe9 : 0xff2a00), LV_PART_MAIN);
 	lv_obj_set_style_text_color(lv_event_get_target(e), lv_color_hex(motorbar[*getmotor].motor.is_installed() ? 0x071808 : 0xcfffe9), LV_PART_MAIN);
 	lv_obj_set_style_bg_opa(lv_event_get_target(e), temp, LV_PART_MAIN);
@@ -39,6 +40,7 @@ static void tempmore(lv_event_t *e) {
 	lv_obj_set_style_bg_opa(motorinfo, 255, LV_PART_MAIN);
 	lv_obj_align(motorinfo, LV_ALIGN_CENTER, 0, 0);
 	temp = motorbar[*getinfo].motor.get_temperature() * 5;
+	if(temp > 255) temp = 255;
 	lv_obj_set_style_bg_color(motorinfo, lv_color_hsv_to_rgb(motorbar[*getinfo].motor.is_installed() ? 124 : 0, 71, temp), LV_PART_MAIN);
 }
 
@@ -89,35 +91,47 @@ void tempcheck() {
 }
 
 void tempcheckTask() {
+	float tempDrive;
+	float tempIntake;
+	float tempLadyBrown;
 	while(true) {
-		driveTemp = (motorbar[1].motor.get_temperature() + motorbar[2].motor.get_temperature() + motorbar[3].motor.get_temperature() +
+		// temperature variables
+		tempDrive = (motorbar[1].motor.get_temperature() + motorbar[2].motor.get_temperature() + motorbar[3].motor.get_temperature() +
 					 motorbar[5].motor.get_temperature() + motorbar[6].motor.get_temperature() + motorbar[7].motor.get_temperature()) /
 					6;
-		intakeTemp = (motorbar[0].motor.get_temperature() + motorbar[4].motor.get_temperature()) / 2;
+		tempIntake = (motorbar[0].motor.get_temperature() + motorbar[4].motor.get_temperature()) / 2;
+		tempLadyBrown = motorbar[8].motor.get_temperature();
 
+		// screen update
 		if(lv_tileview_get_tile_act(mainscreen) == motortemps) {
 			for(int m = 0; m < motorbar.size(); m++) {
 				lv_event_send(motorboxes[m], LV_EVENT_REFRESH, NULL);
 			}
 		}
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y) == true) {
-			if(intakeTemp <= 30)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "i: cool, %.0f°C    ", intakeTemp);
-			else if(intakeTemp > 30 && intakeTemp <= 45)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "i: warm, %.0f°C    ", intakeTemp);
-			else if(intakeTemp > 45)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "i: hot, %.0f°C    ", intakeTemp);
-			pros::delay(90);
-		} else {
-			if(driveTemp <= 30)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: cool, %.0f°C    ", driveTemp);
-			else if(driveTemp > 30 && driveTemp <= 45)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: warm, %.0f°C    ", driveTemp);
-			else if(driveTemp > 45)
-				pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: hot, %.0f°C    ", driveTemp);
-			pros::delay(90);
-		}
-		pros::delay(10);
+		// controller update
+		if(tempDrive <= 30)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: cool, %.0f°C    ", tempDrive);
+		else if(tempDrive > 30 && tempDrive <= 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: warm, %.0f°C    ", tempDrive);
+		else if(tempDrive > 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 0, 0, "d: hot, %.0f°C    ", tempDrive);
+		pros::delay(50);
+
+		if(tempIntake <= 30)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 1, 0, "i: cool, %.0f°C    ", tempIntake);
+		else if(tempIntake > 30 && tempIntake <= 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 1, 0, "i: warm, %.0f°C    ", tempIntake);
+		else if(tempIntake > 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 1, 0, "i: hot, %.0f°C    ", tempIntake);
+		pros::delay(50);
+
+		if(tempLadyBrown <= 30)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 2, 0, "l: cool, %.0f°C    ", tempLadyBrown);
+		else if(tempLadyBrown > 30 && tempLadyBrown <= 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 2, 0, "l: warm, %.0f°C    ", tempLadyBrown);
+		else if(tempLadyBrown > 50)
+			pros::c::controller_print(pros::E_CONTROLLER_MASTER, 2, 0, "l: hot, %.0f°C    ", tempLadyBrown);
+		pros::delay(50);
 	}
 }

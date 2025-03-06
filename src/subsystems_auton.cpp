@@ -1,6 +1,7 @@
 #include "main.h"  // IWYU pragma: keep
 
 int target = 0;
+bool unjam = true;
 bool jammed = false;
 Colors allianceColor = Colors::NEUTRAL;
 AutoMogo mogoState = AutoMogo::OFF;
@@ -21,13 +22,15 @@ void setDoinker(Doinker doinker, bool state) {
 	if(doinker == Doinker::RIGHT || doinker == Doinker::BOTH) doinkerR.set(state);
 }
 
+void setUnjam(bool state) { unjam = state; }
+
 // Color sorting
 
 bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(120);
+	pros::delay(60);
 	intakesecond.move(-target);
 	pros::delay(100);
 	setIntake(target);
@@ -50,9 +53,9 @@ void colorSet(Colors color) {
 
 Colors colorGet() {
 	auto hue = ringsens.get_hue();
-	if(hue > 0 && hue < 10)
+	if(hue > 0 && hue < 15)
 		return Colors::RED;
-	else if(hue > 210 && hue < 225)
+	else if(hue > 200 && hue < 215)
 		return Colors::BLUE;
 	else if(hue < 90 && hue > 70)
 		return Colors::SPUR;
@@ -62,12 +65,12 @@ Colors colorGet() {
 
 void colorTask() {
 	Colors color;
+	ringsens.set_integration_time(10);
+	ringsens.set_led_pwm(100);
 	while(true) {
 		color = colorGet();
-		ringsens.set_led_pwm(100);
-		ringsens.set_integration_time(10);
 		colorSet(color);
-		if(pros::competition::is_autonomous() && !discarding && !jammed) {
+		if(pros::competition::is_autonomous() && (int)allianceColor < 2 && !discarding && !jammed) {
 			if(allianceColor != color && (int)color < 2) {
 				discard();
 			}
@@ -88,7 +91,7 @@ void ladybrownTask() {
 void unjamTask() {
 	int jamtime = 0;
 	while(true) {
-		if(intakesecond.get_temperature() < 50) {
+		if(intakesecond.get_temperature() < 50 && unjam) {
 			if(setLB == true && discarding == false) {
 				if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
 					jamtime++;

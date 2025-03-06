@@ -28,6 +28,7 @@ void setIntake(int Target);
 void setLadyBrown(int Target);
 void setMogo(bool state);
 void setDoinker(Doinker doinker, bool state);
+void setUnjam(bool state);
 
 void ladybrownTask();
 void colorTask();

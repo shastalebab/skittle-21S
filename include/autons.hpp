@@ -30,4 +30,4 @@ void skills();
 void move_forward();
 
 void default_constants();
-void ram();
+void ram(int attempts);

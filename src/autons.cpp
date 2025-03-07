@@ -1,5 +1,7 @@
 #include "EZ-Template/util.hpp"
+#include "autonbuilder.hpp"
 #include "main.h"  // IWYU pragma: keep
+#include "subsystems.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our
@@ -660,12 +662,12 @@ void blue_negsolowp() {
 // SKILLS
 
 void skills() {
-	allianceColor = Colors::NEUTRAL;
-	chassis.odom_xyt_set(70_in, 0_in, 90_deg);
+	allianceColor = Colors::RED;
+	chassis.odom_xyt_set(0_in, 0_in, 90_deg);
 	// score preload on alliance stake
 	setUnjam(false);
 	setIntake(127);
-	pros::delay(750);
+	pros::delay(600);
 	setUnjam(true);
 	// grab mogo
 	chassis.pid_drive_set(15, 127);
@@ -673,38 +675,72 @@ void skills() {
 	chassis.pid_turn_set(180_deg, 127);
 	chassis.pid_wait_quick();
 	chassis.pid_drive_set(-18, 127);
-	chassis.pid_wait_quick();
-	chassis.pid_drive_set(-4, 70);
-	chassis.pid_wait_quick();
+	chassis.pid_wait_quick_chain();
+	chassis.pid_drive_set(-5, 70);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait();
+	pros::delay(250);
 	setMogo(true);
 	chassis.pid_turn_set(90_deg, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_drive_set(25, 127);
+	chassis.pid_drive_set(22, 127);
 	chassis.pid_wait_quick();
 	chassis.pid_turn_set(0_deg, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_drive_set(24, 127);
+	chassis.pid_drive_set(20, 127);
 	chassis.pid_wait_quick();
 	chassis.pid_turn_set(90_deg, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_drive_set(60, 127);
+	chassis.pid_drive_set(59, 127);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_drive_set(5, 50);
 	chassis.pid_wait_quick();
-	chassis.pid_drive_set(6, 90);
-	chassis.pid_wait();
 	pros::delay(250);
-	chassis.pid_drive_set(-72, 127);
+	chassis.pid_drive_set(-52, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_turn_set(270_deg, 127);
+	chassis.pid_turn_set(275_deg, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_drive_set(36, 127);
+	chassis.pid_drive_set(54, 100);
 	chassis.pid_wait_quick();
-	chassis.pid_turn_set(180_deg, 127);
-	chassis.pid_wait_quick();
-	chassis.pid_drive_set(-6, 127);
-	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-3, 127);
+	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(135_deg, 127);
 	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-10, 127);
+	chassis.pid_wait_until(-5);
 	setMogo(false);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_drive_set(6, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(45_deg, 127);
+	chassis.pid_wait_quick();
+	setUnjam(false);
+	setLadyBrown(200);
+	chassis.pid_drive_set(6, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_odom_set({{53, 58, 90}, fwd, 127});
+	chassis.pid_wait();
+	chassis.pid_turn_set(0, 127);
+	chassis.pid_wait_quick();
+	intakefirst.move(127);
+	setLadyBrown(1200);
+	setIntake(0);
+	chassis.pid_drive_set(5, 127);
+	chassis.pid_wait_quick();
+	pros::delay(1500);
+	setIntake(127);
+	setLadyBrown(200);
+	pros::delay(1000);
+	setLadyBrown(1200);
+	setIntake(0);
+	pros::delay(1000);
+	setLadyBrown(10);
+
+
+
+
+
+
 
 	/*
 	setIntake(127);

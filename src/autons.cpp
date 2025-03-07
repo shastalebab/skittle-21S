@@ -1,5 +1,6 @@
 #include "EZ-Template/util.hpp"
 #include "main.h"  // IWYU pragma: keep
+#include "subsystems.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our
@@ -83,11 +84,11 @@ void red_5greed() {
 	chassis.pid_wait();
 	pros::delay(250);
 	// score corner
-	chassis.pid_odom_set({{134_in, 10_in}, fwd, 127});
+	chassis.pid_odom_set({{123_in, 24_in}, fwd, 127});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
-	chassis.pid_wait_quick_chain();
-	ram(3);
+	chassis.pid_turn_set(135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// grab mid top ring & drop mogo
 	chassis.pid_odom_set({{78_in, 19_in}, fwd, 70});
 	pros::delay(1000);
@@ -138,7 +139,7 @@ void red_gr_wp() {
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
 	chassis.pid_wait_quick_chain();
-	ram(3);
+	ram();
 	// grab top ring at mid
 	chassis.pid_odom_set({{78_in, 22_in}, fwd, 70});
 	pros::delay(1000);
@@ -173,7 +174,7 @@ void red_possolowp() {
 	pros::delay(500);
 	setLadyBrown(10);
 	// grab mogo & bottom ring
-	chassis.pid_odom_set({{101_in, 50_in}, rev, GRAB_MOGO});
+	chassis.pid_odom_set({{99_in, 45_in}, rev, GRAB_MOGO});
 	mogoState = AutoMogo::PRIMED;
 	chassis.pid_wait_quick();
 	setMogo(true);
@@ -231,17 +232,16 @@ void red_6ring() {
 	setIntake(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{35_in, 62.5_in}, fwd, 127}, {{11_in, 62.5_in}, fwd, 90}});
+	chassis.pid_odom_set({{{35_in, 62_in}, fwd, 127}, {{11_in, 62_in}, fwd, 90}});
 	chassis.pid_wait();
 	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 127, 50, ez::cw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{8_in, 14_in}, fwd, 127}});
+	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{21_in, 24_in}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
-	chassis.pid_wait_quick_chain();
-	ram(3);
-	chassis.odom_xy_set(12_in, 12_in);
+	chassis.pid_turn_set(-135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// ram corner
 	if(cornerState) {
 		chassis.pid_odom_set({{138_in, 10_in}, rev, 90});
@@ -275,12 +275,11 @@ void red_7ring() {
 	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 127, 50, ez::cw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{8_in, 14_in}, fwd, 127}});
+	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{21_in, 24_in}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
-	chassis.pid_wait();
-	ram(3);
-	chassis.odom_xy_set(12_in, 12_in);
+	chassis.pid_turn_set(-135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// grab mid top ring
 	chassis.pid_odom_set({{68_in, 20_in}, fwd, 90});
 	pros::delay(500);
@@ -382,11 +381,11 @@ void blue_5greed() {
 	chassis.pid_wait();
 	pros::delay(250);
 	// score corner
-	chassis.pid_odom_set({{10_in, 10_in}, fwd, 127});
+	chassis.pid_odom_set({{21_in, 24_in}, fwd, 127});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({0_in, 0_in}, fwd, 127);
-	chassis.pid_wait_quick_chain();
-	ram(3);
+	chassis.pid_turn_set(-135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// grab mid top ring & drop mogo
 	chassis.pid_odom_set({{70_in, 19_in}, fwd, 70});
 	pros::delay(1000);
@@ -435,7 +434,7 @@ void blue_gr_wp() {
 	// score corner
 	chassis.pid_odom_set({{10_in, 10_in}, fwd, 127});
 	chassis.pid_wait_quick_chain();
-	ram(3);
+	ram();
 	// grab top ring at mid
 	chassis.pid_odom_set({{66_in, 22_in}, fwd, 70});
 	pros::delay(1000);
@@ -528,18 +527,17 @@ void blue_6ring() {
 	setIntake(127);
 	chassis.pid_wait();
 	// sweep ring rush rings
-	chassis.pid_odom_set({{{109_in, 62.5_in}, fwd, 127}, {{133_in, 62.5_in}, fwd, 90}});
+	chassis.pid_odom_set({{{109_in, 62_in}, fwd, 127}, {{133_in, 62_in}, fwd, 90}});
 	chassis.pid_wait();
 	pros::delay(250);
 	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 90, 50, ez::ccw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{136_in, 14_in}, fwd, 127}});
+	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{123_in, 24_in}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
-	chassis.pid_wait_quick_chain();
-	ram(3);
-	chassis.odom_xy_set(132_in, 12_in);
+	chassis.pid_turn_set(135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// ram corner
 	if(cornerState) {
 		chassis.pid_odom_set({{6_in, 10_in}, rev, 90});
@@ -573,12 +571,11 @@ void blue_7ring() {
 	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 127, 50, ez::ccw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{136_in, 14_in}, fwd, 127}});
+	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{123_in, 24_in}, fwd, 127}});
 	chassis.pid_wait_quick_chain();
-	chassis.pid_turn_set({144_in, 0_in}, fwd, 127);
-	chassis.pid_wait();
-	ram(3);
-	chassis.odom_xy_set(132_in, 12_in);
+	chassis.pid_turn_set(135, fwd, 127);
+	chassis.pid_wait_quick();
+	ram();
 	// grab mid top ring
 	chassis.pid_odom_set({{76_in, 20_in}, fwd, 90});
 	pros::delay(500);
@@ -609,7 +606,7 @@ void blue_negsolowp() {
 	pros::delay(500);
 	setLadyBrown(10);
 	// grab mogo
-	chassis.pid_odom_set({{101_in, 50_in}, rev, GRAB_MOGO});
+	chassis.pid_odom_set({{99_in, 45_in}, rev, GRAB_MOGO});
 	mogoState = AutoMogo::PRIMED;
 	chassis.pid_wait_quick_chain();
 	setMogo(true);
@@ -805,11 +802,15 @@ void skills() {
 	*/
 }
 
-void ram(int attempts) {
-	for(int i = 0; i < attempts; i++) {
-		chassis.drive_set(127, 127);
-		pros::delay(i == 0 ? 1000 : 750);
-		chassis.drive_set(-127, -127);
-		pros::delay(250);
-	}
+void ram() {
+	chassis.pid_drive_set(26_in, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(-8_in, 127);
+	chassis.pid_wait_quick();
+	intakeLevel.set(false);
+	chassis.pid_drive_set(10_in, 127);
+	chassis.pid_wait_quick();
+	intakeLevel.set(true);
+	chassis.pid_drive_set(-8_in, 127);
+	chassis.pid_wait_quick_chain();
 }

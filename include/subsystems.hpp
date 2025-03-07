@@ -25,6 +25,5 @@ void opcontrolLadyBrown();
 void opcontrolMogo();
 void opcontrolDoinkerR();
 void opcontrolDoinkerL();
-bool shift();
 
 extern bool setLB;

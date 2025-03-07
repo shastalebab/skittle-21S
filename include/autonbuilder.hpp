@@ -24,3 +24,4 @@ void mid_top_ring();
 void right_btm_ring();
 
 void ladder();
+void drop_mogo();

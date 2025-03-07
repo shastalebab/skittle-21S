@@ -417,60 +417,41 @@ void manualbuilderinit() {
 }
 
 void mancallback() {
+	// Set the position and alliance of the auton based on the selection
 	chassis.odom_pose_set({startposition * okapi::inch, 20_in, positionorient ? 0_deg : 180_deg});
-	cout << util::to_string_with_precision(chassis.odom_x_get()) << endl;
-	if(color != 1)
-		allianceColor = color == 0 ? Colors::RED : Colors::BLUE;
+	if(color != 1) allianceColor = color == 0 ? Colors::RED : Colors::BLUE;
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
 		if(manmodules[module_it].Name == "blue goal rush")
-			// cout << "blue_goal_rush" << endl;
 			blue_goal_rush();
 		else if(manmodules[module_it].Name == "red goal rush")
-			// cout << "red_goal_rush" << endl;
 			red_goal_rush();
 		else if(manmodules[module_it].Name == "alliance stake")
-			// cout << "alliancestake" << endl;
 			alliancestake();
 		else if(manmodules[module_it].Name == "blue regrab goal rush")
-			// cout << "blue_gr_mogo" << endl;
 			blue_gr_mogo();
 		else if(manmodules[module_it].Name == "red regrab goal rush")
-			// cout << "red_gr_mogo" << endl;
 			red_gr_mogo();
 		else if(manmodules[module_it].Name == "left mogo")
-			// cout << "left_mogo" << endl;
 			left_mogo();
 		else if(manmodules[module_it].Name == "right mogo")
-			// cout << "right_mogo" << endl;
 			right_mogo();
 		else if(manmodules[module_it].Name == "left corner")
-			// cout << "left_corner" << endl;
 			left_corner();
 		else if(manmodules[module_it].Name == "right corner")
-			// cout << "right_corner" << endl;
 			right_corner();
 		else if(manmodules[module_it].Name == "red mid two")
-			// cout << "red_ring_rush" << endl;
 			red_ring_rush();
 		else if(manmodules[module_it].Name == "blue mid two")
-			// cout << "blue_ring_rush" << endl;
 			blue_ring_rush();
 		else if(manmodules[module_it].Name == "left bottom ring")
-			// cout << "left_btm_ring" << endl;
 			left_btm_ring();
 		else if(manmodules[module_it].Name == "mid top ring")
-			// cout << "mid_top_ring" << endl;
 			mid_top_ring();
 		else if(manmodules[module_it].Name == "right bottom ring")
-			// cout << "right_btm_ring" << endl;
 			right_btm_ring();
 		else if(manmodules[module_it].Name == "ladder")
-			// cout << "ladder" << endl;
 			ladder();
-		else if(manmodules[module_it].Name == "drop mogo") {
-			// cout << "drop mogo" << endl;
-			setIntake(0);
-			setMogo(false);
-		}
+		else if(manmodules[module_it].Name == "drop mogo")
+			drop_mogo();
 	}
 }

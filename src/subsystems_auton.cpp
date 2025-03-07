@@ -1,9 +1,10 @@
 #include "main.h"  // IWYU pragma: keep
+#include "pros/misc.hpp"
 
 int target = 0;
 bool unjam = true;
 bool jammed = false;
-Colors allianceColor = Colors::RED;
+Colors allianceColor = Colors::NEUTRAL;
 AutoMogo mogoState = AutoMogo::OFF;
 
 // Wrappers
@@ -70,7 +71,7 @@ void colorTask() {
 	while(true) {
 		color = colorGet();
 		colorSet(color);
-		if((int)allianceColor < 2 && !discarding && !jammed) {
+		if(pros::competition::is_autonomous() && (int)allianceColor < 2 && !discarding && !jammed) {
 			if(allianceColor != color && (int)color < 2) {
 				discard();
 			}
@@ -83,7 +84,8 @@ void colorTask() {
 
 void ladybrownTask() {
 	while(true) {
-		ladybrown.move(lbPID.compute(ladybrown.get_position()));
+		if(!(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)))
+			ladybrown.move(lbPID.compute(ladybrown.get_position()));
 		pros::delay(10);
 	}
 }

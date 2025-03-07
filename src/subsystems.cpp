@@ -1,4 +1,6 @@
+#include "subsystems.hpp"
 #include "main.h"  // IWYU pragma: keep
+#include "subsystems_auton.hpp"
 
 bool setLB = true;
 
@@ -20,9 +22,11 @@ void opcontrolLadyBrown() {
 		setLadyBrown(setLB ? 10 : 200);
 	} else {
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			setLadyBrown(ladybrown.get_position() + 100);
+			ladybrown.move(127);
+			setLadyBrown(ladybrown.get_position());
 		} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-			setLadyBrown(ladybrown.get_position() - 100);
+			ladybrown.move(-127);
+			setLadyBrown(ladybrown.get_position());
 		}
 	}
 	if(lbPID.target_get() > 1200)
@@ -35,5 +39,3 @@ void opcontrolMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROL
 
 void opcontrolDoinkerR() { doinkerR.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)); }
 void opcontrolDoinkerL() { doinkerL.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)); }
-
-bool shift() { return master.get_digital(pros::E_CONTROLLER_DIGITAL_R1); }

@@ -662,9 +662,10 @@ void skills() {
 	chassis.odom_xyt_set(0_in, 0_in, 90_deg);
 	// score preload on alliance stake
 	setUnjam(false);
-	setIntake(127);
+	intake.move_relative(500, 200);
 	pros::delay(600);
 	setUnjam(true);
+	setIntake(127);
 	// grab mogo
 	chassis.pid_drive_set(15, 127);
 	chassis.pid_wait();
@@ -714,7 +715,7 @@ void skills() {
 	setLadyBrown(200);
 	chassis.pid_drive_set(6, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_odom_set({{53, 58, 90}, fwd, 127});
+	chassis.pid_odom_set({{53, 58}, fwd, 100});
 	chassis.pid_wait();
 	chassis.pid_turn_set(0, 127);
 	chassis.pid_wait_quick();
@@ -722,15 +723,24 @@ void skills() {
 	setLadyBrown(1200);
 	setIntake(0);
 	chassis.pid_drive_set(5, 127);
-	chassis.pid_wait_quick();
-	pros::delay(1500);
+	pros::delay(1000);
+	chassis.pid_drive_set(-5, 127);
 	setIntake(127);
 	setLadyBrown(200);
-	pros::delay(1000);
+	pros::delay(1500);
+	chassis.pid_drive_set(5, 127);
 	setLadyBrown(1200);
 	setIntake(0);
 	pros::delay(1000);
 	setLadyBrown(10);
+	chassis.pid_drive_set(-5, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_turn_set(90_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(48, 127);
+	chassis.pid_wait();
+	chassis.odom_xyt_set(0, 0, 0);
+	chassis.pid_odom_set({{{22_in, -14_in}, fwd, 127}, {{38_in, -6_in}, fwd, 127}, {{-11_in, 15_in}, fwd, 127}});
 
 
 

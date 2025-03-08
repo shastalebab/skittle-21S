@@ -9,8 +9,8 @@
 // Chassis constructor
 ez::Drive chassis(
 	// These are your drive motors, the first motor is used for sensing!
-	{20, 19, -18},	 // Left Chassis Ports (negative port will reverse it!)
-	{11, -12, -13},	 // Right Chassis Ports (negative port will reverse it!)
+	{19, 20, -18},	 // Left Chassis Ports (negative port will reverse it!)
+	{-12, 11, -13},	 // Right Chassis Ports (negative port will reverse it!)
 
 	3,			   // IMU Port
 	3.7454365097,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -58,18 +58,18 @@ void initialize() {
 	// Auton selector
 	j_auton_selector.jautonpopulate({
 		jas::jasauton(red_5greed, 0, 1, "Red 5 ring greed", "Red 5 ring auton", 5, 0, false),
-		jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 2 + 2 + 1 goal rush auton", 2, 2, true),
+		// jas::jasauton(red_gr_wp, 0, 1, "Red goal rush WP", "Red 2 + 2 + 1 goal rush auton", 2, 2, true),
 		jas::jasauton(red_possolowp, 0, 1, "Red positive solo WP", "Red 3 + 2 + 1 goal side auton", 3, 2, true),
 		jas::jasauton(red_6ring, 0, 0, "Red 6 ring", "Red 6 ring side auton", 6, 0, false),
-		jas::jasauton(red_7ring, 0, 0, "Red 7 ring", "Red 5 + 1 + 1 ring side auton", 5, 1, true),
+		jas::jasauton(red_7ring, 0, 0, "Red 7 ring", "Red 6 + 1 ring side auton", 6, 0, true),
 		jas::jasauton(red_negsolowp, 0, 0, "Red negative solo WP", "Red 3 + 2 + 1 ring side auton", 3, 2, true),
 		jas::jasauton(blue_5greed, 1, 1, "Blue 5 ring greed", "Blue 5 ring auton", 5, 0, false),
-		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 2 + 2 + 1 goal rush auton", 2, 2, true),
+		// jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 2 + 2 + 1 goal rush auton", 2, 2, true),
 		jas::jasauton(blue_possolowp, 1, 1, "Blue positive solo WP", "Blue 3 + 2 + 1 goal side auton", 3, 2, true),
 		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring", "Blue 6 ring side auton", 6, 0, false),
-		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring", "Blue 5 + 1 + 1 ring side auton", 5, 1, true),
+		jas::jasauton(blue_7ring, 1, 0, "Blue 7 ring", "Blue 6 + 1 ring side auton", 6, 0, true),
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 3 + 2 + 1 ring side auton", 3, 2, true),
-		jas::jasauton(skills, 2, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 5, true),
+		jas::jasauton(skills, 2, 2, "Skills", "Loosely tested, potential 53-59 pt", 6, 6, true),
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward", 0, 0, false),
 		jas::jasauton(testautonRed, 0, 2, "red test", "intake + clamp", 0, 0, false),
 		jas::jasauton(testautonBlue, 1, 2, "blue test", "intake + clamp", 0, 0, false),

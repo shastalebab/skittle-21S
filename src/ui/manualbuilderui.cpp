@@ -1,7 +1,5 @@
 #include "main.h"  // IWYU pragma: keep
 
-// TO DO: Add callbacks. Make it so it goes back a page when you remove all
-// modules on a page.
 jas::autobuildermodules::autobuildermodules() {
 	Name = "";
 	Desc = "";
@@ -29,6 +27,7 @@ bool positionorient = true;
 bool noselection1 = true;
 bool noselection2 = true;
 
+// Create base list of modules & user selection list of modules
 vector<jas::autobuildermodules> getmodules{
 	jas::autobuildermodules("blue goal rush", "Use doinker to grab mogo at the intersection between alliances"),
 	jas::autobuildermodules("red goal rush", "Use doinker to grab mogo at the intersection between alliances"),
@@ -70,6 +69,7 @@ static lv_style_t stylebtn_;
 LV_IMG_DECLARE(manbuilderoverlay)
 
 void tableupdate(lv_obj_t *targettable) {
+	// Update the values displayed in the table when a new module is added to the list or when the list is scrolled
 	if(lv_obj_get_x(targettable) == 223) {
 		l < getmodules.size() ? lv_table_set_cell_value(manbuilderlist, 0, 0, getmodules[l].Name.c_str()) : lv_table_set_cell_value(manbuilderlist, 0, 0, ""),
 			noselection1 = true;
@@ -96,6 +96,7 @@ void tableupdate(lv_obj_t *targettable) {
 }
 
 static void allianceselect(lv_event_t *e) {
+	// Set the selected alliance
 	int target = lv_slider_get_value(allianceslider);
 	const lv_color32_t colors[3] = {lv_color_hex(0xff2a00), lv_color_hex(0x5d5d5d), lv_color_hex(0x0066cc)};
 	color = target;
@@ -104,6 +105,7 @@ static void allianceselect(lv_event_t *e) {
 }
 
 static void selecttable(lv_event_t *e) {
+	// Updates the selection variables to the list item(s) chosen by the user and display the descriptions
 	uint16_t row, col;
 	lv_table_get_selected_cell(lv_event_get_target(e), &row, &col);
 	if(lv_event_get_target(e) == manbuilderlist) {
@@ -132,6 +134,7 @@ static void selecttable(lv_event_t *e) {
 }
 
 static void confirmchoice(lv_event_t *e) {
+	// Add or delete modules from the list
 	lv_obj_t *target = lv_event_get_target(e);
 	if(target == addmodule && selected1 < getmodules.size()) {
 		if(noselection1 == true) return;
@@ -148,6 +151,7 @@ static void confirmchoice(lv_event_t *e) {
 }
 
 static void pageupdate(lv_event_t *e) {
+	// Event handler for using the scrolling buttons
 	lv_obj_t *target = lv_event_get_target(e);
 	if(lv_obj_get_y(target) == 52) {
 		if(lv_obj_get_x(target) == 223) {
@@ -178,6 +182,7 @@ static void pageupdate(lv_event_t *e) {
 }
 
 static void positionupdate(lv_event_t *e) {
+	// Update the start position of the robot and the direction it is facing
 	if(lv_event_get_target(e) == positionind) {
 		if(lv_slider_get_value(positionslider) < 12)
 			lv_slider_set_value(positionslider, 0, LV_ANIM_ON);
@@ -202,6 +207,7 @@ static void positionupdate(lv_event_t *e) {
 }
 
 static void tableinfo(lv_event_t *e) {
+	// Create a message box with all relevant information to the path
 	std::string manpath = "";
 	for(int strings = 0; strings < manmodules.size(); strings++) {
 		manpath = manpath.append("\n    " + manmodules[strings].Name);
@@ -225,14 +231,15 @@ static void tableinfo(lv_event_t *e) {
 	lv_obj_set_style_text_font(lv_msgbox_get_close_btn(manpathinfo), &lv_font_montserrat_20, LV_PART_MAIN);
 	lv_obj_set_style_text_font(lv_msgbox_get_title(manpathinfo), &lv_font_montserrat_20, LV_PART_MAIN);
 	lv_obj_del(buf);
-	// autonomous(); //comment this out
 }
 
 static void screenchange(lv_event_t *e) {
+	// Swap between the manual and automatic auton builder pages
 	activescreen = !activescreen;
 	lv_obj_set_tile(mainscreen, activescreen ? manbuilder : autobuilder, LV_ANIM_ON);
 }
 
+// Create events
 lv_event_cb_t pageUpdate = pageupdate;
 lv_event_cb_t confirmChoice = confirmchoice;
 lv_event_cb_t selectTable = selecttable;
@@ -242,6 +249,7 @@ lv_event_cb_t positionUpdate = positionupdate;
 lv_event_cb_t screenChange = screenchange;
 
 void manualbuilderinit() {
+	// Initialize tables style
 	lv_style_init(&styletables);
 	lv_style_set_border_width(&styletables, 0);
 	lv_style_set_outline_width(&styletables, 1);
@@ -252,6 +260,7 @@ void manualbuilderinit() {
 	lv_style_set_bg_opa(&styletables, 255);
 	lv_style_set_bg_color(&styletables, lv_color_hex(0x071808));
 
+	// Initialize buttons style
 	lv_style_init(&stylebtn_);
 	lv_style_set_border_width(&stylebtn_, 3);
 	lv_style_set_outline_width(&stylebtn_, 2);
@@ -264,6 +273,7 @@ void manualbuilderinit() {
 	lv_style_set_bg_opa(&stylebtn_, 255);
 	lv_style_set_img_recolor_opa(&stylebtn_, 255);
 
+	// Set image sources and rearrange base objects (background and page switch buttons)
 	lv_img_set_src(mbuilderoverlay, &manbuilderoverlay);
 	lv_img_set_src(pageswitchup, LV_SYMBOL_UP);
 	lv_img_set_src(pageswitchdown, LV_SYMBOL_DOWN);
@@ -273,17 +283,20 @@ void manualbuilderinit() {
 	lv_obj_move_foreground(pageswitchup);
 	lv_obj_move_foreground(pageswitchdown);
 
+	// Set labels text
 	lv_label_set_text(addmodule, LV_SYMBOL_OK);
 	lv_label_set_text(delmodule, LV_SYMBOL_CLOSE);
 	lv_label_set_text(infobtn, "?");
 	lv_label_set_text(manlistlabel, "No module selected");
 	lv_label_set_text(manpathlabel, "No module selected");
 
+	// Set up sliders
 	lv_slider_set_range(allianceslider, 0, 2);
 	lv_slider_set_range(positionslider, 0, 144);
 	lv_slider_set_value(allianceslider, 1, LV_ANIM_OFF);
 	lv_slider_set_value(positionslider, 72, LV_ANIM_OFF);
 
+	// Set object sizes
 	lv_obj_set_size(addmodule, 47, 47);
 	lv_obj_set_size(delmodule, 47, 47);
 	lv_obj_set_size(manlistlabel, 158, 47);
@@ -294,6 +307,7 @@ void manualbuilderinit() {
 	lv_obj_set_size(positiontoggle, 17, 17);
 	lv_obj_set_width(positionind, 22);
 
+	// Set object positions
 	lv_obj_set_pos(addmodule, 168, 188);
 	lv_obj_set_pos(delmodule, 405, 188);
 	lv_obj_set_pos(manlistlabel, 5, 188);
@@ -303,6 +317,7 @@ void manualbuilderinit() {
 	lv_obj_set_pos(positionslider, 313, 5);
 	lv_obj_set_pos(positiontoggle, 220, 31);
 
+	// Update object flags
 	lv_obj_add_flag(pageswitchup, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_add_flag(pageswitchdown, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_add_flag(addmodule, LV_OBJ_FLAG_CLICKABLE);
@@ -312,6 +327,7 @@ void manualbuilderinit() {
 	lv_obj_add_flag(infobtn, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_clear_flag(manbuilder, LV_OBJ_FLAG_SCROLLABLE);
 
+	// Add styles to objects
 	lv_obj_add_style(addmodule, &styletables, LV_PART_MAIN);
 	lv_obj_add_style(delmodule, &styletables, LV_PART_MAIN);
 	lv_obj_add_style(manlistlabel, &styletables, LV_PART_MAIN);
@@ -326,6 +342,7 @@ void manualbuilderinit() {
 	lv_obj_add_style(positiontoggle, &stylebtn_, LV_PART_MAIN);
 	lv_obj_add_style(infobtn, &stylebtn_, LV_PART_MAIN);
 
+	// Modify specific objects' styles
 	lv_obj_set_style_outline_width(addmodule, 0, LV_PART_MAIN);
 	lv_obj_set_style_outline_width(delmodule, 0, LV_PART_MAIN);
 	lv_obj_set_style_outline_width(positionind, 0, LV_PART_MAIN);
@@ -353,6 +370,7 @@ void manualbuilderinit() {
 	lv_obj_set_style_pad_left(positiontoggle, 1, LV_PART_MAIN);
 	lv_obj_set_style_pad_left(infobtn, 1, LV_PART_MAIN);
 
+	// Configure settings for text and set background colors
 	lv_obj_set_style_text_align(manlistlabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
 	lv_obj_set_style_text_align(manpathlabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
 	lv_obj_set_style_text_font(positionind, &lv_font_montserrat_10, LV_PART_MAIN);
@@ -371,6 +389,7 @@ void manualbuilderinit() {
 	lv_obj_set_style_bg_color(positionslider, lv_color_hex(0xdb8826), LV_PART_INDICATOR);
 	lv_obj_set_style_bg_opa(positionind, 0, LV_PART_MAIN);
 
+	// Add events
 	lv_obj_add_event_cb(pageswitchup, screenChange, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(pageswitchdown, screenChange, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(addmodule, confirmChoice, LV_EVENT_CLICKED, NULL);
@@ -381,12 +400,14 @@ void manualbuilderinit() {
 	lv_obj_add_event_cb(positiontoggle, positionUpdate, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(infobtn, tableInfo, LV_EVENT_CLICKED, NULL);
 
+	// Rearrange object layers
 	lv_obj_move_foreground(allianceslider);
 	lv_obj_move_foreground(positionslider);
 	lv_obj_move_foreground(positionind);
 	lv_obj_move_foreground(positiontoggle);
 	lv_obj_move_foreground(infobtn);
 
+	// Initialize lists
 	for(int i = 0; i < 2; i++) {
 		lv_obj_add_style(i < 1 ? manbuilderlist : manbuilderpath, &styletables, LV_PART_MAIN);
 		lv_obj_add_style(i < 1 ? manbuilderlist : manbuilderpath, &styletables, LV_PART_ITEMS);
@@ -402,6 +423,7 @@ void manualbuilderinit() {
 		lv_obj_set_pos(i < 1 ? manbuilderlist : manbuilderpath, i < 1 ? 5 : 242, 31);
 	}
 
+	// Initialize table page up/down buttons
 	for(int i = 0; i < 4; i++) {
 		pageupdwn = lv_btn_create(manbuilder);
 		lv_obj_add_style(pageupdwn, &stylebtn_, LV_PART_MAIN);
@@ -412,6 +434,7 @@ void manualbuilderinit() {
 		lv_obj_update_layout(pageupdwn);
 		tableupdate(pageupdwn);
 	}
+	// Send events to objects to set default state of screen
 	lv_event_send(allianceslider, LV_EVENT_VALUE_CHANGED, NULL);
 	lv_event_send(positionslider, LV_EVENT_VALUE_CHANGED, NULL);
 }

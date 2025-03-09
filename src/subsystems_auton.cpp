@@ -31,7 +31,7 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(60);
+	pros::delay(50);
 	intakesecond.move(-target);
 	pros::delay(100);
 	setIntake(target);

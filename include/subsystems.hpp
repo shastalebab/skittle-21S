@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstdint>
 #include "EZ-Template/api.hpp"  // IWYU pragma: keep
 #include "api.h"  // IWYU pragma: keep
 #include "pros/distance.hpp"
+#include "pros/adi.hpp"
 
 // Motors, sensors, etc
 inline pros::Optical ringsens(2);
@@ -27,3 +29,6 @@ void opcontrolDoinkerR();
 void opcontrolDoinkerL();
 
 extern bool setLB;
+
+inline pros::adi::Led leftDriveLED({4, 'a'}, 20);
+inline pros::adi::Led rightDriveLED({4, 'b'}, 20);

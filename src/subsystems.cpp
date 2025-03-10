@@ -1,6 +1,9 @@
 #include "subsystems.hpp"
+
 #include "main.h"  // IWYU pragma: keep
+#include "pros/misc.h"
 #include "subsystems_auton.hpp"
+
 
 bool setLB = true;
 
@@ -20,13 +23,18 @@ void opcontrolLadyBrown() {
 		setLB = !setLB;
 		if(ladybrown.get_position() > 280) setLB = false;
 		setLadyBrown(setLB ? 10 : 200);
+	} else if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+		tareLadyBrown();
 	} else {
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 			ladybrown.move(127);
-			setLadyBrown(ladybrown.get_position());
+			usingTarget = false;
 		} else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			ladybrown.move(-127);
+			usingTarget = false;
+		} else {
 			setLadyBrown(ladybrown.get_position());
+			usingTarget = true;
 		}
 	}
 	if(lbPID.target_get() > 1200)

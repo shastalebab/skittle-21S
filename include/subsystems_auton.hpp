@@ -4,6 +4,7 @@
 #include "api.h"  // IWYU pragma: keep
 
 extern int target;
+extern bool usingTarget;
 extern bool jammed;
 
 enum class AutoMogo {
@@ -29,6 +30,7 @@ void setLadyBrown(int Target);
 void setMogo(bool state);
 void setDoinker(Doinker doinker, bool state);
 void setUnjam(bool state);
+void tareLadyBrown();
 
 void ladybrownTask();
 void colorTask();

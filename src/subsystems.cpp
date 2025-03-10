@@ -47,3 +47,4 @@ void opcontrolMogo() { mogomech.button_toggle(master.get_digital(pros::E_CONTROL
 
 void opcontrolDoinkerR() { doinkerR.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)); }
 void opcontrolDoinkerL() { doinkerL.set(master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)); }
+

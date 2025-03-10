@@ -1,9 +1,12 @@
 #include "main.h"  // IWYU pragma: keep
 #include "pros/misc.hpp"
+#include "subsystems.hpp"
 
 int target = 0;
 bool unjam = true;
 bool jammed = false;
+bool taring = true;
+bool usingTarget = true;
 Colors allianceColor = Colors::NEUTRAL;
 AutoMogo mogoState = AutoMogo::OFF;
 
@@ -15,6 +18,10 @@ void setIntake(int Target) {
 }
 
 void setLadyBrown(int Target) { lbPID.target_set(Target); }
+
+void tareLadyBrown() {
+	taring = true;
+}
 
 void setMogo(bool state) { mogomech.set(state); }
 
@@ -31,10 +38,9 @@ bool discarding = false;
 
 void discard() {
 	discarding = true;
-	pros::delay(50);
-	intakesecond.move(-target);
-	pros::delay(100);
-	setIntake(target);
+	setLadyBrown(100);
+	pros::delay(300);
+	tareLadyBrown();
 	discarding = false;
 }
 
@@ -64,6 +70,11 @@ Colors colorGet() {
 		return Colors::NEUTRAL;
 }
 
+bool colorCompare(Colors color) {
+	if((int)allianceColor < 2 && (int)color < 2) return allianceColor != color;
+	return false;
+}
+
 void colorTask() {
 	Colors color;
 	ringsens.set_integration_time(10);
@@ -71,21 +82,27 @@ void colorTask() {
 	while(true) {
 		color = colorGet();
 		colorSet(color);
-		if(pros::competition::is_autonomous() && (int)allianceColor < 2 && !discarding && !jammed) {
-			if(allianceColor != color && (int)color < 2) {
+		if(!jammed && pros::competition::is_autonomous()) {
+			if(colorCompare(color) && !discarding) {
 				discard();
 			}
 		}
-		pros::delay(10);
 	}
+	pros::delay(10);
 }
 
 // Other tasks
 
 void ladybrownTask() {
 	while(true) {
-		if(!(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) || master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)))
-			ladybrown.move(lbPID.compute(ladybrown.get_position()));
+		if(taring) {
+			ladybrown.move(-127);
+			if(abs(ladybrown.get_actual_velocity()) < 20) {
+				ladybrown.tare_position();
+				setLadyBrown(10);
+				taring = false;
+			}
+		} else if(usingTarget) ladybrown.move(lbPID.compute(ladybrown.get_position()));
 		pros::delay(10);
 	}
 }

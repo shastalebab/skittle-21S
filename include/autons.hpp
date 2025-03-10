@@ -9,27 +9,13 @@ extern bool cornerState;
 void testautonRed();
 void testautonBlue();
 
-void red_3safe();
-void red_5greed();
-void red_gr_wp();
-void red_possolowp();
-
-void red_5safe();
+void red_4pos();
 void red_6ring();
-void red_7ring();
 void red_negsolowp();
 
-void blue_3safe();
-void blue_5greed();
-void blue_gr_wp();
-void blue_possolowp();
-
-void blue_5safe();
+void blue_4pos();
 void blue_6ring();
-void blue_7ring();
 void blue_negsolowp();
-
-void skills();
 
 void move_forward();
 

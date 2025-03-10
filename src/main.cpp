@@ -61,7 +61,7 @@ void initialize() {
 		jas::jasauton(red_6ring, 0, 0, "Red 6 ring", "Red 5 + 1 negitive side.", 6, 0, false),
 		jas::jasauton(red_negsolowp, 0, 0, "Red negative solo WP", "Red 3 + 2 + 1 negitive side.", 3, 2, true),
 		
-		jas::jasauton(blue_4neg, 1, 0, "Blue 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
+		jas::jasauton(blue_4pos, 1, 0, "Blue 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
 		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring", "Blue 5 + 1 negitive side.", 6, 0, true),
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 3 + 2 + 1 negitive side.", 3, 2, true),
 		
@@ -174,7 +174,7 @@ void opcontrol() {
 		opcontrolLadyBrown();
 		opcontrolDoinkerR();
 		opcontrolDoinkerL();
-		setDriveLED();
+		setDriveLED(0x127012);
 
 		pros::delay(ez::util::DELAY_TIME);
 	}

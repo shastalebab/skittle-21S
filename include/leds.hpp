@@ -1,1 +1,1 @@
-void setDriveLED();
+void setDriveLED(int x);

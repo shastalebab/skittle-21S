@@ -3,7 +3,7 @@
 #include "api.h"
 
 
-void setDriveLED() {
-    leftDriveLED.set_all(0x127012);
-    rightDriveLED.set_all(0x127012);
+void setDriveLED(int x) {
+    leftDriveLED.set_all(x);
+    rightDriveLED.set_all(x);
 }

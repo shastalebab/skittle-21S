@@ -4,7 +4,6 @@
 
 
 void setDriveLED() {
-    x = 0x127012;
-    leftDriveLED.set_all(x);
-    rightDriveLED.set_all(x);
+    leftDriveLED.set_all(0x127012);
+    rightDriveLED.set_all(0x127012);
 }

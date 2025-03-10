@@ -179,8 +179,6 @@ void opcontrol() {
 		opcontrolLadyBrown();
 		opcontrolDoinkerR();
 		opcontrolDoinkerL();
-		
-		setDriveLED();
 
 		pros::delay(ez::util::DELAY_TIME);
 	}

@@ -67,8 +67,52 @@ void testautonRed() {
 	allianceColor = Colors::RED;
 	mogoState = AutoMogo::PRIMED;
 	setIntake(127);
-	chassis.pid_drive_set(-20_in, 80, false);
 	chassis.pid_wait();
+}
+
+void red_3safe() {
+	allianceColor = Colors::RED;
+	chassis.odom_xyt_set(96_in, 20_in, 180_deg);
+	// grab mogo
+	chassis.pid_drive_set(-28_in, GRAB_MOGO, true);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_until(-22_in);
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack
+	chassis.pid_turn_set(90_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(24_in, 127);
+	chassis.pid_wait();
+	// grab mid top ring
+	chassis.pid_turn_set(-116.57_deg, 127);
+	chassis.pid_wait();
+	chassis.pid_drive_set(53_in, 80);
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	// drop goal in corner
+	if(cornerState) {
+		chassis.pid_turn_set(88_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(-100_in, 127);
+		chassis.pid_wait();
+		setMogo(false);
+		chassis.pid_turn_set(-65_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(50_in, 127);
+	} else {
+		// touch ladder
+		chassis.pid_turn_set(0_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(24_in, 127);
+	}
 }
 
 void red_5greed() {
@@ -82,7 +126,7 @@ void red_5greed() {
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack
-	chassis.pid_turn_set(-90_deg, 127);
+	chassis.pid_turn_set(90_deg, 127);
 	chassis.pid_wait_quick();
 	chassis.pid_drive_set(24_in, 127);
 	chassis.pid_wait();
@@ -189,7 +233,7 @@ void red_possolowp() {
 	// grab mogo & bottom ring
 	chassis.pid_drive_set(-42_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-32_in);
+	chassis.pid_wait_until(-36_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
@@ -241,6 +285,49 @@ void red_possolowp() {
 	chassis.pid_wait();
 }
 
+void red_5safe() {
+	allianceColor = Colors::RED;
+	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
+	// grab mogo
+	chassis.pid_drive_set(-22_in, GRAB_MOGO, true);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait();
+	// sweep ring rush rings
+	chassis.pid_odom_set({{{35_in, 62_in}, fwd, 127}, {{11_in, 62_in}, fwd, 90}});
+	chassis.pid_wait();
+	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 127, 50, ez::cw);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack and mid top ring
+	chassis.pid_odom_set({{24_in, 48_in}, fwd, 127});
+	chassis.pid_turn_set(116.57_deg, 127);
+	chassis.pid_wait();
+	chassis.pid_drive_set(53_in, 80);
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	if(cornerState) {
+		// ram corner
+		chassis.pid_turn_set(-88_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(-100_in, 127);
+		chassis.pid_wait();
+		setMogo(false);
+	} else {
+		// touch ladder
+		chassis.pid_turn_set(0_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(50_in, 127);
+	}
+}
+
 void red_6ring() {
 	allianceColor = Colors::RED;
 	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
@@ -287,7 +374,7 @@ void red_7ring() {
 	pros::delay(500);
 	setLadyBrown(10);
 	// grab mogo
-	chassis.pid_drive_set(-32_in, GRAB_MOGO, true);
+	chassis.pid_drive_set(-36_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
 	chassis.pid_wait_quick_chain();
 	setMogo(true);
@@ -346,7 +433,7 @@ void red_negsolowp() {
 	// grab mogo
 	chassis.pid_drive_set(-42_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-32_in);
+	chassis.pid_wait_until(-36_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait();
@@ -381,7 +468,7 @@ void red_negsolowp() {
 	chassis.pid_drive_set(-24_in, 127);
 	pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-17_in);
+	chassis.pid_wait_until(-21_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
@@ -406,6 +493,51 @@ void testautonBlue() {
 	chassis.pid_wait();
 }
 
+void blue_3safe() {
+	allianceColor = Colors::BLUE;
+	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
+	// grab mogo
+	chassis.pid_drive_set(-28_in, GRAB_MOGO, true);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_until(-22_in);
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack
+	chassis.pid_turn_set(-90_deg, 127);
+	chassis.pid_wait_quick();
+	chassis.pid_drive_set(24_in, 127);
+	chassis.pid_wait();
+	// grab mid top ring
+	chassis.pid_turn_set(116.57_deg, 127);
+	chassis.pid_wait();
+	chassis.pid_drive_set(53_in, 80);
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	// drop goal in corner
+	if(cornerState) {
+		chassis.pid_turn_set(-88_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(-100_in, 127);
+		chassis.pid_wait();
+		setMogo(false);
+		chassis.pid_turn_set(0_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(50_in, 127);
+	} else {
+		// touch ladder
+		chassis.pid_turn_set(0_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(24_in, 127);
+	}
+}
+
 void blue_5greed() {
 	allianceColor = Colors::BLUE;
 	chassis.odom_xyt_set(48_in, 20_in, 180_deg);
@@ -417,7 +549,7 @@ void blue_5greed() {
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack
-	chassis.pid_turn_set(90_deg, 127);
+	chassis.pid_turn_set(-90_deg, 127);
 	chassis.pid_wait_quick();
 	chassis.pid_drive_set(24_in, 127);
 	chassis.pid_wait();
@@ -522,7 +654,7 @@ void blue_possolowp() {
 	// grab mogo & bottom ring
 	chassis.pid_drive_set(-42_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-32_in);
+	chassis.pid_wait_until(-36_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
@@ -574,6 +706,49 @@ void blue_possolowp() {
 	chassis.pid_wait();
 }
 
+void blue_5safe() {
+	allianceColor = Colors::BLUE;
+	chassis.odom_xyt_set(96_in, 20_in, 180_deg);
+	// grab mogo
+	chassis.pid_drive_set(-22_in, GRAB_MOGO, true);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick_chain();
+	setMogo(true);
+	setIntake(127);
+	chassis.pid_wait();
+	// sweep ring rush rings
+	chassis.pid_odom_set({{{109_in, 62_in}, fwd, 127}, {{133_in, 62_in}, fwd, 90}});
+	chassis.pid_wait();
+	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 127, 50, ez::ccw);
+	chassis.pid_wait_quick_chain();
+	// grab bottom ring of ring stack and mid top ring
+	chassis.pid_odom_set({{120_in, 48_in}, fwd, 127});
+	chassis.pid_turn_set(-116.57_deg, 127);
+	chassis.pid_wait();
+	chassis.pid_drive_set(53_in, 80);
+	pros::delay(500);
+	intakeLevel.set(false);
+	chassis.pid_wait();
+	pros::delay(500);
+	intakeLevel.set(true);
+	pros::delay(250);
+	chassis.pid_drive_set(-6_in, 90);
+	chassis.pid_wait_quick_chain();
+	if(cornerState) {
+		// ram corner
+		chassis.pid_turn_set(88_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(-100_in, 127);
+		chassis.pid_wait();
+		setMogo(false);
+	} else {
+		// touch ladder
+		chassis.pid_turn_set(0_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(50_in, 127);
+	}
+}
+
 void blue_6ring() {
 	allianceColor = Colors::BLUE;
 	chassis.odom_xyt_set(96_in, 20_in, 180_deg);
@@ -620,7 +795,7 @@ void blue_7ring() {
 	pros::delay(500);
 	setLadyBrown(10);
 	// grab mogo
-	chassis.pid_drive_set(-32_in, GRAB_MOGO, true);
+	chassis.pid_drive_set(-36_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
 	chassis.pid_wait_quick_chain();
 	setMogo(true);
@@ -679,7 +854,7 @@ void blue_negsolowp() {
 	// grab mogo
 	chassis.pid_drive_set(-42_in, GRAB_MOGO, true);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-32_in);
+	chassis.pid_wait_until(-36_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait();
@@ -714,7 +889,7 @@ void blue_negsolowp() {
 	chassis.pid_drive_set(-24_in, 127);
 	pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(-17_in);
+	chassis.pid_wait_until(-21_in);
 	setMogo(true);
 	setIntake(127);
 	chassis.pid_wait_quick_chain();
@@ -917,13 +1092,13 @@ void skills() {
 }
 
 void ram() {
-	chassis.pid_drive_set(26_in, 127);
-	chassis.pid_wait_quick();
+	chassis.drive_set(127, 127);
+	pros::delay(1500);
 	chassis.pid_drive_set(-8_in, 127);
 	chassis.pid_wait_quick();
 	intakeLevel.set(false);
-	chassis.pid_drive_set(10_in, 127);
-	chassis.pid_wait_quick();
+	chassis.drive_set(127, 127);
+	pros::delay(1000);
 	intakeLevel.set(true);
 	chassis.pid_drive_set(-8_in, 127);
 	chassis.pid_wait_quick_chain();

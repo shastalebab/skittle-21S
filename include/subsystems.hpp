@@ -9,6 +9,7 @@
 // Motors, sensors, etc
 inline pros::Optical ringsens(2);
 inline pros::Distance distsens(1);
+inline pros::adi::LineSensor hooksens('D');
 inline pros::MotorGroup intake({-16, -17});
 inline pros::Motor intakefirst(-16);
 inline pros::Motor intakesecond(-17);

@@ -301,7 +301,7 @@ void screeninit() {
 	autonbuilderinit();
 	manualbuilderinit();
 
-	for(int i = 0; i < 4; i++) {
+	for(int i = 0; i < 6; i++) {
 		pageswitch = lv_img_create(screens[i % 3]);
 		lv_img_set_src(pageswitch, i < 3 ? LV_SYMBOL_RIGHT : LV_SYMBOL_LEFT);
 		lv_obj_set_size(pageswitch, 18, 18);

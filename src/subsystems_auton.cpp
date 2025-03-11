@@ -1,11 +1,11 @@
+#include "EZ-Template/util.hpp"
 #include "main.h"  // IWYU pragma: keep
-#include "pros/misc.hpp"
 #include "subsystems.hpp"
 
 int target = 0;
 bool unjam = true;
 bool jammed = false;
-bool taring = true;
+bool taring = false;
 bool usingTarget = true;
 Colors allianceColor = Colors::NEUTRAL;
 AutoMogo mogoState = AutoMogo::OFF;
@@ -19,9 +19,7 @@ void setIntake(int Target) {
 
 void setLadyBrown(int Target) { lbPID.target_set(Target); }
 
-void tareLadyBrown() {
-	taring = true;
-}
+void tareLadyBrown() { taring = true; }
 
 void setMogo(bool state) { mogomech.set(state); }
 
@@ -37,10 +35,9 @@ void setUnjam(bool state) { unjam = state; }
 bool discarding = false;
 
 void discard() {
-	discarding = true;
-	setLadyBrown(100);
-	pros::delay(300);
-	tareLadyBrown();
+	intakesecond.move(-127);
+	pros::delay(80);
+	setIntake(target);
 	discarding = false;
 }
 
@@ -84,25 +81,33 @@ void colorTask() {
 		colorSet(color);
 		if(!jammed && pros::competition::is_autonomous()) {
 			if(colorCompare(color) && !discarding) {
-				discard();
+				discarding = true;
+			} else if(discarding) {
+				if(hooksens.get_value() < 2800 && util::sgn(intakesecond.get_actual_velocity()) == 1) discard();
 			}
 		}
+		pros::delay(10);
 	}
-	pros::delay(10);
 }
 
 // Other tasks
 
 void ladybrownTask() {
+	int taretime = 0;
 	while(true) {
 		if(taring) {
 			ladybrown.move(-127);
-			if(abs(ladybrown.get_actual_velocity()) < 20) {
-				ladybrown.tare_position();
+			if(abs(ladybrown.get_actual_velocity()) < 5) taretime++;
+			if(taretime > 10) {
+				ladybrown.move(0);
+				pros::delay(10);
+				ladybrown.set_zero_position(-50);
 				setLadyBrown(10);
+				taretime = 0;
 				taring = false;
 			}
-		} else if(usingTarget) ladybrown.move(lbPID.compute(ladybrown.get_position()));
+		} else if(usingTarget)
+			ladybrown.move(lbPID.compute(ladybrown.get_position()));
 		pros::delay(10);
 	}
 }
@@ -111,7 +116,7 @@ void unjamTask() {
 	int jamtime = 0;
 	while(true) {
 		if(intakesecond.get_temperature() < 50 && unjam) {
-			if(setLB == true && discarding == false) {
+			if(setLB) {
 				if(!jammed && target != 0 && abs(intakesecond.get_actual_velocity()) <= 20) {
 					jamtime++;
 					if(jamtime > 20) {

@@ -100,6 +100,9 @@ static void allianceselect(lv_event_t *e) {
 	int target = lv_slider_get_value(allianceslider);
 	const lv_color32_t colors[3] = {lv_color_hex(0xff2a00), lv_color_hex(0x5d5d5d), lv_color_hex(0x0066cc)};
 	color = target;
+	if(color == 0) allianceColor = Colors::RED;
+	if(color == 1) allianceColor = Colors::NEUTRAL;
+	if(color == 2) allianceColor = Colors::BLUE;
 	lv_obj_set_style_bg_color(allianceslider, colors[color], LV_PART_MAIN);
 	lv_obj_set_style_bg_color(allianceslider, colors[color], LV_PART_INDICATOR);
 }

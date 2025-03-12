@@ -39,8 +39,16 @@ void distanceTask();
 
 extern AutoMogo mogoState;
 extern Colors allianceColor;
-int compStatus(int comp);
 
+void compStatusSet(int mode, int set);
+int compPluged();
+int compStatus();
+
+/*
+0 = disabled
+1 = auto
+2 = driver
+*/
 
 void ledTimeTask();
 void ledAllianceTask();

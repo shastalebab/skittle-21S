@@ -1,10 +1,13 @@
 #include "main.h"
+#include "stormlib/api.hpp"
+#include "subsystems_auton.hpp"
 
 // big money $_$
 /////
 // For installation, upgrading, documentations, and tutorials, check out our
 // website! https://ez-robotics.github.io/EZ-Template/
 /////
+
 
 // Chassis constructor
 ez::Drive chassis(
@@ -81,7 +84,9 @@ void initialize() {
 	pros::Task unjamtask(unjamTask);
 	pros::Task ladybrowntask(ladybrownTask);
 	pros::Task distancetask(distanceTask);
+	pros::Task ledAlliance(ledAllianceTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
+	LEDmanager.initialize(20);
 }
 
 /**
@@ -105,6 +110,7 @@ void disabled() {
 void competition_initialize() {
 	// Start screen on auton selector
 	lv_obj_set_tile(mainscreen, autoselector, LV_ANIM_ON);
+	//comp = true;
 }
 
 /**
@@ -151,20 +157,16 @@ void autonomous() {
  */
 
 void opcontrol() {
+	//OPstarted = true;
 	// Update the state of the robot to be optimal for driver control
 	chassis.drive_brake_set(MOTOR_BRAKE_BRAKE);
 	lv_obj_set_tile(mainscreen, motortemps, LV_ANIM_ON);
 	intakeLevel.set(true);
+	
+	driverClock.start();
+	pros::Task ledTimer(ledTimeTask);
 
 	while(true) {
-		if(!pros::competition::is_connected()) {
-			// Trigger the selected autonomous routine
-			if(master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
-				pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
-				autonomous();
-				chassis.drive_brake_set(preference);
-			}
-		}
 
 		// Tank control
 		chassis.opcontrol_tank();
@@ -175,8 +177,16 @@ void opcontrol() {
 		opcontrolLadyBrown();
 		opcontrolDoinkerR();
 		opcontrolDoinkerL();
-		setDriveLED(0x127012);
 
+		/*
+		if (driverClock.timeLeft() > 40 * 1000) {
+			LEDmanager.setColor(SPURFLY);
+		} else if (driverClock.timeLeft() <= 40 * 1000 && driverClock.timeLeft() > 30 * 1000) {
+			LEDmanager.pulse(0xb00c8f, 4, 500); 
+		} else {
+			LEDmanager.rainbow();
+		}
+		*/
 		pros::delay(ez::util::DELAY_TIME);
 	}
 }

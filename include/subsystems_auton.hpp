@@ -39,3 +39,8 @@ void distanceTask();
 
 extern AutoMogo mogoState;
 extern Colors allianceColor;
+int compStatus(int comp);
+
+
+void ledTimeTask();
+void ledAllianceTask();

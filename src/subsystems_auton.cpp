@@ -1,5 +1,7 @@
+#include "subsystems_auton.hpp"
 #include "EZ-Template/util.hpp"
 #include "main.h"  // IWYU pragma: keep
+#include "pros/rtos.hpp"
 #include "subsystems.hpp"
 
 int target = 0;
@@ -149,5 +151,52 @@ void distanceTask() {
 			}
 		}
 		pros::delay(10);
+	}
+}
+/**
+int compStatus(int comp) {
+	switch (comp) {
+		case 0: //none
+
+		case 1: //auto
+
+		case 2: //
+
+	}
+	return comp;
+}
+*/
+void ledTimeTask() {
+	//if (comp) {
+	LEDmanager.setColor(SPURFLY);
+	driverClock.waitUntil(40 * 1000);
+	LEDmanager.pulse(SPURFLY, 4, 500); 
+	driverClock.waitUntil(30 * 1000);
+	LEDmanager.rainbow();
+	driverClock.waitUntil(0 * 1000);
+	LEDmanager.off();
+	//} else {
+	//LEDmanager.setColor(SPURFLY); }
+}
+
+int i = 0;
+bool OPstarted = true;
+void ledAllianceTask() {
+	while (i < 1) {
+		if (!OPstarted){
+		switch (allianceColor) {
+		case Colors::RED:
+			LEDmanager.setColor(RED_HEX);
+			break;
+		case Colors::BLUE:
+			LEDmanager.setColor(BLUE_HEX);
+			break;
+		default:
+			LEDmanager.setColor(WHITE);
+		}
+		pros::delay(20);
+	} else {
+		i++;
+	}
 	}
 }

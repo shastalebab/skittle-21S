@@ -51,6 +51,8 @@ void updatepath() {
 	bool setside = true;
 	std::string path;
 
+	allianceColor = (Colors)redblubuilder;
+
 	// Empty the modules vector and create temporary singles/doubles vector
 	modules.clear();
 	vector<std::string> singles{"left bottom ring", "mid top ring", "right bottom ring"};

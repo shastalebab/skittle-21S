@@ -106,6 +106,7 @@ static void jautoncurate(lv_event_t *e) {
 	j = 0;
 	lv_obj_has_state(redblu, LV_STATE_CHECKED) == true ? redblustore = 1 : redblustore = 0;
 	lv_obj_has_state(posneg, LV_STATE_CHECKED) == true ? posnegstore = 1 : posnegstore = 0;
+	allianceColor = (Colors)redblustore;
 	for(int i = 0; i < j_auton_selector.jasautontable.size(); i++) {
 		if((j_auton_selector.jasautontable[i].RedBluFilt == redblustore || j_auton_selector.jasautontable[i].RedBluFilt == 2) &&
 		   (j_auton_selector.jasautontable[i].PosNegFilt == posnegstore || j_auton_selector.jasautontable[i].PosNegFilt == 2)) {

@@ -66,6 +66,7 @@ void initialize() {
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 3 + 2 + 1 negitive side.", 3, 2, true),
 		
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward.", 0, 0, false),
+		jas::jasauton(ram, 2, 2, "ram", "Ram corner", 2, 0, false),
 		jas::jasauton(testautonRed, 0, 2, "red test", "intake + clamp test.", 0, 0, false),
 		jas::jasauton(testautonBlue, 1, 2, "blue test", "intake + clamp test.", 0, 0, false),
 	});

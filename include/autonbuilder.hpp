@@ -1,8 +1,10 @@
 #pragma once
 
 #include "EZ-Template/drive/drive.hpp"
+#include "subsystems_auton.hpp"
 
 extern Drive chassis;
+extern Coordinate currentPoint;
 
 void alliancestake();
 

@@ -164,15 +164,15 @@ int compPluged() {
 	return comp1;
 }
 void compStatusSet(int mode, int set) {
-	comp1 = mode;
+	compMode = mode;
 	if (set <= 1) {
-	compMode =  set;
+		comp1 =  set;
 	}
 }
 
 void ledTimeTask() {
 	while (true) {
-	if (compStatus() == 2) {
+	if (compStatus() == 2 && compPluged() == 1) {
 		LEDmanager.setColor(SPURFLY);
 		driverClock.waitUntil(40 * 1000);
 		LEDmanager.pulse(SPURFLY, 4, 500); 
@@ -180,17 +180,15 @@ void ledTimeTask() {
 		LEDmanager.rainbow();
 		driverClock.waitUntil(0 * 1000);
 		LEDmanager.off();
-	} else {
-		LEDmanager.setColor(WHITE); }
+		}
 	}
+	pros::delay(20);
 }
 
 int i = 0;
 void ledAllianceTask() {
 	while (i < 1) {
-		if (compPluged() == 0) {
-			LEDmanager.setColor(WHITE);
-		} else if (compPluged() == 1){
+	if (compStatus() == 0 && compPluged() == 1) {
 		switch (allianceColor) {
 		case Colors::RED:
 			LEDmanager.setColor(RED_HEX);
@@ -201,9 +199,10 @@ void ledAllianceTask() {
 		default:
 			LEDmanager.setColor(RED_HEX);
 		}
-		pros::delay(20);
-	} else if (compStatus() == 2) {
+	} else if (compStatus() >= 1) {
 		i++;
+		break;
 	}
+	pros::delay(20);
 	}
 }

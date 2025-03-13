@@ -377,6 +377,7 @@ void autocallback() {
 	// Set the position and alliance of the auton based on the selection
 	chassis.odom_pose_set({usegoalrush == true ? (useredblu == useposneg ? 37_in : 107_in) : (useredblu == useposneg ? 48_in : 96_in), 20_in,
 						   usegoalrush == true ? 0_deg : 180_deg});
+	currentPoint = {usegoalrush == true ? (useredblu == useposneg ? 37.0 : 107.0) : (useredblu == useposneg ? 48.0 : 96.0), 20};
 	allianceColor = useredblu ? Colors::RED : Colors::BLUE;
 	for(int module_it = 0; module_it < modules.size(); module_it++) {
 		if(modules[module_it] == "blue goal rush")

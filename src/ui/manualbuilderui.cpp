@@ -445,6 +445,7 @@ void manualbuilderinit() {
 void mancallback() {
 	// Set the position and alliance of the auton based on the selection
 	chassis.odom_pose_set({startposition * okapi::inch, 20_in, positionorient ? 0_deg : 180_deg});
+	currentPoint = {(double)startposition, 20};
 	if(color != 1) allianceColor = color == 0 ? Colors::RED : Colors::BLUE;
 	for(int module_it = 0; module_it < manmodules.size(); module_it++) {
 		if(manmodules[module_it].Name == "blue goal rush")

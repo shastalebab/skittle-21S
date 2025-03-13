@@ -2,6 +2,7 @@
 
 #include "EZ-Template/api.hpp"  // IWYU pragma: keep
 #include "api.h"  // IWYU pragma: keep
+#include "okapi/api/units/QAngle.hpp"
 
 extern int target;
 extern bool usingTarget;
@@ -23,6 +24,12 @@ enum class Doinker {
     LEFT = 0,
     RIGHT = 1,
     BOTH = 2
+};
+
+class Coordinate {
+    public: 
+        double x;
+        double y;
 };
 
 void setIntake(int Target);
@@ -52,3 +59,8 @@ int compStatus();
 
 void ledTimeTask();
 void ledAllianceTask();
+
+okapi::QLength findDistance(Coordinate point1, Coordinate point2, ez::drive_directions direction);
+okapi::QAngle findAngle(Coordinate point1, Coordinate point2, ez::drive_directions direction);
+
+void moveToPoint(Coordinate currentpoint, Coordinate newpoint, int speed, ez::drive_directions direction);

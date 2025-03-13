@@ -1,8 +1,4 @@
-#include "subsystems_auton.hpp"
-#include "EZ-Template/util.hpp"
 #include "main.h"  // IWYU pragma: keep
-#include "pros/rtos.hpp"
-#include "subsystems.hpp"
 
 int target = 0;
 bool unjam = true;
@@ -103,7 +99,7 @@ void ladybrownTask() {
 			if(taretime > 10) {
 				ladybrown.move(0);
 				pros::delay(10);
-				ladybrown.set_zero_position(-50);
+				ladybrown.set_zero_position(-60);
 				setLadyBrown(10);
 				taretime = 0;
 				taring = false;
@@ -153,6 +149,8 @@ void distanceTask() {
 		pros::delay(10);
 	}
 }
+
+// LEDs
 
 int compMode = 0;
 int compStatus() {
@@ -205,4 +203,28 @@ void ledAllianceTask() {
 	}
 	pros::delay(20);
 	}
+}
+
+// Auton pathing aids
+
+okapi::QLength findDistance(Coordinate point1, Coordinate point2, ez::drive_directions direction) {
+	auto new_direction = direction == rev ? -1 : 1;
+	double errorX = point2.x - point1.x;
+	double errorY = point2.y - point1.y;
+	return ((sqrt((errorX * errorX) + (errorY * errorY))) * new_direction) * okapi::inch;
+}
+
+okapi::QAngle findAngle(Coordinate point1, Coordinate point2, ez::drive_directions direction) {
+	auto new_direction = direction == rev ? 180 : 0;
+	double errorX = point2.x - point1.x;
+	double errorY = point2.y - point1.y;
+	return ((atan2(errorX, errorY) * 180 / M_PI) + new_direction) * okapi::degree;
+}
+
+void moveToPoint(Coordinate currentpoint, Coordinate newpoint, int speed, ez::drive_directions direction) {
+	bool slew_state = false;
+	if(findDistance(currentpoint, newpoint, direction) > 24_in && speed > 90) slew_state = true;
+	chassis.pid_turn_set(findAngle(currentpoint, newpoint, direction), speed);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_drive_set(findDistance(currentpoint, newpoint, direction), speed, slew_state);
 }

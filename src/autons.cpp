@@ -102,7 +102,10 @@ void red_4pos() {
 	chassis.pid_drive_set(-34_in, 90, true);
 	chassis.pid_wait_quick_chain();
 	// score far ring
-	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 90}, {{123_in, 24_in}, fwd, 90}});
+	//chassis.pid_odom_set({{{120_in, 48_in}, fwd, 90}, {{123_in, 24_in}, fwd, 90}});
+	moveToPoint({99, 52}, {120, 48}, 90, fwd);
+	chassis.pid_wait_quick_chain();
+	moveToPoint({120, 48}, {123, 24}, 90, fwd);
 	chassis.pid_wait_quick_chain();
 	// score corner ring
 	chassis.pid_turn_set(135_deg, 90);
@@ -144,15 +147,18 @@ void red_6ring() {
 	setMogo(true);
 	setIntake(127);
 	// sweep ring rush rings
-	chassis.pid_turn_set({35_in, 6_in}, fwd, 127);
+	chassis.pid_turn_set({35_in, 60_in}, fwd, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_odom_set({{{35_in, 60_in}, fwd, 90}, {{18_in, 60_in}, fwd, 90}});
+	chassis.pid_odom_set({{{35_in, 60_in}, fwd, 90}, {{16_in, 60_in}, fwd, 90}});
 	chassis.pid_wait_quick_chain();
 	pros::delay(250);
 	chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 127, 50, ez::cw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{21_in, 24_in}, fwd, 127}});
+	//chassis.pid_odom_set({{{24_in, 48_in}, fwd, 127}, {{24_in, 20_in}, fwd, 127}});
+	moveToPoint({34, 58}, {24, 48}, 127, fwd);
+	chassis.pid_wait_quick_chain();
+	moveToPoint({24, 48}, {24, 20}, 127, fwd);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(-135_deg, 127);
 	chassis.pid_wait_quick_chain();
@@ -183,6 +189,8 @@ void red_6ring() {
 	} else {
 		// touch ladder
 		chassis.pid_swing_set(ez::RIGHT_SWING, -45_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(20_in, 127);
 	}
 }
 
@@ -293,7 +301,10 @@ void blue_4pos() {
 	chassis.pid_drive_set(-34_in, 127, true);
 	chassis.pid_wait_quick();
 	// score far ring
-	chassis.pid_odom_set({{{24_in, 48_in}, fwd, 90}, {{21_in, 24_in}, fwd, 90}});
+	//chassis.pid_odom_set({{{24_in, 48_in}, fwd, 90}, {{21_in, 24_in}, fwd, 90}});
+	moveToPoint({45, 52}, {24, 48}, 90, fwd);
+	chassis.pid_wait_quick_chain();
+	moveToPoint({24, 48}, {21, 24}, 90, fwd);
 	chassis.pid_wait_quick_chain();
 	// score corner ring
 	chassis.pid_turn_set(-135_deg, 90);
@@ -333,15 +344,18 @@ void blue_6ring() {
 	setMogo(true);
 	setIntake(127);
 	// sweep ring rush rings
-	chassis.pid_turn_set({109_in, 57_in}, fwd, 127);
+	chassis.pid_turn_set({109_in, 58_in}, fwd, 127);
 	chassis.pid_wait_quick();
-	chassis.pid_odom_set({{{109_in, 57_in}, fwd, 90}, {{126_in, 57_in}, fwd, 90}});
+	chassis.pid_odom_set({{{109_in, 58_in}, fwd, 90}, {{126_in, 58_in}, fwd, 90}});
 	chassis.pid_wait_quick_chain();
 	pros::delay(250);
 	chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 127, 50, ez::ccw);
 	chassis.pid_wait_quick_chain();
 	// grab bottom ring of ring stack, then score corner
-	chassis.pid_odom_set({{{120_in, 48_in}, fwd, 127}, {{120_in, 20_in}, fwd, 127}});
+	// chassis.pid_odom_set({{{120_in, 44_in}, fwd, 127}, {{120_in, 20_in}, fwd, 127}});
+	moveToPoint({110, 58}, {120, 48}, 127, fwd);
+	chassis.pid_wait_quick_chain();
+	moveToPoint({120, 48}, {120, 20}, 127, fwd);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(135_deg, 127);
 	chassis.pid_wait_quick_chain();
@@ -372,6 +386,8 @@ void blue_6ring() {
 	} else {
 		// touch ladder
 		chassis.pid_swing_set(ez::LEFT_SWING, 45_deg, 127);
+		chassis.pid_wait_quick_chain();
+		chassis.pid_drive_set(20_in, 127);
 	}
 }
 
@@ -443,12 +459,12 @@ void blue_negsolowp() {
 }
 
 void ram() {
-	chassis.drive_set(60, 60);
+	chassis.drive_set(127, 127);
 	pros::delay(1000);
 	chassis.pid_drive_set(-16_in, 80);
-	pros::delay(1000);
+	pros::delay(800);
 	intakeLevel.set(false);
-	chassis.drive_set(60, 60);
+	chassis.drive_set(127, 127);
 	pros::delay(500);
 	intakeLevel.set(true);
 	pros::delay(500);

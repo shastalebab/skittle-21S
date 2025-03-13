@@ -1,4 +1,5 @@
 #include "main.h"  // IWYU pragma: keep
+#include "pros/rtos.hpp"
 
 int target = 0;
 bool unjam = true;
@@ -153,56 +154,54 @@ void distanceTask() {
 // LEDs
 
 int compMode = 0;
-int compStatus() {
-	return compMode;
-}
+int compStatus() { return compMode; }
 
 int comp1 = 0;
-int compPluged() {
-	return comp1;
-}
+int compPluged() { return comp1; }
 void compStatusSet(int mode, int set) {
 	comp1 = mode;
-	if (set <= 1) {
-	compMode =  set;
+	if(set <= 1) {
+		compMode = set;
 	}
 }
 
 void ledTimeTask() {
-	while (true) {
-	if (compStatus() == 2) {
-		LEDmanager.setColor(SPURFLY);
-		driverClock.waitUntil(40 * 1000);
-		LEDmanager.pulse(SPURFLY, 4, 500); 
-		driverClock.waitUntil(30 * 1000);
-		LEDmanager.rainbow();
-		driverClock.waitUntil(0 * 1000);
-		LEDmanager.off();
-	} else {
-		LEDmanager.setColor(WHITE); }
+	while(true) {
+		if(compStatus() == 2) {
+			LEDmanager.setColor(SPURFLY);
+			driverClock.waitUntil(40 * 1000);
+			LEDmanager.pulse(SPURFLY, 4, 500);
+			driverClock.waitUntil(30 * 1000);
+			LEDmanager.rainbow();
+			driverClock.waitUntil(0 * 1000);
+			LEDmanager.off();
+		} else {
+			LEDmanager.setColor(WHITE);
+		}
+		pros::delay(10);
 	}
 }
 
 int i = 0;
 void ledAllianceTask() {
-	while (i < 1) {
-		if (compPluged() == 0) {
+	while(i < 1) {
+		if(compPluged() == 0) {
 			LEDmanager.setColor(WHITE);
-		} else if (compPluged() == 1){
-		switch (allianceColor) {
-		case Colors::RED:
-			LEDmanager.setColor(RED_HEX);
-			break;
-		case Colors::BLUE:
-			LEDmanager.setColor(BLUE_HEX);
-			break;
-		default:
-			LEDmanager.setColor(RED_HEX);
+		} else if(compPluged() == 1) {
+			switch(allianceColor) {
+				case Colors::RED:
+					LEDmanager.setColor(RED_HEX);
+					break;
+				case Colors::BLUE:
+					LEDmanager.setColor(BLUE_HEX);
+					break;
+				default:
+					LEDmanager.setColor(RED_HEX);
+			}
+		} else if(compStatus() == 2) {
+			i++;
 		}
 		pros::delay(20);
-	} else if (compStatus() == 2) {
-		i++;
-	}
 	}
 }
 

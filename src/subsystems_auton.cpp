@@ -1,4 +1,5 @@
 #include "main.h"  // IWYU pragma: keep
+#include "pros/rtos.hpp"
 
 int target = 0;
 bool unjam = true;
@@ -153,18 +154,14 @@ void distanceTask() {
 // LEDs
 
 int compMode = 0;
-int compStatus() {
-	return compMode;
-}
+int compStatus() { return compMode; }
 
 int comp1 = 0;
-int compPluged() {
-	return comp1;
-}
+int compPluged() { return comp1; }
 void compStatusSet(int mode, int set) {
 	compMode = mode;
-	if (set <= 1) {
-		comp1 =  set;
+	if(set <= 1) {
+		comp1 = set;
 	}
 }
 

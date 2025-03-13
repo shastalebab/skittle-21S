@@ -1,5 +1,6 @@
 #include "main.h"
 #include "stormlib/api.hpp"
+#include "subsystems.hpp"
 #include "subsystems_auton.hpp"
 
 // big money $_$
@@ -143,6 +144,7 @@ void autonomous() {
 	else {
 		if(noselection == false) jautonrun();
 	}
+	LEDmanager.setColor(WHITE);
 }
 
 /**

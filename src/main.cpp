@@ -1,5 +1,6 @@
 #include "main.h"
 #include "stormlib/api.hpp"
+#include "subsystems.hpp"
 #include "subsystems_auton.hpp"
 
 // big money $_$
@@ -87,6 +88,7 @@ void initialize() {
 	pros::Task ledAlliance(ledAllianceTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
 	LEDmanager.initialize(20);
+	compStatusSet(0, 0);
 }
 
 /**
@@ -96,6 +98,7 @@ void initialize() {
  */
 void disabled() {
 	// . . .
+	compStatusSet(0, 2);
 }
 
 /**
@@ -110,7 +113,7 @@ void disabled() {
 void competition_initialize() {
 	// Start screen on auton selector
 	lv_obj_set_tile(mainscreen, autoselector, LV_ANIM_ON);
-	//comp = true;
+	compStatusSet(0, 1);
 }
 
 /**
@@ -125,6 +128,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+	compStatusSet(1, 2);
 	chassis.pid_targets_reset();				// Resets PID targets to 0
 	chassis.drive_imu_reset();					// Reset gyro position to 0
 	chassis.drive_sensor_reset();				// Reset drive sensors to 0
@@ -140,6 +144,7 @@ void autonomous() {
 	else {
 		if(noselection == false) jautonrun();
 	}
+	LEDmanager.setColor(WHITE);
 }
 
 /**
@@ -157,7 +162,7 @@ void autonomous() {
  */
 
 void opcontrol() {
-	//OPstarted = true;
+	compStatusSet(2, 2);
 	// Update the state of the robot to be optimal for driver control
 	chassis.drive_brake_set(MOTOR_BRAKE_BRAKE);
 	lv_obj_set_tile(mainscreen, motortemps, LV_ANIM_ON);

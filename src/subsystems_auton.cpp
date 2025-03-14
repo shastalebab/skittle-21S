@@ -58,7 +58,7 @@ Colors colorGet() {
 	auto hue = ringsens.get_hue();
 	if(hue > 0 && hue < 15)
 		return Colors::RED;
-	else if(hue > 200 && hue < 215)
+	else if(hue > 210 && hue < 225)
 		return Colors::BLUE;
 	else if(hue < 90 && hue > 70)
 		return Colors::SPUR;

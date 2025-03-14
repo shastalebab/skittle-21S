@@ -14,6 +14,7 @@ void red_6ring();
 void red_negsolowp();
 
 void blue_4pos();
+void blue_gr_wp();
 void blue_6ring();
 void blue_negsolowp();
 

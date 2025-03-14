@@ -1,14 +1,18 @@
 #include "main.h"
+
+#include "pros/misc.h"
+#include "pros/misc.hpp"
 #include "stormlib/api.hpp"
 #include "subsystems.hpp"
 #include "subsystems_auton.hpp"
+#include "ui/brainui.hpp"
+
 
 // big money $_$
 /////
 // For installation, upgrading, documentations, and tutorials, check out our
 // website! https://ez-robotics.github.io/EZ-Template/
 /////
-
 
 // Chassis constructor
 ez::Drive chassis(
@@ -64,11 +68,12 @@ void initialize() {
 		jas::jasauton(red_4pos, 0, 1, "Red 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
 		jas::jasauton(red_6ring, 0, 0, "Red 6 ring", "Red 5 + 1 negitive side.", 6, 0, false),
 		jas::jasauton(red_negsolowp, 0, 0, "Red negative solo WP", "Red 3 + 2 + 1 negitive side.", 3, 2, true),
-		
+
+		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 2 + 1 + 1 positive side", 2, 1, true),
 		jas::jasauton(blue_4pos, 1, 1, "Blue 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
 		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring", "Blue 5 + 1 negitive side.", 6, 0, true),
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 3 + 2 + 1 negitive side.", 3, 2, true),
-		
+
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward.", 0, 0, false),
 		jas::jasauton(ram, 2, 2, "ram", "Ram corner", 2, 0, false),
 		jas::jasauton(testautonRed, 0, 2, "red test", "intake + clamp test.", 0, 0, false),
@@ -167,11 +172,18 @@ void opcontrol() {
 	chassis.drive_brake_set(MOTOR_BRAKE_BRAKE);
 	lv_obj_set_tile(mainscreen, motortemps, LV_ANIM_ON);
 	intakeLevel.set(true);
-	
+
 	driverClock.start();
 	pros::Task ledTimer(ledTimeTask);
 
 	while(true) {
+		if(!pros::competition::is_connected()) {
+			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+				pros::motor_brake_mode_e_t preference = chassis.drive_brake_get();
+				autonomous();
+				chassis.drive_brake_set(preference);
+			}
+		}
 
 		// Tank control
 		chassis.opcontrol_tank();
@@ -187,7 +199,7 @@ void opcontrol() {
 		if (driverClock.timeLeft() > 40 * 1000) {
 			LEDmanager.setColor(SPURFLY);
 		} else if (driverClock.timeLeft() <= 40 * 1000 && driverClock.timeLeft() > 30 * 1000) {
-			LEDmanager.pulse(0xb00c8f, 4, 500); 
+			LEDmanager.pulse(0xb00c8f, 4, 500);
 		} else {
 			LEDmanager.rainbow();
 		}

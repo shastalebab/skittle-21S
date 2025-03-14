@@ -9,13 +9,14 @@ Coordinate currentPoint = {0, 0};
 void blue_goal_rush() {
 	setDoinker(Doinker::RIGHT, true);
 	intakefirst.move(127);
-	//chassis.pid_odom_set({{24_in, 54_in}, fwd, 90});
+	// chassis.pid_odom_set({{24_in, 54_in}, fwd, 90});
 	moveToPoint(currentPoint, {24, 54}, 90, fwd);
 	chassis.pid_wait_quick_chain();
 	setDoinker(Doinker::RIGHT, false);
 	pros::delay(250);
-	//chassis.pid_odom_set({{24_in, 28_in}, rev, 90});
+	// chassis.pid_odom_set({{24_in, 28_in}, rev, 90});
 	moveToPoint(currentPoint, {24, 28}, 90, rev);
+	chassis.pid_wait();
 	blue_goal_rush_used = true;
 	currentPoint = {24, 28};
 }
@@ -23,19 +24,20 @@ void blue_goal_rush() {
 void red_goal_rush() {
 	setDoinker(Doinker::LEFT, true);
 	intakefirst.move(127);
-	//chassis.pid_odom_set({{120_in, 54_in}, fwd, 90});
+	// chassis.pid_odom_set({{120_in, 54_in}, fwd, 90});
 	moveToPoint(currentPoint, {120, 54}, 90, fwd);
 	chassis.pid_wait_quick_chain();
 	setDoinker(Doinker::LEFT, false);
 	pros::delay(250);
-	//chassis.pid_odom_set({{120_in, 28_in}, rev, 90});
+	// chassis.pid_odom_set({{120_in, 28_in}, rev, 90});
 	moveToPoint(currentPoint, {120, 28}, 90, rev);
+	chassis.pid_wait();
 	red_goal_rush_used = true;
 	currentPoint = {24, 28};
 }
 
 void alliancestake() {
-	//chassis.pid_odom_set({{72_in, 16_in}, fwd, 127});
+	// chassis.pid_odom_set({{72_in, 16_in}, fwd, 127});
 	moveToPoint(currentPoint, {72, 16}, 90, fwd);
 	chassis.pid_wait();
 	chassis.pid_turn_set(0_deg, 70);
@@ -52,10 +54,12 @@ void alliancestake() {
 
 void blue_gr_mogo() {
 	if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
-	//chassis.pid_odom_set({{24_in, 48_in}, rev, 80});
+	// chassis.pid_odom_set({{24_in, 48_in}, rev, 80});
 	moveToPoint(currentPoint, {24, 48}, 80, rev);
 	if(mogo_dropped) pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
@@ -67,10 +71,12 @@ void blue_gr_mogo() {
 
 void red_gr_mogo() {
 	if(chassis.odom_x_get() <= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
-	//chassis.pid_odom_set({{120_in, 48_in}, rev, 80});
+	// chassis.pid_odom_set({{120_in, 48_in}, rev, 80});
 	moveToPoint(currentPoint, {120, 48}, 80, rev);
 	if(mogo_dropped) pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
@@ -82,10 +88,12 @@ void red_gr_mogo() {
 
 void left_mogo() {
 	if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
-	//chassis.pid_odom_set({{48_in, 48_in}, rev, 80});
+	// chassis.pid_odom_set({{48_in, 48_in}, rev, 80});
 	moveToPoint(currentPoint, {48, 48}, 80, rev);
 	if(mogo_dropped) pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
@@ -97,10 +105,12 @@ void left_mogo() {
 
 void right_mogo() {
 	if(chassis.odom_x_get() <= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
-	//chassis.pid_odom_set({{96_in, 48_in}, rev, 80});
+	// chassis.pid_odom_set({{96_in, 48_in}, rev, 80});
 	moveToPoint(currentPoint, {96, 48}, 80, rev);
 	if(mogo_dropped) pros::delay(750);
 	mogoState = AutoMogo::PRIMED;
@@ -112,11 +122,13 @@ void right_mogo() {
 
 void left_corner() {
 	if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
 	setIntake(127);
-	//chassis.pid_odom_set({{21_in, 24_in}, fwd, 127});
+	// chassis.pid_odom_set({{21_in, 24_in}, fwd, 127});
 	moveToPoint(currentPoint, {21, 24}, 127, fwd);
 	chassis.pid_wait_quick();
 	chassis.pid_turn_set(-135, 127);
@@ -131,11 +143,13 @@ void left_corner() {
 
 void right_corner() {
 	if(chassis.odom_x_get() <= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
 	setIntake(127);
-	//chassis.pid_odom_set({{123_in, 24_in}, fwd, 127});
+	// chassis.pid_odom_set({{123_in, 24_in}, fwd, 127});
 	moveToPoint(currentPoint, {123, 24}, 127, fwd);
 	chassis.pid_wait_quick();
 	chassis.pid_turn_set(135, 127);
@@ -150,8 +164,10 @@ void right_corner() {
 
 void red_ring_rush() {
 	if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
 	setIntake(127);
 	moveToPoint(currentPoint, {48, 48}, 90, fwd);
@@ -164,8 +180,10 @@ void red_ring_rush() {
 
 void blue_ring_rush() {
 	if(chassis.odom_x_get() <= 72 && chassis.odom_y_get() > 28) {
-		chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+		moveToPoint(currentPoint, {72, 24}, 127, fwd);
 		chassis.pid_wait_quick_chain();
+		currentPoint = {72, 24};
 	}
 	setIntake(127);
 	moveToPoint(currentPoint, {96, 48}, 90, fwd);
@@ -180,10 +198,12 @@ void left_btm_ring() {
 	setIntake(127);
 	if(!blue_goal_rush_used) {
 		if(chassis.odom_x_get() >= 72 && chassis.odom_y_get() > 28) {
-			chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+			// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+			moveToPoint(currentPoint, {72, 24}, 127, fwd);
 			chassis.pid_wait_quick_chain();
+			currentPoint = {72, 24};
 		}
-		//chassis.pid_odom_set({{24_in, 48_in}, fwd, 90});
+		// chassis.pid_odom_set({{24_in, 48_in}, fwd, 90});
 		moveToPoint(currentPoint, {24, 48}, 127, fwd);
 		chassis.pid_wait();
 		currentPoint = {24, 48};
@@ -193,7 +213,7 @@ void left_btm_ring() {
 void mid_top_ring() {
 	intakeLevel.set(false);
 	intakefirst.move(127);
-	//chassis.pid_odom_set({{72_in, 20_in}, fwd, 100});
+	// chassis.pid_odom_set({{72_in, 20_in}, fwd, 100});
 	moveToPoint(currentPoint, {72, 48}, 90, fwd);
 	chassis.pid_wait();
 	intakeLevel.set(true);
@@ -204,10 +224,12 @@ void right_btm_ring() {
 	setIntake(127);
 	if(!red_goal_rush_used) {
 		if(chassis.odom_x_get() <= 72 && chassis.odom_y_get() > 28) {
-			chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+			// chassis.pid_odom_set({{72_in, 24_in}, fwd, 127});
+			moveToPoint(currentPoint, {72, 24}, 127, fwd);
 			chassis.pid_wait_quick_chain();
+			currentPoint = {72, 24};
 		}
-		//chassis.pid_odom_set({{120_in, 48_in}, fwd, 90});
+		// chassis.pid_odom_set({{120_in, 48_in}, fwd, 90});
 		moveToPoint(currentPoint, {120, 48}, 127, fwd);
 		chassis.pid_wait();
 		currentPoint = {120, 48};
@@ -215,7 +237,7 @@ void right_btm_ring() {
 }
 
 void ladder() {
-	//chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
+	// chassis.pid_odom_set({{72_in, 48_in}, fwd, 127});
 	moveToPoint(currentPoint, {72, 48}, 127, fwd);
 	setLadyBrown(600);
 	chassis.pid_wait();

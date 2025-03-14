@@ -85,6 +85,7 @@ void initialize() {
 	_init_fs();
 	screeninit();
 	master.rumble(".");
+	LEDmanager.initialize(20);
 	pros::Task tempchecktask(tempcheckTask);
 	pros::Task colortask(colorTask);
 	pros::Task unjamtask(unjamTask);
@@ -92,7 +93,7 @@ void initialize() {
 	pros::Task distancetask(distanceTask);
 	pros::Task ledAlliance(ledAllianceTask);
 	ladybrown.set_brake_mode(MOTOR_BRAKE_HOLD);
-	LEDmanager.initialize(20);
+
 	compStatusSet(0, 0);
 }
 
@@ -149,7 +150,8 @@ void autonomous() {
 	else {
 		if(noselection == false) jautonrun();
 	}
-	LEDmanager.setColor(WHITE);
+	LEDmanager.off();
+	LEDmanager.setColor(WHITE_HEX);
 }
 
 /**

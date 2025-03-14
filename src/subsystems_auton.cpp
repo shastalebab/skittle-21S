@@ -172,11 +172,11 @@ void ledTimeTask() {
 	if (compStatus() == 2 && compPluged() == 1) {
 		LEDmanager.setColor(GREEN_HEX);
 		driverClock.waitUntil( 40 * 1000);
-		while (i < 5) {
+		while (i < 10) {
 		LEDmanager.setColor(WHITE_HEX);
-		pros::delay(1000);
-		LEDmanager.off();
-		pros::delay(1000);
+		pros::delay(500);
+		LEDmanager.setColor(GREEN_HEX);
+		pros::delay(500);
 		master.rumble(".");
 		i++;
 		}

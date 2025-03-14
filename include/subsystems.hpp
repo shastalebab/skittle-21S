@@ -43,5 +43,6 @@ inline stormlib::aRGB_manager LEDmanager(&driveLeftLED, &driveRightLED, nullptr,
 
 #define RED_HEX 0xFF000F
 #define BLUE_HEX 0x0FFFFF
-#define WHITE 0xFFFFFF
-#define SPURFLY 0xB5C15F
+#define WHITE_HEX 0xc7c7c7
+#define GREEN_HEX 0x099e36
+#define SPURFLY_HEX 0xB5C15F

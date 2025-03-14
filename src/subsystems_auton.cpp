@@ -170,16 +170,18 @@ void ledTimeTask() {
 	bool match = true;
 	while (match) {
 	if (compStatus() == 2 && compPluged() == 1) {
-		LEDmanager.setColor(SPURFLY);
+		LEDmanager.setColor(GREEN_HEX);
 		driverClock.waitUntil( 40 * 1000);
-		while (i < 10) {
-		LEDmanager.setColor(WHITE);
-		pros::delay(800);
+		while (i < 5) {
+		LEDmanager.setColor(WHITE_HEX);
+		pros::delay(1000);
 		LEDmanager.off();
-		pros::delay(200);
+		pros::delay(1000);
+		master.rumble(".");
 		i++;
 		}
 		driverClock.waitUntil(30 * 1000);
+		master.rumble(".....");
 		LEDmanager.off();
 		LEDmanager.rainbow(0);
 		driverClock.waitUntil(0 );
@@ -205,7 +207,7 @@ void ledAllianceTask() {
 			LEDmanager.setColor(RED_HEX);
 		}
 	} else if (compPluged() == 0) {
-		LEDmanager.setColor(WHITE);
+		LEDmanager.setColor(GREEN_HEX);
 	} else if (compStatus() >= 1) {
 		i++;
 		break;
@@ -213,6 +215,7 @@ void ledAllianceTask() {
 	pros::delay(20);
 	}
 }
+
 
 // Auton pathing aids
 

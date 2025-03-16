@@ -1,5 +1,9 @@
+#include "subsystems_auton.hpp"
+
 #include "main.h"  // IWYU pragma: keep
+#include "pros/misc.hpp"
 #include "pros/rtos.hpp"
+
 
 int target = 0;
 bool unjam = true;
@@ -56,14 +60,14 @@ void colorSet(Colors color) {
 
 Colors colorGet() {
 	auto hue = ringsens.get_hue();
-	if(hue > 0 && hue < 15)
-		return Colors::RED;
-	else if(hue > 210 && hue < 225)
-		return Colors::BLUE;
-	else if(hue < 90 && hue > 70)
-		return Colors::SPUR;
-	else
-		return Colors::NEUTRAL;
+	if(ringsens.get_proximity() > 100) {
+		if((hue > 340 && hue < 360) || (hue > 0 && hue < 15))
+			return Colors::RED;
+		else if(hue > 210 && hue < 225)
+			return Colors::BLUE;
+		else if(hue < 90 && hue > 70)
+			return Colors::SPUR;
+	} return Colors::NEUTRAL;
 }
 
 bool colorCompare(Colors color) {
@@ -78,7 +82,7 @@ void colorTask() {
 	while(true) {
 		color = colorGet();
 		colorSet(color);
-		if(!jammed && pros::competition::is_autonomous()) {
+		if(!jammed && pros::competition::is_autonomous() && !pros::competition::is_disabled()) {
 			if(colorCompare(color) && !discarding) {
 				discarding = true;
 			} else if(discarding) {
@@ -168,25 +172,25 @@ void compStatusSet(int mode, int set) {
 void ledTimeTask() {
 	int i = 0;
 	bool match = true;
-	while (match) {
-	if (compStatus() == 2 && compPluged() == 1) {
-		LEDmanager.setColor(GREEN_HEX);
-		driverClock.waitUntil( 40 * 1000);
-		while (i < 10) {
-		LEDmanager.setColor(WHITE_HEX);
-		pros::delay(500);
-		LEDmanager.setColor(GREEN_HEX);
-		pros::delay(500);
-		master.rumble(".");
-		i++;
-		}
-		driverClock.waitUntil(30 * 1000);
-		master.rumble(".....");
-		LEDmanager.off();
-		LEDmanager.rainbow(0);
-		driverClock.waitUntil(0 );
-		LEDmanager.off();
-		match = false;
+	while(match) {
+		if(compStatus() == 2 && compPluged() == 1) {
+			LEDmanager.setColor(WHITE_HEX);
+			driverClock.waitUntil(40 * 1000);
+			while(i < 10) {
+				LEDmanager.setColor(SPURFLY_HEX);
+				pros::delay(500);
+				LEDmanager.setColor(WHITE_HEX);
+				pros::delay(500);
+				master.rumble(".");
+				i++;
+			}
+			driverClock.waitUntil(30 * 1000);
+			master.rumble(".....");
+			LEDmanager.off();
+			LEDmanager.rainbow(0);
+			driverClock.waitUntil(0);
+			LEDmanager.off();
+			match = false;
 		}
 		pros::delay(20);
 	}
@@ -194,28 +198,28 @@ void ledTimeTask() {
 
 void ledAllianceTask() {
 	int i = 0;
-	while (i < 1) {
-	if (compStatus() == 0 && compPluged() == 1) {
-		switch (allianceColor) {
-		case Colors::RED:
-			LEDmanager.setColor(RED_HEX);
+	while(i < 1) {
+		if(compStatus() == 0 && compPluged() == 1) {
+			switch(allianceColor) {
+				case Colors::RED:
+					LEDmanager.setColor(RED_HEX);
+					break;
+				case Colors::BLUE:
+					LEDmanager.setColor(BLUE_HEX);
+					break;
+				default:
+					LEDmanager.setColor(RED_HEX);
+			}
+		} else if(compPluged() == 0) {
+			LEDmanager.setColor(WHITE_HEX);
+		} else if(compStatus() >= 1) {
+			LEDmanager.off();
+			i++;
 			break;
-		case Colors::BLUE:
-			LEDmanager.setColor(BLUE_HEX);
-			break;
-		default:
-			LEDmanager.setColor(RED_HEX);
 		}
-	} else if (compPluged() == 0) {
-		LEDmanager.setColor(GREEN_HEX);
-	} else if (compStatus() >= 1) {
-		i++;
-		break;
-	}
-	pros::delay(20);
+		pros::delay(20);
 	}
 }
-
 
 // Auton pathing aids
 

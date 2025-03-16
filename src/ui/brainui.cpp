@@ -1,5 +1,8 @@
 #include "autons.hpp"
 #include "liblvgl/core/lv_obj.h"
+#include "liblvgl/core/lv_obj_style.h"
+#include "liblvgl/misc/lv_color.h"
+#include "liblvgl/widgets/lv_btn.h"
 #include "main.h"  // IWYU pragma: keep
 
 using namespace jas;
@@ -55,9 +58,10 @@ lv_obj_t *autonselectup = lv_btn_create(autoselector);
 lv_obj_t *autonselectdown = lv_btn_create(autoselector);
 lv_obj_t *redblu = lv_switch_create(autoselector);
 lv_obj_t *posneg = lv_switch_create(autoselector);
+lv_obj_t *ladderToggle = lv_btn_create(autoselector);
 lv_obj_t *negind = lv_obj_create(autoselector);
 lv_obj_t *posind = lv_obj_create(autoselector);
-lv_obj_t *redbluind = lv_obj_create(autoselector);
+lv_obj_t *redbluind = lv_btn_create(autoselector);
 lv_obj_t *jauton = lv_table_create(autoselector);
 lv_obj_t *selectedAuton = lv_label_create(autoselector);
 lv_obj_t *selectedAutonbox = lv_obj_create(autoselector);
@@ -76,12 +80,6 @@ vector<lv_color32_t> colortable = {lv_color_hex(0xff2a00), lv_color_hex(0x0066cc
 								   lv_color_hex(0xdb8826), lv_color_hex(0x5d5d5d), lv_color_hex(0x84f03b)};
 
 void jautonrun() { jautoncurated[selected].AutonCall(); }
-
-void setPosInd() {
-	bool corner = lv_obj_has_state(posneg, LV_STATE_CHECKED);
-	if(cornerState) lv_obj_set_style_bg_color(posind, corner ? lv_color_hex(0xb12e1c) : lv_color_hex(0x5d2e1c), LV_PART_MAIN);
-	else lv_obj_set_style_bg_color(posind, corner ? lv_color_hex(0xdb8826) : lv_color_hex(0x5d5d5d), LV_PART_MAIN);
-}
 
 static void clear() {
 	noselection = true;
@@ -130,15 +128,15 @@ static void selectauton(lv_event_t *e) {
 															 lv_obj_set_style_bg_color(redbluind, lv_color_hex(0xff2a00), LV_PART_MAIN);
 		lv_obj_has_state(posneg, LV_STATE_CHECKED) == true ? lv_obj_set_style_bg_color(posind, lv_color_hex(0xdb8826), LV_PART_MAIN) :
 															 lv_obj_set_style_bg_color(negind, lv_color_hex(0x00b5bc), LV_PART_MAIN);
-		setPosInd();
 		colortable[2] = lv_obj_get_style_bg_color(redbluind, LV_PART_MAIN);
 		lv_label_set_text(selectedAuton, ((jautoncurated[selected].Desc).c_str()));
 		lv_obj_set_style_bg_color(mogoring1, colortable[jautoncurated[selected].RedBluFilt], LV_PART_MAIN);
 		lv_obj_set_size(mogoringback1, 46, (78 - (13 * jautoncurated[selected].Mogo1)));
 		lv_obj_set_style_bg_color(mogoring2, colortable[jautoncurated[selected].RedBluFilt], LV_PART_MAIN);
 		lv_obj_set_size(mogoringback2, 46, (78 - (13 * jautoncurated[selected].Mogo2)));
+		if(!allianceState) lv_obj_set_style_bg_color(redbluind, lv_color_hex(0x000000), LV_PART_MAIN);
 		jautoncurated[selected].AllyRing == true ? lv_obj_add_flag(alliancering, LV_OBJ_FLAG_HIDDEN) : lv_obj_clear_flag(alliancering, LV_OBJ_FLAG_HIDDEN);
-		//jautonrun();  // comment this out
+		// jautonrun();  // comment this out
 	}
 }
 
@@ -159,7 +157,17 @@ static void updownbtn(lv_event_t *e) {
 
 static void cornertoggle(lv_event_t *e) {
 	cornerState = !cornerState;
-	setPosInd();
+	lv_obj_set_style_bg_color(ladderToggle, cornerState ? lv_color_hex(0x071808) : lv_color_hex(0x84f03b), LV_PART_MAIN);
+	cout << (cornerState ? "corner" : "ladder") << endl;
+}
+
+static void alliancedelay(lv_event_t *e) {
+	allianceState = !allianceState;
+	cout << (allianceState ? "alliance" : "delay") << endl;
+	if(!allianceState)
+		lv_obj_set_style_bg_color(redbluind, lv_color_hex(0x000000), LV_PART_MAIN);
+	else
+		lv_obj_set_style_bg_color(redbluind, lv_color_hex(lv_obj_has_state(redblu, LV_STATE_CHECKED) == true ? 0x0066cc : 0xff2a00), LV_PART_MAIN);
 }
 
 lv_obj_t *screens[3]{autoselector, motortemps, autobuilder};
@@ -176,6 +184,7 @@ lv_event_cb_t selectAuton = selectauton;
 lv_event_cb_t upDownBtn = updownbtn;
 lv_event_cb_t pageSwitchBtn = pageswitchbtn;
 lv_event_cb_t cornerToggle = cornertoggle;
+lv_event_cb_t allianceDelay = alliancedelay;
 
 void screeninit() {
 	lv_style_init(&style);
@@ -253,7 +262,7 @@ void screeninit() {
 	lv_obj_set_pos(jauton, 5, 60);
 	lv_obj_move_foreground(autonselectup);
 	lv_obj_move_foreground(autonselectdown);
-	lv_obj_add_style(redblu, &stylebtn, LV_PART_INDICATOR | LV_STATE_DEFAULT); 
+	lv_obj_add_style(redblu, &stylebtn, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 	lv_obj_add_style(redblu, &stylebtn, LV_PART_INDICATOR | LV_STATE_CHECKED);
 	lv_obj_add_style(redblu, &stylebtn, LV_PART_KNOB);
 	lv_obj_set_style_pad_all(redblu, 0, LV_PART_KNOB);
@@ -265,7 +274,7 @@ void screeninit() {
 	lv_obj_set_pos(redblu, 62, 10);
 	lv_obj_move_foreground(redblu);
 	lv_obj_add_style(posneg, &stylebtn, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-	lv_obj_add_style(posneg, &stylebtn, LV_PART_INDICATOR |LV_STATE_CHECKED);
+	lv_obj_add_style(posneg, &stylebtn, LV_PART_INDICATOR | LV_STATE_CHECKED);
 	lv_obj_add_style(posneg, &stylebtn, LV_PART_KNOB);
 	lv_obj_set_style_pad_all(posneg, 0, LV_PART_KNOB);
 	lv_obj_set_style_pad_hor(posneg, 2, LV_PART_KNOB);
@@ -281,7 +290,6 @@ void screeninit() {
 	lv_obj_add_style(negind, &styleind, LV_PART_MAIN);
 	lv_obj_set_size(posind, 66, 66);
 	lv_obj_set_pos(posind, 412, 126);
-	lv_obj_add_flag(posind, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_add_style(posind, &styleind, LV_PART_MAIN);
 	lv_obj_set_size(redbluind, 62, 79);
 	lv_obj_set_pos(redbluind, 266, 22);
@@ -289,10 +297,15 @@ void screeninit() {
 	lv_obj_set_pos(autondesc, 7, 45);
 	lv_obj_add_style(autondesc, &style, LV_PART_MAIN);
 	lv_label_set_text(autondesc, "auton selection:");
+	lv_obj_add_style(ladderToggle, &styleind, LV_PART_MAIN);
+	lv_obj_set_style_bg_color(ladderToggle, lv_color_hex(0x84f03b), LV_PART_MAIN);
+	lv_obj_set_size(ladderToggle, 36, 42);
+	lv_obj_set_pos(ladderToggle, 305, 103);
 
 	lv_obj_add_event_cb(redblu, jautonCurate, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(posneg, jautonCurate, LV_EVENT_CLICKED, NULL);
-	lv_obj_add_event_cb(posind, cornerToggle, LV_EVENT_CLICKED, NULL);
+	lv_obj_add_event_cb(ladderToggle, cornerToggle, LV_EVENT_CLICKED, NULL);
+	lv_obj_add_event_cb(redbluind, allianceDelay, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(autonselectup, upDownBtn, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(autonselectdown, upDownBtn, LV_EVENT_CLICKED, NULL);
 	lv_obj_add_event_cb(jauton, selectAuton, LV_EVENT_VALUE_CHANGED, NULL);

@@ -65,19 +65,26 @@ void initialize() {
 
 	// Auton selector
 	j_auton_selector.jautonpopulate({
-		jas::jasauton(red_4pos, 0, 1, "Red 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
-		jas::jasauton(red_6ring, 0, 0, "Red 6 ring", "Red 5 + 1 negitive side.", 6, 0, false),
+		jas::jasauton(red_4pos, 0, 1, "Red 4 RING pos", "Red 3 + 1 ring positive side.", 3, 0, true),
+		jas::jasauton(red_4greed, 0, 1, "Red 4 GREED pos", "Red 4 ring positive side.", 4, 0, false),
+		jas::jasauton(red_6ring, 0, 0, "Red 6 RING", "Red 5 + 1 negitive side.", 5, 0, true),
+		jas::jasauton(red_6greed, 0, 0, "Red 6 GREED", "Red 6 negitive side.", 6, 0, false),
 		jas::jasauton(red_negsolowp, 0, 0, "Red negative solo WP", "Red 3 + 2 + 1 negitive side.", 3, 2, true),
 
 		jas::jasauton(blue_gr_wp, 1, 1, "Blue goal rush WP", "Blue 2 + 1 + 1 positive side", 2, 1, true),
-		jas::jasauton(blue_4pos, 1, 1, "Blue 4 ring pos", "Red 4 ring positive side.", 5, 0, false),
-		jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring", "Blue 5 + 1 negitive side.", 6, 0, true),
+		jas::jasauton(blue_4pos, 1, 1, "Blue 4 RING pos", "Red 3 + 1 ring positive side.", 3, 0, true),
+		jas::jasauton(blue_4greed, 1, 1, "Blue 4 GREED pos", "Red 4 ring positive side.", 4, 0, false),
+		jas::jasauton(blue_6ring, 1, 0, "Blue 6 RING", "Blue 5 + 1 negitive side.", 5, 0, true),
+		jas::jasauton(blue_6greed, 1, 0, "Blue 6 GREED", "Blue 6 negitive side.", 6, 0, false),
 		jas::jasauton(blue_negsolowp, 1, 0, "Blue negative solo WP", "Blue 3 + 2 + 1 negitive side.", 3, 2, true),
 
 		jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward.", 0, 0, false),
 		jas::jasauton(ram, 2, 2, "ram", "Ram corner", 2, 0, false),
 		jas::jasauton(testautonRed, 0, 2, "red test", "intake + clamp test.", 0, 0, false),
 		jas::jasauton(testautonBlue, 1, 2, "blue test", "intake + clamp test.", 0, 0, false),
+
+		jas::jasauton(skills, 2, 2, "skills 1", "skills quinn", 6, 6, true),
+		jas::jasauton(skills2, 2, 2, "skills 2", "skills jordan", 6, 6, true)
 	});
 
 	// Initialize chassis and auton selector

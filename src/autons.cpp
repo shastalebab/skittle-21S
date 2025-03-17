@@ -1,4 +1,5 @@
 #include "EZ-Template/util.hpp"
+#include "autonbuilder.hpp"
 #include "main.h"  // IWYU pragma: keep
 #include "subsystems_auton.hpp"
 
@@ -15,7 +16,7 @@ const int TURN_SPEED = 90;
 const int SWING_SPEED = 90;
 const int GRAB_MOGO = 80;
 
-bool cornerState = false;
+bool cornerState = true;
 bool allianceState = true;
 ///
 // Constants
@@ -179,6 +180,52 @@ void red_4greed() {
 	setLadyBrown(10);
 }
 
+void red_gr_wp() {
+	allianceColor = Colors::RED;
+	// grab goal rush mogo
+	setDoinker(Doinker::RIGHT, true);
+	intakefirst.move(127);
+	moveToPoint({108, 20}, {120, 54}, 90, fwd);
+	chassis.pid_wait_quick();
+	setDoinker(Doinker::RIGHT, false);
+	// reverse and set goal rush mogo
+	moveToPoint({120, 54}, {120, 32}, 90, rev);
+	chassis.pid_wait();
+	setDoinker(Doinker::RIGHT, true);
+	mogoState = AutoMogo::PRIMED;
+	// grab other mogo and score two
+	moveToPoint({120, 32}, {96, 48}, 80, rev);
+	pros::delay(500);
+	setDoinker(Doinker::RIGHT, false);
+	chassis.pid_wait_quick();
+	setMogo(true);
+	setIntake(127);
+	pros::delay(1000);
+	// regrab goal rush mogo
+	setMogo(false);
+	moveToPoint({96, 48}, {120, 48}, 80, rev);
+	mogoState = AutoMogo::PRIMED;
+	chassis.pid_wait_quick();
+	setMogo(true);
+	// score mid top ring
+	intakeLevel.set(false);
+	moveToPoint({120, 48}, {72, 24}, 80, fwd);
+	chassis.pid_wait_quick_chain();
+	pros::delay(500);
+	// score corner
+	moveToPoint({72, 24}, {96, 36}, 80, rev);
+	chassis.pid_wait_quick();
+	moveToPoint({96, 36}, {120, 28}, 127, fwd);
+	chassis.pid_wait_quick_chain();
+	chassis.pid_turn_set(135_deg, 127);
+	ram();
+	setLadyBrown(600);
+	// ladder
+	chassis.pid_drive_set(-60_in, 127, true);
+	chassis.pid_wait();
+	setLadyBrown(10);
+}
+
 // toggle preload for scoring on allaince or mogo
 // NEG 6 ring
 void red_6ring() {
@@ -215,19 +262,19 @@ void red_6ring() {
 	chassis.pid_turn_set(-135_deg, 127);
 	chassis.pid_wait_quick_chain();
 	ram();
+	pros::delay(250);
 	chassis.pid_drive_set(-24_in, GRAB_MOGO);
 	chassis.pid_wait_quick();
 	// grab mid top ring
 	chassis.pid_turn_set(90_deg, 127);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_drive_set(52_in, 127, true);
+	chassis.pid_drive_set(52_in, 80, true);
 	pros::delay(500);
 	intakeLevel.set(false);
-	chassis.pid_wait_until(26_in);
-	chassis.pid_speed_max_set(70);
-	chassis.pid_wait_quick();
+	chassis.pid_wait_quick_chain();
 	intakeLevel.set(true);
-	setLadyBrown(1000);
+	chassis.pid_drive_set(-8_in, 80);
+	chassis.pid_wait_quick_chain();
 	// ram corner
 	if(cornerState) {
 		chassis.pid_turn_set(268_deg, 127);
@@ -488,58 +535,48 @@ void blue_4greed() {
 
 void blue_gr_wp() {
 	allianceColor = Colors::BLUE;
-	// rush mogo & collect ring
-	setDoinker(Doinker::RIGHT, true);
+	// grab goal rush mogo
+	setDoinker(Doinker::LEFT, true);
 	intakefirst.move(127);
-	chassis.pid_drive_set(findDistance({37, 20}, {24, 56}, fwd), 80, true);
-	chassis.pid_wait_quick_chain();
-	setDoinker(Doinker::RIGHT, false);
-	pros::delay(250);
-	moveToPoint({24, 56}, {24, 28}, 127, rev);
+	moveToPoint({36, 20}, {28, 54}, 90, fwd);
+	chassis.pid_wait_quick();
+	setDoinker(Doinker::LEFT, false);
+	// reverse and set goal rush mogo
+	moveToPoint({24, 54}, {24, 32}, 90, rev);
 	chassis.pid_wait();
-	// grab other mogo & score the two collected rings on it
-	moveToPoint({24, 28}, {48, 48}, GRAB_MOGO, rev);
+	setDoinker(Doinker::LEFT, true);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_until(findDistance({24, 28}, {24, 48}, rev) - 3_in);
+	// grab other mogo and score two
+	moveToPoint({24, 32}, {48, 48}, 80, rev);
+	pros::delay(500);
+	setDoinker(Doinker::LEFT, false);
+	chassis.pid_wait_quick();
 	setMogo(true);
 	setIntake(127);
-	chassis.pid_wait();
-	// drop mogo & regrab goal rush mogo
 	pros::delay(1000);
+	// regrab goal rush mogo
 	setMogo(false);
-	moveToPoint({48, 48}, {20, 48}, GRAB_MOGO, rev);
-	pros::delay(200);
+	moveToPoint({48, 48}, {24, 48}, 80, rev);
 	mogoState = AutoMogo::PRIMED;
-	chassis.pid_wait_quick_chain();
+	chassis.pid_wait_quick();
 	setMogo(true);
+	// score mid top ring
+	intakeLevel.set(false);
+	moveToPoint({24, 48}, {72, 24}, 80, fwd);
+	chassis.pid_wait_quick_chain();
+	pros::delay(500);
 	// score corner
-	moveToPoint({20, 48}, {20, 24}, 127, fwd);
+	moveToPoint({72, 24}, {48, 36}, 80, rev);
+	chassis.pid_wait_quick();
+	moveToPoint({48, 36}, {28, 28}, 127, fwd);
 	chassis.pid_wait_quick_chain();
 	chassis.pid_turn_set(-135_deg, 127);
-	chassis.pid_wait_quick();
 	ram();
-	chassis.pid_drive_set(-14_in, GRAB_MOGO);
-	pros::delay(500);
-	// grab mid top ring
-	chassis.pid_turn_set(90_deg, 127);
-	chassis.pid_wait_quick_chain();
-	chassis.pid_drive_set(52_in, 127, true);
-	pros::delay(500);
-	intakeLevel.set(false);
-	setIntake(0);
-	chassis.pid_wait_until(32_in);
-	intakefirst.move(127);
-	chassis.pid_speed_max_set(70);
+	setLadyBrown(600);
+	// ladder
+	chassis.pid_drive_set(-60_in, 127, true);
 	chassis.pid_wait();
-	intakeLevel.set(true);
-	// score on alliance stake
-	moveToPoint({72, 24}, {72, 10}, 90, rev);
-	chassis.pid_wait();
-	intake.move_relative(600, 200);
-	pros::delay(500);
-	// touch ladder
-	setLadyBrown(1000);
-	moveToPoint({72, 10}, {57, 60}, 127, rev);
+	setLadyBrown(10);
 }
 
 // NEG 6 ring
@@ -577,19 +614,19 @@ void blue_6ring() {
 	chassis.pid_turn_set(135_deg, 127);
 	chassis.pid_wait_quick_chain();
 	ram();
+	pros::delay(500);
 	chassis.pid_drive_set(-24_in, GRAB_MOGO);
 	chassis.pid_wait_quick();
 	// grab mid top ring
 	chassis.pid_turn_set(-90_deg, 127);
 	chassis.pid_wait_quick_chain();
-	chassis.pid_drive_set(52_in, 127, true);
+	chassis.pid_drive_set(52_in, 80, true);
 	pros::delay(500);
 	intakeLevel.set(false);
-	chassis.pid_wait_until(26_in);
-	chassis.pid_speed_max_set(70);
 	chassis.pid_wait_quick();
 	intakeLevel.set(true);
-	setLadyBrown(1000);
+	chassis.pid_drive_set(-8_in, 80);
+	chassis.pid_wait_quick_chain();
 	// ram corner
 	if(cornerState) {
 		chassis.pid_turn_set(-268_deg, 127);

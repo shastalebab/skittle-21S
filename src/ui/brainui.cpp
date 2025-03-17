@@ -298,7 +298,7 @@ void screeninit() {
 	lv_obj_add_style(autondesc, &style, LV_PART_MAIN);
 	lv_label_set_text(autondesc, "auton selection:");
 	lv_obj_add_style(ladderToggle, &styleind, LV_PART_MAIN);
-	lv_obj_set_style_bg_color(ladderToggle, lv_color_hex(0x84f03b), LV_PART_MAIN);
+	lv_obj_set_style_bg_color(ladderToggle, lv_color_hex(0x071808), LV_PART_MAIN);
 	lv_obj_set_size(ladderToggle, 36, 42);
 	lv_obj_set_pos(ladderToggle, 305, 103);
 
